@@ -9,7 +9,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #f5f1eb;
             min-height: 100vh;
             line-height: 1.6;
         }
@@ -24,7 +24,7 @@
         }
         
         .header {
-            background: linear-gradient(135deg, #2c8aa6, #4ba3c7);
+            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
             color: white;
             padding: 40px;
             text-align: center;
@@ -67,7 +67,7 @@
         }
         
         .intro h2 {
-            color: #2c8aa6;
+            color: #2d5d3b;
             font-size: 28px;
             margin-bottom: 15px;
         }
@@ -98,6 +98,7 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.08);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
         
         .concept-card::before {
@@ -107,7 +108,7 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(135deg, #2c8aa6, #4ba3c7);
+            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
             transform: scaleX(0);
             transition: transform 0.3s ease;
         }
@@ -115,11 +116,30 @@
         .concept-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            border-color: #2c8aa6;
+            border-color: #2d5d3b;
         }
         
         .concept-card:hover::before {
             transform: scaleX(1);
+        }
+        
+        .concept-card.available:hover {
+            cursor: pointer;
+        }
+        
+        .concept-card.coming-soon {
+            opacity: 0.7;
+        }
+        
+        .concept-card.coming-soon:hover {
+            cursor: default;
+            transform: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-color: #e1e8ed;
+        }
+        
+        .concept-card.coming-soon:hover::before {
+            transform: scaleX(0);
         }
         
         .concept-icon {
@@ -168,7 +188,7 @@
         }
         
         .footer h3 {
-            color: #2c8aa6;
+            color: #2d5d3b;
             margin-bottom: 15px;
         }
         
@@ -189,7 +209,7 @@
             background: white;
             padding: 15px;
             border-radius: 8px;
-            border-left: 4px solid #2c8aa6;
+            border-left: 4px solid #2d5d3b;
         }
         
         .info-label {
@@ -202,6 +222,40 @@
         .info-value {
             color: #666;
             font-size: 16px;
+        }
+        
+        /* Modal for demonstration */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: black;
         }
         
         /* Mobile responsiveness */
@@ -250,52 +304,50 @@
         
         <div class="content">
             <div class="intro">
-                <h2>Welcome to Your Course Concept Library</h2>
-                <p>This interactive resource library contains key concepts, frameworks, and practical examples to support your learning in IT project management. Each concept page is designed to help you understand and apply project management principles in real-world IT scenarios.</p>
+                <h2>Week 1: Foundation Concepts</h2>
+                <p>Master the fundamental concepts of IT project management. This week covers the essential definitions, roles, and frameworks that form the foundation of successful project management practice.</p>
             </div>
             
             <div class="concepts-grid">
-                <a href="project-management-definition.html" class="concept-card">
+                <div class="concept-card available" onclick="showAvailable()">
                     <span class="concept-icon">🎯</span>
                     <div class="concept-title">Project Management Definition</div>
-                    <div class="concept-description">Understand the four core elements: Knowledge, Skills, Tools, and Working with People. See practical IT examples for each component.</div>
+                    <div class="concept-description">Core definition plus the "Musts" of PM and common misconceptions. Foundation concept covering what PM is and is NOT.</div>
                     <span class="concept-status status-available">Available Now</span>
-                </a>
+                </div>
                 
-                <a href="project-vs-operations.html" class="concept-card">
-                    <span class="concept-icon">⚖️</span>
-                    <div class="concept-title">Projects vs Operations</div>
-                    <div class="concept-description">Learn to distinguish between temporary projects and ongoing operations with clear criteria and IT examples.</div>
+                <div class="concept-card coming-soon" onclick="showComingSoon()">
+                    <span class="concept-icon">📋</span>
+                    <div class="concept-title">Project Definition</div>
+                    <div class="concept-description">What makes something a project? Includes characteristics and real examples from both professional IT and personal contexts.</div>
                     <span class="concept-status status-coming-soon">Coming Soon</span>
-                </a>
+                </div>
                 
-                <a href="key-people-roles.html" class="concept-card">
-                    <span class="concept-icon">👥</span>
-                    <div class="concept-title">Key People & Roles</div>
-                    <div class="concept-description">Explore the essential roles in IT project management: PM, Sponsor, Team Members, Stakeholders, and more.</div>
+                <div class="concept-card coming-soon" onclick="showComingSoon()">
+                    <span class="concept-icon">👤</span>
+                    <div class="concept-title">Project Manager Definition</div>
+                    <div class="concept-description">Role definition, essential skills, PM vs Functional Manager differences, and key people in project teams.</div>
                     <span class="concept-status status-coming-soon">Coming Soon</span>
-                </a>
+                </div>
                 
-                <a href="pmi-framework.html" class="concept-card">
+                <div class="concept-card coming-soon" onclick="showComingSoon()">
+                    <span class="concept-icon">🏢</span>
+                    <div class="concept-title">PMO Definition</div>
+                    <div class="concept-description">What is a Project Management Office and the different types of PMOs in organizations.</div>
+                    <span class="concept-status status-coming-soon">Coming Soon</span>
+                </div>
+                
+                <div class="concept-card coming-soon" onclick="showComingSoon()">
                     <span class="concept-icon">📚</span>
-                    <div class="concept-title">PMI Framework</div>
-                    <div class="concept-description">Discover PMI's project management principles and performance domains with practical applications.</div>
+                    <div class="concept-title">PMI & PMBOK Guide</div>
+                    <div class="concept-description">Project Management Institute overview, PMBOK Guide structure, PM Principles, and Performance Domains.</div>
                     <span class="concept-status status-coming-soon">Coming Soon</span>
-                </a>
-                
-                <a href="project-lifecycle.html" class="concept-card">
-                    <span class="concept-icon">🔄</span>
-                    <div class="concept-title">Project Lifecycle</div>
-                    <div class="concept-description">Master the phases of project management from initiation through closure with IT project examples.</div>
-                    <span class="concept-status status-coming-soon">Coming Soon</span>
-                </a>
-                
-                <a href="agile-vs-waterfall.html" class="concept-card">
-                    <span class="concept-icon">🌊</span>
-                    <div class="concept-title">Agile vs Waterfall</div>
-                    <div class="concept-description">Compare methodologies and learn when to use each approach for different types of IT projects.</div>
-                    <span class="concept-status status-coming-soon">Coming Soon</span>
-                </a>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 10px; text-align: center;">
+                <h3 style="color: #2d5d3b; margin-bottom: 10px;">Coming in Future Weeks</h3>
+                <p style="color: #666; margin: 0;">Project Lifecycle • Agile vs Waterfall • Risk Management • Stakeholder Management • And More!</p>
             </div>
         </div>
         
@@ -321,5 +373,52 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal for demonstration -->
+    <div id="availableModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>🎯 Project Management Definition</h3>
+            <p>This would take you to your interactive concept page!</p>
+            <p><strong>On GitHub Pages, this will link to:</strong><br>
+            project-management-definition.html</p>
+        </div>
+    </div>
+
+    <div id="comingSoonModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>Coming Soon!</h3>
+            <p>This concept page will be added as we progress through the course.</p>
+            <p>New concepts will be made available weekly based on our class schedule.</p>
+        </div>
+    </div>
+
+    <script>
+        function showAvailable() {
+            document.getElementById('availableModal').style.display = 'block';
+        }
+        
+        function showComingSoon() {
+            document.getElementById('comingSoonModal').style.display = 'block';
+        }
+        
+        function closeModal() {
+            document.getElementById('availableModal').style.display = 'none';
+            document.getElementById('comingSoonModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            var availableModal = document.getElementById('availableModal');
+            var comingSoonModal = document.getElementById('comingSoonModal');
+            if (event.target == availableModal) {
+                availableModal.style.display = 'none';
+            }
+            if (event.target == comingSoonModal) {
+                comingSoonModal.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
