@@ -99,6 +99,7 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
+            display: block;
         }
         
         .concept-card::before {
@@ -309,12 +310,12 @@
             </div>
             
             <div class="concepts-grid">
-                <div class="concept-card available" onclick="showAvailable()">
+                <a href="project-management-definition.html" class="concept-card available">
                     <span class="concept-icon">🎯</span>
                     <div class="concept-title">Project Management Definition</div>
                     <div class="concept-description">Core definition plus the "Musts" of PM and common misconceptions. Foundation concept covering what PM is and is NOT.</div>
                     <span class="concept-status status-available">Available Now</span>
-                </div>
+                </a>
                 
                 <div class="concept-card coming-soon" onclick="showComingSoon()">
                     <span class="concept-icon">📋</span>
@@ -347,7 +348,7 @@
             
             <div style="margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 10px; text-align: center;">
                 <h3 style="color: #2d5d3b; margin-bottom: 10px;">Coming in Future Weeks</h3>
-                <p style="color: #666; margin: 0;">Project Lifecycle • Agile vs Waterfall • Risk Management • Stakeholder Management • And More!</p>
+                <p style="color: #666; margin: 0;">Business Value & Strategic Alignment • Project Scope Management • Time, Cost & Quality Management • Stakeholder Management • Team Leadership & Conflict Management • Change & Risk Management • Agile Principles • And More!</p>
             </div>
         </div>
         
@@ -371,20 +372,22 @@
                     <div class="info-value">IT Project Management</div>
                 </div>
             </div>
+            
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e9ecef;">
+                <h4 style="color: #2d5d3b; margin-bottom: 15px;">Professor Maria Espinoza</h4>
+                <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+                    <a href="mailto:mespin135@calstatela.edu" style="color: #666; text-decoration: none; transition: color 0.3s ease;">
+                        📧 mespin135@calstatela.edu
+                    </a>
+                    <a href="https://www.linkedin.com/in/mariaespinozait/" target="_blank" style="color: #666; text-decoration: none; transition: color 0.3s ease;">
+                        💼 LinkedIn Profile
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Modal for demonstration -->
-    <div id="availableModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h3>🎯 Project Management Definition</h3>
-            <p>This would take you to your interactive concept page!</p>
-            <p><strong>On GitHub Pages, this will link to:</strong><br>
-            project-management-definition.html</p>
-        </div>
-    </div>
-
     <div id="comingSoonModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
@@ -395,26 +398,17 @@
     </div>
 
     <script>
-        function showAvailable() {
-            document.getElementById('availableModal').style.display = 'block';
-        }
-        
         function showComingSoon() {
             document.getElementById('comingSoonModal').style.display = 'block';
         }
         
         function closeModal() {
-            document.getElementById('availableModal').style.display = 'none';
             document.getElementById('comingSoonModal').style.display = 'none';
         }
         
         // Close modal when clicking outside
         window.onclick = function(event) {
-            var availableModal = document.getElementById('availableModal');
             var comingSoonModal = document.getElementById('comingSoonModal');
-            if (event.target == availableModal) {
-                availableModal.style.display = 'none';
-            }
             if (event.target == comingSoonModal) {
                 comingSoonModal.style.display = 'none';
             }
