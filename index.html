@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Managing IT Projects - Course Concepts</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c8aa6, #4ba3c7);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="80" r="2.5" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="60" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+        }
+        
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 36px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header p {
+            margin: 0;
+            font-size: 18px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .intro h2 {
+            color: #2c8aa6;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        
+        .intro p {
+            font-size: 18px;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+        
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .concept-card {
+            background: white;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            padding: 25px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .concept-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #2c8aa6, #4ba3c7);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: #2c8aa6;
+        }
+        
+        .concept-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .concept-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .concept-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .concept-description {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .concept-status {
+            font-size: 14px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .status-available {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-coming-soon {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .footer h3 {
+            color: #2c8aa6;
+            margin-bottom: 15px;
+        }
+        
+        .footer p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .course-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .info-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2c8aa6;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 28px;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .concepts-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .concept-card {
+                padding: 20px;
+            }
+            
+            .concept-icon {
+                font-size: 36px;
+            }
+            
+            .course-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Managing IT Projects</h1>
+            <p>Interactive Concept Library for Project Management Success</p>
+        </div>
+        
+        <div class="content">
+            <div class="intro">
+                <h2>Welcome to Your Course Concept Library</h2>
+                <p>This interactive resource library contains key concepts, frameworks, and practical examples to support your learning in IT project management. Each concept page is designed to help you understand and apply project management principles in real-world IT scenarios.</p>
+            </div>
+            
+            <div class="concepts-grid">
+                <a href="project-management-definition.html" class="concept-card">
+                    <span class="concept-icon">🎯</span>
+                    <div class="concept-title">Project Management Definition</div>
+                    <div class="concept-description">Understand the four core elements: Knowledge, Skills, Tools, and Working with People. See practical IT examples for each component.</div>
+                    <span class="concept-status status-available">Available Now</span>
+                </a>
+                
+                <a href="project-vs-operations.html" class="concept-card">
+                    <span class="concept-icon">⚖️</span>
+                    <div class="concept-title">Projects vs Operations</div>
+                    <div class="concept-description">Learn to distinguish between temporary projects and ongoing operations with clear criteria and IT examples.</div>
+                    <span class="concept-status status-coming-soon">Coming Soon</span>
+                </a>
+                
+                <a href="key-people-roles.html" class="concept-card">
+                    <span class="concept-icon">👥</span>
+                    <div class="concept-title">Key People & Roles</div>
+                    <div class="concept-description">Explore the essential roles in IT project management: PM, Sponsor, Team Members, Stakeholders, and more.</div>
+                    <span class="concept-status status-coming-soon">Coming Soon</span>
+                </a>
+                
+                <a href="pmi-framework.html" class="concept-card">
+                    <span class="concept-icon">📚</span>
+                    <div class="concept-title">PMI Framework</div>
+                    <div class="concept-description">Discover PMI's project management principles and performance domains with practical applications.</div>
+                    <span class="concept-status status-coming-soon">Coming Soon</span>
+                </a>
+                
+                <a href="project-lifecycle.html" class="concept-card">
+                    <span class="concept-icon">🔄</span>
+                    <div class="concept-title">Project Lifecycle</div>
+                    <div class="concept-description">Master the phases of project management from initiation through closure with IT project examples.</div>
+                    <span class="concept-status status-coming-soon">Coming Soon</span>
+                </a>
+                
+                <a href="agile-vs-waterfall.html" class="concept-card">
+                    <span class="concept-icon">🌊</span>
+                    <div class="concept-title">Agile vs Waterfall</div>
+                    <div class="concept-description">Compare methodologies and learn when to use each approach for different types of IT projects.</div>
+                    <span class="concept-status status-coming-soon">Coming Soon</span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <h3>Course Information</h3>
+            <p>This concept library supports your learning in Managing Information Systems Projects</p>
+            
+            <div class="course-info">
+                <div class="info-item">
+                    <div class="info-label">Course</div>
+                    <div class="info-value">CIS 4860-01</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">Semester</div>
+                    <div class="info-value">Fall 2025</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">Focus</div>
+                    <div class="info-value">IT Project Management</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
