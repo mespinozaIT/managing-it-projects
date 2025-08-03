@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Management Definition - Managing IT Projects</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c8aa6, #4ba3c7);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .definition-box {
+            background: #f8f9fa;
+            border: 2px solid #2c8aa6;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 40px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 1.7;
+        }
+        
+        .elements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .element-card {
+            background: white;
+            border: 3px solid #333;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        
+        .element-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .element-card.knowledge {
+            border-color: #8e44ad;
+        }
+        
+        .element-card.skills {
+            border-color: #e74c3c;
+        }
+        
+        .element-card.tools {
+            border-color: #3498db;
+        }
+        
+        .element-card.people {
+            border-color: #27ae60;
+        }
+        
+        .element-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .element-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #333;
+        }
+        
+        .element-description {
+            font-size: 16px;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .element-examples {
+            font-size: 14px;
+            text-align: left;
+            color: #444;
+        }
+        
+        .element-examples strong {
+            color: #2c8aa6;
+            display: block;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 16px;
+        }
+        
+        .element-examples ul {
+            margin: 0;
+            padding-left: 0;
+            list-style: none;
+        }
+        
+        .element-examples li {
+            padding: 4px 0;
+            position: relative;
+            padding-left: 20px;
+            line-height: 1.5;
+        }
+        
+        .element-examples li:before {
+            content: "•";
+            color: #2c8aa6;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 16px;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 25px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .footer h3 {
+            margin: 0 0 10px 0;
+            color: #3498db;
+        }
+        
+        .footer p {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background: #2980b9;
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .definition-box {
+                font-size: 18px;
+                padding: 20px;
+            }
+            
+            .elements-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .element-card {
+                padding: 20px;
+            }
+            
+            .element-icon {
+                font-size: 36px;
+            }
+            
+            .element-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Project Management</h1>
+            <p>Key Concepts for IT Project Success</p>
+        </div>
+        
+        <div class="content">
+            <div class="definition-box">
+                Project management is the application of <strong>knowledge, skills, tools,</strong> and the <strong>ability to work with people</strong> to deliver value by completing projects on time, within scope, and within budget.
+            </div>
+            
+            <div class="elements-grid">
+                <div class="element-card knowledge">
+                    <span class="element-icon">🧠</span>
+                    <div class="element-title">Knowledge</div>
+                    <div class="element-description">What you know from formal learning <em>and</em> real-world experience</div>
+                    <div class="element-examples">
+                        <strong>IT Examples:</strong>
+                        <ul>
+                            <li>PMBOK framework and methodologies</li>
+                            <li>Agile vs. Waterfall approaches</li>
+                            <li>Risk management principles</li>
+                            <li>Understanding project phases</li>
+                            <li>Industry best practices</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="element-card skills">
+                    <span class="element-icon">⚙️</span>
+                    <div class="element-title">Skills</div>
+                    <div class="element-description">What you can do—your applied abilities</div>
+                    <div class="element-examples">
+                        <strong>IT Examples:</strong>
+                        <ul>
+                            <li>Leading effective meetings</li>
+                            <li>Creating realistic schedules</li>
+                            <li>Managing change requests</li>
+                            <li>Facilitating team collaboration</li>
+                            <li>Problem-solving and decision-making</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="element-card tools">
+                    <span class="element-icon">🔧</span>
+                    <div class="element-title">Tools</div>
+                    <div class="element-description">What you use to plan, track, and report</div>
+                    <div class="element-examples">
+                        <strong>IT Examples:</strong>
+                        <ul>
+                            <li>Jira, Trello, Microsoft Project</li>
+                            <li>Gantt charts and timelines</li>
+                            <li>RAID logs (Risks, Actions, Issues, Decisions)</li>
+                            <li>Dashboard and reporting tools</li>
+                            <li>Communication platforms (Slack, Teams)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="element-card people">
+                    <span class="element-icon">🤝</span>
+                    <div class="element-title">Working with People</div>
+                    <div class="element-description">How you collaborate, lead, and communicate with others</div>
+                    <div class="element-examples">
+                        <strong>IT Examples:</strong>
+                        <ul>
+                            <li>Aligning stakeholders on goals</li>
+                            <li>Motivating and supporting teams</li>
+                            <li>Resolving conflicts constructively</li>
+                            <li>Building trust and transparency</li>
+                            <li>Managing expectations and communication</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <h3>Remember</h3>
+            <p>Successful IT project management requires all four elements working together. You can't just rely on tools and processes—the human element is often what makes or breaks a project.</p>
+            <a href="index.html" class="back-link">Back to Course Concepts</a>
+        </div>
+    </div>
+</body>
+</html>
