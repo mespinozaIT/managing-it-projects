@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Managing IT Projects - Course Concepts</title>
-    <meta name="description" content="Interactive concept library for CIS 4860-01 Managing Information Systems Projects at Cal State LA. Master fundamental PM concepts including definitions, roles, and frameworks.">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
-            background: #f5f1eb;
+            background: #F5F1EB;
             min-height: 100vh;
             line-height: 1.6;
         }
@@ -25,7 +24,7 @@
         }
         
         .header {
-            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
+            background: linear-gradient(135deg, #2F5233, #4A7C59);
             color: white;
             padding: 40px;
             text-align: center;
@@ -68,7 +67,7 @@
         }
         
         .intro h2 {
-            color: #2d5d3b;
+            color: #2F5233;
             font-size: 28px;
             margin-bottom: 15px;
         }
@@ -100,7 +99,6 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
-            display: block;
         }
         
         .concept-card::before {
@@ -110,7 +108,7 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
+            background: linear-gradient(135deg, #2F5233, #C8A96E);
             transform: scaleX(0);
             transition: transform 0.3s ease;
         }
@@ -118,12 +116,7 @@
         .concept-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            border-color: #2d5d3b;
-        }
-        
-        .concept-card:focus {
-            outline: 3px solid #2d5d3b;
-            outline-offset: 2px;
+            border-color: #2F5233;
         }
         
         .concept-card:hover::before {
@@ -142,7 +135,7 @@
             cursor: default;
             transform: none;
             box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            border-color: #e1e8ed;
+            border-color: #E1E8ED;
         }
         
         .concept-card.coming-soon:hover::before {
@@ -153,6 +146,31 @@
             font-size: 48px;
             margin-bottom: 15px;
             display: block;
+            width: 48px;
+            height: 48px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        .concept-icon.target::before {
+            content: "🎯";
+        }
+        
+        .concept-icon.clipboard::before {
+            content: "🗂️";
+        }
+        
+        .concept-icon.person::before {
+            content: "👨‍💼";
+        }
+        
+        .concept-icon.building::before {
+            content: "🏢";
+        }
+        
+        .concept-icon.book::before {
+            content: "📖";
         }
         
         .concept-title {
@@ -178,57 +196,142 @@
         }
         
         .status-available {
-            background: #d4edda;
+            background: #D4EDDA;
             color: #155724;
         }
         
         .status-coming-soon {
-            background: #fff3cd;
+            background: #FFF3CD;
             color: #856404;
         }
         
         .footer {
-            background: #f8f9fa;
-            padding: 30px;
-            text-align: center;
-            border-top: 1px solid #e9ecef;
+            background: #2C3E50;
+            color: white;
+            padding: 40px 30px 20px 30px;
+            margin-top: 30px;
         }
         
-        .footer h3 {
-            color: #2d5d3b;
-            margin-bottom: 15px;
-        }
-        
-        .footer p {
-            color: #666;
-            margin-bottom: 20px;
-        }
-        
-        .course-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            max-width: 600px;
+        .footer-content {
+            max-width: 1000px;
             margin: 0 auto;
         }
         
-        .info-item {
-            background: white;
+        .footer-section h3 {
+            margin: 0 0 20px 0;
+            color: #C8A96E;
+            font-size: 20px;
+        }
+        
+        .footer-section p {
+            margin: 0 0 20px 0;
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .footer-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
             padding: 15px;
+            background: rgba(255,255,255,0.1);
             border-radius: 8px;
-            border-left: 4px solid #2d5d3b;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .footer-link:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+            border-color: #C8A96E;
+        }
+        
+        .footer-link:focus {
+            outline: 3px solid #ffd700;
+            outline-offset: 2px;
+        }
+        
+        .link-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .link-content {
+            flex: 1;
+        }
+        
+        .link-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        
+        .link-description {
+            font-size: 14px;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.2);
+            margin-top: 30px;
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        .footer-bottom p {
+            margin: 0;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        .course-info-banner {
+            background: linear-gradient(135deg, #C8A96E, #B8956A);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .course-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .info-item {
+            background: rgba(255,255,255,0.15);
+            padding: 15px 25px;
+            border-radius: 8px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            min-width: 150px;
         }
         
         .info-label {
             font-weight: bold;
-            color: #333;
+            color: rgba(255,255,255,0.9);
             font-size: 14px;
             margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .info-value {
-            color: #666;
-            font-size: 16px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
         }
         
         /* Modal for demonstration */
@@ -299,6 +402,37 @@
             .course-info {
                 grid-template-columns: 1fr;
             }
+            
+            .course-info-banner {
+                margin-bottom: 30px;
+                padding: 20px;
+            }
+            
+            .info-value {
+                font-size: 16px;
+            }
+            
+            .footer {
+                padding: 30px 20px 0 20px;
+            }
+            
+            .footer-content {
+                margin: 0 auto;
+            }
+            
+            .footer-links {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 15px !important;
+            }
+            
+            .footer-link {
+                padding: 12px;
+            }
+            
+            .link-icon {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
@@ -310,115 +444,131 @@
         </div>
         
         <div class="content">
+            <div class="course-info-banner">
+                <div class="course-info">
+                    <div class="info-item">
+                        <div class="info-label">Course</div>
+                        <div class="info-value">CIS 4860</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Semester</div>
+                        <div class="info-value">Fall 2025</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">Instructor</div>
+                        <div class="info-value">Maria Espinoza</div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="intro">
                 <h2>Week 1: Foundation Concepts</h2>
                 <p>Master the fundamental concepts of IT project management. This week covers the essential definitions, roles, and frameworks that form the foundation of successful project management practice.</p>
             </div>
             
-            <div class="concepts-grid" role="navigation" aria-label="Week 1 Foundation Concepts">
-                <a href="project-management-definition.html" class="concept-card available" aria-describedby="pm-def-desc">
-                    <span class="concept-icon" aria-hidden="true">🎯</span>
+            <div class="concepts-grid">
+                <div class="concept-card available" onclick="showAvailable()">
+                    <span class="concept-icon">🎯</span>
                     <div class="concept-title">Project Management Definition</div>
-                    <div class="concept-description" id="pm-def-desc">Core definition plus the "Musts" of PM and common misconceptions. Foundation concept covering what PM is and is NOT.</div>
+                    <div class="concept-description">Core definition plus the "Musts" of PM and common misconceptions. Foundation concept covering what PM is and is NOT.</div>
                     <span class="concept-status status-available">Available Now</span>
-                </a>
+                </div>
                 
-                <a href="project-definition.html" class="concept-card available" aria-describedby="proj-def-desc">
-                    <span class="concept-icon" aria-hidden="true">📋</span>
+                <div class="concept-card coming-soon" onclick="showComingSoon()">
+                    <span class="concept-icon">📋</span>
                     <div class="concept-title">Project Definition</div>
-                    <div class="concept-description" id="proj-def-desc">What makes something a project? Includes characteristics and real examples from both professional IT and personal contexts.</div>
-                    <span class="concept-status status-available">Available Now</span>
-                </a>
+                    <div class="concept-description">What makes something a project? Includes characteristics and real examples from both professional IT and personal contexts.</div>
+                    <span class="concept-status status-coming-soon">Coming Soon</span>
+                </div>
                 
-                <a href="project-manager-role.html" class="concept-card available" aria-describedby="pm-role-desc">
-                    <span class="concept-icon" aria-hidden="true">👤</span>
+                <div class="concept-card coming-soon" onclick="showComingSoon()">
+                    <span class="concept-icon">👤</span>
                     <div class="concept-title">Project Manager Definition</div>
-                    <div class="concept-description" id="pm-role-desc">Role definition, essential skills, PM vs Functional Manager differences, and key people in project teams.</div>
-                    <span class="concept-status status-available">Available Now</span>
-                </a>
+                    <div class="concept-description">Role definition, essential skills, PM vs Functional Manager differences, and key people in project teams.</div>
+                    <span class="concept-status status-coming-soon">Coming Soon</span>
+                </div>
                 
-                <a href="project-management-office-definition.html" class="concept-card available" aria-describedby="pmo-def-desc">
-                    <span class="concept-icon" aria-hidden="true">🏢</span>
+                <div class="concept-card coming-soon" onclick="showComingSoon()">
+                    <span class="concept-icon">🏢</span>
                     <div class="concept-title">PMO Definition</div>
-                    <div class="concept-description" id="pmo-def-desc">What is a Project Management Office and the different types of PMOs in organizations.</div>
-                    <span class="concept-status status-available">Available Now</span>
-                </a>
+                    <div class="concept-description">What is a Project Management Office and the different types of PMOs in organizations.</div>
+                    <span class="concept-status status-coming-soon">Coming Soon</span>
+                </div>
                 
-                <a href="PMI.html" class="concept-card available" aria-describedby="pmi-desc">
-                    <span class="concept-icon" aria-hidden="true">📚</span>
+                <div class="concept-card coming-soon" onclick="showComingSoon()">
+                    <span class="concept-icon">📚</span>
                     <div class="concept-title">PMI & PMBOK Guide</div>
-                    <div class="concept-description" id="pmi-desc">Project Management Institute overview, PMBOK Guide structure, PM Principles, and Performance Domains.</div>
-                    <span class="concept-status status-available">Available Now</span>
-                </a>
+                    <div class="concept-description">Project Management Institute overview, PMBOK Guide structure, PM Principles, and Performance Domains.</div>
+                    <span class="concept-status status-coming-soon">Coming Soon</span>
+                </div>
             </div>
             
-            <div style="margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 10px; text-align: center;">
-                <h3 style="color: #2d5d3b; margin-bottom: 10px;">Coming in Future Weeks</h3>
+            <div style="margin-top: 40px; padding: 20px; background: #F8F9FA; border-radius: 10px; text-align: center;">
+                <h3 style="color: #2F5233; margin-bottom: 10px;">Coming in Future Weeks</h3>
                 <p style="color: #666; margin: 0;">Business Value & Strategic Alignment • Project Scope Management • Time, Cost & Quality Management • Stakeholder Management • Team Leadership & Conflict Management • Change & Risk Management • Agile Principles • And More!</p>
             </div>
         </div>
         
         <div class="footer">
-            <h3>Course Information</h3>
-            <p>This concept library supports your learning in Managing Information Systems Projects</p>
-            
-            <div class="course-info">
-                <div class="info-item">
-                    <div class="info-label">Course</div>
-                    <div class="info-value">CIS 4860-01</div>
-                </div>
-                
-                <div class="info-item">
-                    <div class="info-label">Semester</div>
-                    <div class="info-value">Fall 2025</div>
-                </div>
-                
-                <div class="info-item">
-                    <div class="info-label">Focus</div>
-                    <div class="info-value">IT Project Management</div>
-                </div>
-            </div>
-            
-            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e9ecef;">
-                <h4 style="color: #2d5d3b; margin-bottom: 15px;">Professor Maria Espinoza</h4>
-                <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
-                    <a href="mailto:mespin135@calstatela.edu" style="color: #666; text-decoration: none; transition: color 0.3s ease;">
-                        📧 mespin135@calstatela.edu
-                    </a>
-                    <a href="https://www.linkedin.com/in/mariaespinozait/" target="_blank" style="color: #666; text-decoration: none; transition: color 0.3s ease;">
-                        💼 LinkedIn Profile
-                    </a>
+            <div class="footer-content">
+                <div class="footer-section" style="grid-column: 1 / -1;">
+                    <h3>Course Resources</h3>
+                    <div class="footer-links" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+                        <a href="course-syllabus.html" class="footer-link">
+                            <span class="link-icon">📋</span>
+                            <div class="link-content">
+                                <div class="link-title">Course Syllabus</div>
+                                <div class="link-description">Complete course information, policies, and schedule</div>
+                            </div>
+                        </a>
+                        
+                        <a href="class-expectations.html" class="footer-link">
+                            <span class="link-icon">🎯</span>
+                            <div class="link-content">
+                                <div class="link-title">Class Expectations</div>
+                                <div class="link-description">Teaching philosophy, ground rules, and success guide</div>
+                            </div>
+                        </a>
+                        
+                        <a href="mailto:mespin135@calstatela.edu" class="footer-link">
+                            <span class="link-icon">✉️</span>
+                            <div class="link-content">
+                                <div class="link-title">Contact Instructor</div>
+                                <div class="link-description">Questions? Reach out via email</div>
+                            </div>
+                        </a>
+                        
+                        <a href="https://www.linkedin.com/in/mariaespinozait/" target="_blank" class="footer-link" rel="noopener noreferrer">
+                            <span class="link-icon">💼</span>
+                            <div class="link-content">
+                                <div class="link-title">LinkedIn Profile</div>
+                                <div class="link-description">Connect with Professor Maria Espinoza</div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal for demonstration -->
-    <div id="comingSoonModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h3>Coming Soon!</h3>
-            <p>This concept page will be added as we progress through the course.</p>
-            <p>New concepts will be made available weekly based on our class schedule.</p>
-        </div>
-    </div>
+
 
     <script>
-        function showComingSoon() {
-            document.getElementById('comingSoonModal').style.display = 'block';
-        }
-        
-        function closeModal() {
-            document.getElementById('comingSoonModal').style.display = 'none';
-        }
-        
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            var comingSoonModal = document.getElementById('comingSoonModal');
-            if (event.target == comingSoonModal) {
-                comingSoonModal.style.display = 'none';
+        // Enhanced accessibility for keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                // Close any open modals if needed in the future
             }
-        }
+        });
+        
+        // Ensure focus management for concept cards
+        document.querySelectorAll('.concept-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Cards now link directly to pages, no modal needed
+            });
+        });
     </script>
 </body>
 </html>
