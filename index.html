@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Managing IT Projects - Course Concepts</title>
+    <meta name="description" content="Interactive concept library for CIS 4860-01 Managing Information Systems Projects at Cal State LA. Master fundamental PM concepts including definitions, roles, and frameworks.">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -118,6 +119,11 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             border-color: #2d5d3b;
+        }
+        
+        .concept-card:focus {
+            outline: 3px solid #2d5d3b;
+            outline-offset: 2px;
         }
         
         .concept-card:hover::before {
@@ -309,41 +315,41 @@
                 <p>Master the fundamental concepts of IT project management. This week covers the essential definitions, roles, and frameworks that form the foundation of successful project management practice.</p>
             </div>
             
-            <div class="concepts-grid">
-                <a href="project-management-definition.html" class="concept-card available">
-                    <span class="concept-icon">🎯</span>
+            <div class="concepts-grid" role="navigation" aria-label="Week 1 Foundation Concepts">
+                <a href="project-management-definition.html" class="concept-card available" aria-describedby="pm-def-desc">
+                    <span class="concept-icon" aria-hidden="true">🎯</span>
                     <div class="concept-title">Project Management Definition</div>
-                    <div class="concept-description">Core definition plus the "Musts" of PM and common misconceptions. Foundation concept covering what PM is and is NOT.</div>
+                    <div class="concept-description" id="pm-def-desc">Core definition plus the "Musts" of PM and common misconceptions. Foundation concept covering what PM is and is NOT.</div>
                     <span class="concept-status status-available">Available Now</span>
                 </a>
                 
-                <a href="project-definition.html" class="concept-card available">
-                    <span class="concept-icon">📋</span>
+                <a href="project-definition.html" class="concept-card available" aria-describedby="proj-def-desc">
+                    <span class="concept-icon" aria-hidden="true">📋</span>
                     <div class="concept-title">Project Definition</div>
-                    <div class="concept-description">What makes something a project? Includes characteristics and real examples from both professional IT and personal contexts.</div>
+                    <div class="concept-description" id="proj-def-desc">What makes something a project? Includes characteristics and real examples from both professional IT and personal contexts.</div>
                     <span class="concept-status status-available">Available Now</span>
                 </a>
                 
-                <div class="concept-card coming-soon" onclick="showComingSoon()">
-                    <span class="concept-icon">👤</span>
+                <a href="project-manager-role.html" class="concept-card available" aria-describedby="pm-role-desc">
+                    <span class="concept-icon" aria-hidden="true">👤</span>
                     <div class="concept-title">Project Manager Definition</div>
-                    <div class="concept-description">Role definition, essential skills, PM vs Functional Manager differences, and key people in project teams.</div>
-                    <span class="concept-status status-coming-soon">Coming Soon</span>
-                </div>
+                    <div class="concept-description" id="pm-role-desc">Role definition, essential skills, PM vs Functional Manager differences, and key people in project teams.</div>
+                    <span class="concept-status status-available">Available Now</span>
+                </a>
                 
-                <div class="concept-card coming-soon" onclick="showComingSoon()">
-                    <span class="concept-icon">🏢</span>
+                <a href="project-management-office-definition.html" class="concept-card available" aria-describedby="pmo-def-desc">
+                    <span class="concept-icon" aria-hidden="true">🏢</span>
                     <div class="concept-title">PMO Definition</div>
-                    <div class="concept-description">What is a Project Management Office and the different types of PMOs in organizations.</div>
-                    <span class="concept-status status-coming-soon">Coming Soon</span>
-                </div>
+                    <div class="concept-description" id="pmo-def-desc">What is a Project Management Office and the different types of PMOs in organizations.</div>
+                    <span class="concept-status status-available">Available Now</span>
+                </a>
                 
-                <div class="concept-card coming-soon" onclick="showComingSoon()">
-                    <span class="concept-icon">📚</span>
+                <a href="PMI.html" class="concept-card available" aria-describedby="pmi-desc">
+                    <span class="concept-icon" aria-hidden="true">📚</span>
                     <div class="concept-title">PMI & PMBOK Guide</div>
-                    <div class="concept-description">Project Management Institute overview, PMBOK Guide structure, PM Principles, and Performance Domains.</div>
-                    <span class="concept-status status-coming-soon">Coming Soon</span>
-                </div>
+                    <div class="concept-description" id="pmi-desc">Project Management Institute overview, PMBOK Guide structure, PM Principles, and Performance Domains.</div>
+                    <span class="concept-status status-available">Available Now</span>
+                </a>
             </div>
             
             <div style="margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 10px; text-align: center;">
