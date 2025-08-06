@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1 Quiz Challenge - Managing IT Projects</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-button:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2F5233, #4A7C59);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 32px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header p {
+            margin: 0;
+            font-size: 16px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .game-container {
+            padding: 40px;
+        }
+        
+        .start-screen {
+            text-align: center;
+            display: block;
+        }
+        
+        .start-screen h2 {
+            color: #544677;
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        
+        .quiz-selection {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .quiz-option {
+            background: white;
+            border: 3px solid #e9ecef;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quiz-option:hover {
+            border-color: #544677;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(84, 70, 119, 0.2);
+        }
+        
+        .quiz-option.concepts {
+            border-color: #3498db;
+        }
+        
+        .quiz-option.scenarios {
+            border-color: #e67e22;
+        }
+        
+        .quiz-option.concepts:hover {
+            border-color: #3498db;
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.2);
+        }
+        
+        .quiz-option.scenarios:hover {
+            border-color: #e67e22;
+            box-shadow: 0 10px 25px rgba(230, 126, 34, 0.2);
+        }
+        
+        .quiz-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .quiz-option h3 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .quiz-option p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        
+        .quiz-option ul {
+            text-align: left;
+            margin: 15px 0;
+            padding-left: 0;
+            list-style: none;
+        }
+        
+        .quiz-option li {
+            padding: 3px 0;
+            font-size: 13px;
+            color: #555;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .quiz-option li:before {
+            content: "•";
+            color: #544677;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .quiz-select-btn {
+            background: linear-gradient(135deg, #544677, #6b5b95);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        
+        .quiz-option.concepts .quiz-select-btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+        
+        .quiz-option.scenarios .quiz-select-btn {
+            background: linear-gradient(135deg, #e67e22, #d35400);
+        }
+        
+        .quiz-select-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .game-info {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #544677;
+        }
+        
+        .game-info h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .game-info ul {
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .quiz-screen {
+            display: none;
+        }
+        
+        .progress-bar {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(135deg, #544677, #6b5b95);
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        
+        .question-counter {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .question-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #544677;
+            min-height: 200px;
+        }
+        
+        .question-type {
+            background: #544677;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        
+        .question-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        .scenario-text {
+            background: #e8f5e8;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #2d5d3b;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .option {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 14px;
+            position: relative;
+        }
+        
+        .option:hover {
+            border-color: #544677;
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .option.selected {
+            border-color: #544677;
+            background: #f0f0ff;
+        }
+        
+        .option.correct {
+            border-color: #27ae60;
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .option.incorrect {
+            border-color: #e74c3c;
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .option-letter {
+            font-weight: bold;
+            color: #544677;
+            margin-right: 10px;
+        }
+        
+        .next-button {
+            background: linear-gradient(135deg, #544677, #6b5b95);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 20px auto 0;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .next-button.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .next-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(84, 70, 119, 0.3);
+        }
+        
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .feedback.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .results-screen {
+            display: none;
+            text-align: center;
+        }
+        
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            position: relative;
+        }
+        
+        .score-circle.excellent {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        }
+        
+        .score-circle.good {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+        
+        .score-circle.needs-improvement {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+        
+        .results-message {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .results-details {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #544677;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .action-button {
+            background: linear-gradient(135deg, #544677, #6b5b95);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(84, 70, 119, 0.3);
+        }
+        
+        .action-button.secondary {
+            background: #6c757d;
+        }
+        
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .header { padding: 30px 20px; }
+            .header h1 { font-size: 24px; }
+            .game-container { padding: 20px; }
+            .question-card { padding: 20px; }
+            .back-button { position: static; margin: 10px; }
+            .action-buttons { flex-direction: column; align-items: center; }
+            .quiz-selection { grid-template-columns: 1fr; gap: 20px; }
+            .quiz-option { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button" aria-label="Return to course concepts homepage">
+            <span aria-hidden="true">←</span>
+            Back to Course
+        </a>
+        
+        <header class="header">
+            <h1>🎯 Week 1 Quiz Challenge</h1>
+            <p>Test Your Foundation Knowledge</p>
+        </header>
+        
+        <main class="game-container">
+            <!-- Start Screen -->
+            <div class="start-screen" id="startScreen">
+                <h2>Choose Your Quiz Challenge</h2>
+                <div class="quiz-selection">
+                    <div class="quiz-option concepts">
+                        <div class="quiz-icon">🧠</div>
+                        <h3>Concepts Quiz</h3>
+                        <p>Test your knowledge of definitions, principles, and core PM concepts</p>
+                        <ul>
+                            <li>Definitions & terminology</li>
+                            <li>PM principles & characteristics</li>
+                            <li>Roles & responsibilities</li>
+                            <li>Organizational structures</li>
+                        </ul>
+                        <button class="quiz-select-btn" onclick="selectQuizType('concepts')">Take Concepts Quiz</button>
+                    </div>
+                    
+                    <div class="quiz-option scenarios">
+                        <div class="quiz-icon">🎭</div>
+                        <h3>Scenarios Quiz</h3>
+                        <p>Apply your knowledge to real-world situations and problem-solving</p>
+                        <ul>
+                            <li>Workplace scenarios</li>
+                            <li>Decision-making situations</li>
+                            <li>Problem identification</li>
+                            <li>Applied PM principles</li>
+                        </ul>
+                        <button class="quiz-select-btn" onclick="selectQuizType('scenarios')">Take Scenarios Quiz</button>
+                    </div>
+                </div>
+                
+                <div class="game-info">
+                    <h3>🎮 Quiz Details</h3>
+                    <ul>
+                        <li><strong>10 Questions</strong> per quiz type</li>
+                        <li><strong>Medium difficulty</strong> - think beyond basic recall</li>
+                        <li><strong>Immediate feedback</strong> with explanations</li>
+                        <li><strong>No time limit</strong> - take your time</li>
+                        <li><strong>Multiple attempts</strong> allowed</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Quiz Screen -->
+            <div class="quiz-screen" id="quizScreen">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="question-counter" id="questionCounter">Question 1 of 10</div>
+                
+                <div class="question-card" id="questionCard">
+                    <!-- Questions will be dynamically inserted here -->
+                </div>
+                
+                <button class="next-button" id="nextButton" onclick="nextQuestion()">Next Question</button>
+            </div>
+            
+            <!-- Results Screen -->
+            <div class="results-screen" id="resultsScreen">
+                <div class="score-circle" id="scoreCircle">
+                    <span id="scoreText">0/10</span>
+                </div>
+                <div class="results-message" id="resultsMessage">Great job!</div>
+                <div class="results-details" id="resultsDetails">
+                    <p>You've completed the Week 1 Quiz Challenge!</p>
+                    <p id="scoreBreakdown"></p>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-button" onclick="restartQuiz()">🔄 Try Again</button>
+                    <button class="action-button secondary" onclick="goToQuizSelection()">🎯 Try Other Quiz</button>
+                    <a href="week-1-summary.html" class="action-button secondary">📚 Review Summary</a>
+                    <a href="index.html" class="action-button secondary">🏠 Back to Course</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let currentQuestion = 0;
+        let score = 0;
+        let userAnswers = [];
+        let currentQuizType = '';
+
+        const conceptsQuestions = [
+            {
+                type: "Definition",
+                question: "Which of the following BEST completes the project management definition: 'Project management is the application of knowledge, skills, tools, and ___'?",
+                options: [
+                    "processes to deliver successful outcomes",
+                    "the ability to work with people to deliver value",
+                    "methodologies to ensure quality deliverables",
+                    "resources to meet stakeholder expectations"
+                ],
+                correct: 1,
+                explanation: "The complete definition emphasizes the human element - 'the ability to work with people' - which distinguishes effective PMs from those who only focus on tools and processes."
+            },
+            {
+                type: "Characteristics",
+                question: "Which characteristic would NOT make something qualify as a project?",
+                options: [
+                    "Planning your company's annual holiday party",
+                    "Providing ongoing customer support via help desk",
+                    "Launching a new mobile app for your startup",
+                    "Organizing a one-time conference for 500 attendees"
+                ],
+                correct: 1,
+                explanation: "Ongoing customer support is operational work, not a project. Projects are temporary endeavors with defined beginnings and ends."
+            },
+            {
+                type: "PM Principles",
+                question: "A stakeholder says: 'We need this project to be agile because we're not sure exactly what we want yet.' Which PM principle does this BEST represent?",
+                options: [
+                    "Balance constraints - managing scope uncertainty",
+                    "Technical and soft skills - using methodology knowledge", 
+                    "Flexibility - adapting to changing requirements",
+                    "Tailored approach - choosing the right methodology for the situation"
+                ],
+                correct: 3,
+                explanation: "The stakeholder is indicating that the situation calls for a specific methodology (Agile) based on the project's characteristics, which exemplifies the 'tailored approach' principle."
+            },
+            {
+                type: "Roles",
+                question: "What is the key difference between a Functional Manager and a Project Manager's primary focus?",
+                options: [
+                    "Functional: Short-term success, Project: Long-term excellence",
+                    "Functional: Operations and people, Project: Deliverables and results",
+                    "Functional: Cross-functional teams, Project: Department teams",
+                    "Functional: Temporary initiatives, Project: Ongoing operations"
+                ],
+                correct: 1,
+                explanation: "Functional managers focus on long-term operational excellence and people development, while project managers focus on delivering specific results within defined constraints."
+            },
+            {
+                type: "PMO",
+                question: "A PMO is being established at your company. Which function is NOT typically part of a PMO's responsibilities?",
+                options: [
+                    "Providing governance and maintaining PM standards",
+                    "Supporting project managers with tools and training",
+                    "Writing code and developing software applications",
+                    "Managing resource allocation across multiple projects"
+                ],
+                correct: 2,
+                explanation: "PMOs focus on governance, support, oversight, and resource management. Software development is typically handled by development teams, not PMOs."
+            },
+            {
+                type: "Matrix Organizations",
+                question: "In which type of matrix organization does the project manager have the MOST authority over team members?",
+                options: [
+                    "Weak Matrix",
+                    "Balanced Matrix", 
+                    "Strong Matrix",
+                    "Functional Matrix"
+                ],
+                correct: 2,
+                explanation: "In a Strong Matrix organization, project managers have more authority over resources compared to functional managers, unlike Weak Matrix where functional managers dominate."
+            },
+            {
+                type: "Team Roles",
+                question: "Which role typically serves as the bridge between business stakeholders and the technical development team?",
+                options: [
+                    "Project Sponsor",
+                    "Technical Lead",
+                    "Business Analyst",
+                    "Quality Assurance Tester"
+                ],
+                correct: 2,
+                explanation: "Business Analysts specialize in gathering requirements from business stakeholders and translating them for the technical team, serving as a crucial communication bridge."
+            },
+            {
+                type: "PM Elements",
+                question: "Which element of the PM definition involves understanding PMBOK frameworks, risk management principles, and industry best practices?",
+                options: [
+                    "Knowledge",
+                    "Skills", 
+                    "Tools",
+                    "Working with people"
+                ],
+                correct: 0,
+                explanation: "Knowledge encompasses what you know from formal learning and experience, including frameworks, principles, and best practices."
+            },
+            {
+                type: "Project Characteristics",
+                question: "The fact that every project creates something new or different relates to which key project characteristic?",
+                options: [
+                    "Temporary endeavor",
+                    "Goal-driven and outcome-focused",
+                    "Collaborative effort",
+                    "Unique"
+                ],
+                correct: 3,
+                explanation: "The 'unique' characteristic means projects aim to produce something that hasn't been done before, distinguishing them from routine operations."
+            },
+            {
+                type: "PM Skills",
+                question: "Leading effective meetings, creating realistic schedules, and managing change requests are examples of which PM element?",
+                options: [
+                    "Knowledge - what you know",
+                    "Skills - what you can do",
+                    "Tools - what you use",
+                    "Working with people - how you collaborate"
+                ],
+                correct: 1,
+                explanation: "These are all applied abilities that demonstrate what a project manager can do, which defines the 'Skills' element of the PM definition."
+            }
+        ];
+
+        const scenariosQuestions = [
+            {
+                type: "Scenario",
+                question: "Sarah is managing a website redesign project. The marketing team wants additional features, but this would push the timeline back by 3 weeks. Which PM principle is Sarah primarily dealing with?",
+                scenario: "Marketing has requested new social media integration features that weren't in the original scope.",
+                options: [
+                    "Flexibility - adapting to changing requirements",
+                    "Balancing constraints - managing scope, time, and budget trade-offs",
+                    "Tailored approach - choosing the right methodology",
+                    "Technical and soft skills - using tools and communication"
+                ],
+                correct: 1,
+                explanation: "This is a classic example of the 'triple constraint' where changing scope impacts time, requiring Sarah to balance these competing constraints."
+            },
+            {
+                type: "Application",
+                question: "A team lead says 'I don't need to worry about stakeholder management - I just focus on the technical work.' This violates which aspect of the PM definition?",
+                options: [
+                    "Knowledge - lacking PM frameworks understanding",
+                    "Skills - missing technical implementation abilities",
+                    "Tools - not using proper project management software",
+                    "Working with people - ignoring collaboration and communication"
+                ],
+                correct: 3,
+                explanation: "Effective project management requires 'working with people.' Stakeholder management is a critical people skill that can't be ignored."
+            },
+            {
+                type: "Scenario",
+                question: "Your project team includes developers from IT, marketers from Marketing, and analysts from Finance. The IT manager is upset that 'their' developers are spending too much time on your project. What type of organizational structure are you likely working in?",
+                scenario: "You're leading a cross-functional team with members from multiple departments.",
+                options: [
+                    "Functional organization - departments work independently",
+                    "Matrix organization - shared authority between functional and project managers",
+                    "Projectized organization - project manager has full authority",
+                    "Hybrid organization - mix of all structures"
+                ],
+                correct: 1,
+                explanation: "The conflict between the IT manager and your project needs indicates a matrix structure where functional managers still have authority over their staff."
+            },
+            {
+                type: "Scenario",
+                question: "You're in a Strong Matrix organization. The functional manager wants their developer to work on department tasks, but you need them for a critical project deadline. Who has the authority to make the final decision?",
+                scenario: "There's a resource conflict between project needs and departmental work.",
+                options: [
+                    "The functional manager - they always control their staff",
+                    "The project manager - Strong Matrix gives PMs more authority",
+                    "The developer - they should choose their own priorities", 
+                    "Senior leadership - conflicts always escalate upward"
+                ],
+                correct: 1,
+                explanation: "In a Strong Matrix, project managers have more authority over resources compared to functional managers, unlike Weak Matrix organizations."
+            },
+            {
+                type: "Analysis",
+                question: "A project manager spends most of their time creating detailed Gantt charts and status reports but rarely talks to team members or stakeholders. They're likely missing which critical PM element?",
+                options: [
+                    "Knowledge - they don't understand PM methodologies",
+                    "Skills - they lack technical project management abilities",
+                    "Tools - they're not using the right software",
+                    "Working with people - they're avoiding human interaction"
+                ],
+                correct: 3,
+                explanation: "While tools and documentation are important, the PM is neglecting the critical 'working with people' aspect of effective project management."
+            },
+            {
+                type: "Scenario",
+                question: "Your company's PMO asks you to use their standard project charter template, attend their monthly PM training, and report weekly status using their dashboard. Which PMO function are they primarily demonstrating?",
+                scenario: "The PMO is requiring standardized processes and providing support resources.",
+                options: [
+                    "Governance - ensuring consistent standards and processes",
+                    "Support - providing tools, training, and guidance", 
+                    "Oversight - tracking progress and alignment",
+                    "Resource Management - allocating staff across projects"
+                ],
+                correct: 0,
+                explanation: "Requiring standard templates and processes demonstrates the PMO's governance function, ensuring consistency across all projects in the organization."
+            },
+            {
+                type: "Real-world",
+                question: "You're managing a software upgrade project. The business users keep changing requirements, developers are behind schedule, and your budget is 80% spent with 60% work remaining. What should be your FIRST priority?",
+                scenario: "Multiple project constraints are being violated simultaneously.",
+                options: [
+                    "Lock down the scope to prevent further changes",
+                    "Add more developers to catch up on the schedule",
+                    "Meet with stakeholders to realign expectations and constraints",
+                    "Request additional budget to complete the remaining work"
+                ],
+                correct: 2,
+                explanation: "When multiple constraints are violated, the PM must first communicate with stakeholders to realign expectations and determine which constraints can be adjusted."
+            },
+            {
+                type: "Decision-making",
+                question: "Your technical lead says the current architecture won't support a key requirement, but changing it will delay the project by 2 months. The business sponsor says the requirement is non-negotiable. How do you apply PM principles?",
+                scenario: "Technical constraints conflict with business requirements.",
+                options: [
+                    "Side with the technical lead - they know the technology best",
+                    "Side with the sponsor - they control the budget and requirements",
+                    "Use your working with people skills to facilitate a solution everyone can accept",
+                    "Escalate to senior leadership and let them decide"
+                ],
+                correct: 2,
+                explanation: "This situation requires the PM to use their people skills to bring stakeholders together, explore alternatives, and facilitate a collaborative solution."
+            },
+            {
+                type: "Problem-solving", 
+                question: "Your project charter says 'Improve customer satisfaction' but provides no specific metrics or targets. Team members are confused about what success looks like. Which project characteristic is missing?",
+                scenario: "The project has a vague goal without clear success criteria.",
+                options: [
+                    "Temporary - the project needs a clear end date",
+                    "Collaborative - more stakeholders should be involved",
+                    "Unique - the project isn't different enough from operations",
+                    "Goal-driven - specific, measurable outcomes need to be defined"
+                ],
+                correct: 3,
+                explanation: "The project lacks specific, measurable goals. Being 'goal-driven' means having clear success criteria that everyone understands and can work toward."
+            },
+            {
+                type: "Workplace",
+                question: "During a team meeting, a developer questions your project timeline in front of everyone, saying it's 'unrealistic and poorly planned.' How should you respond using PM principles?",
+                scenario: "A team member publicly challenges your project management competence.",
+                options: [
+                    "Defend your timeline and assert your authority as project manager",
+                    "Acknowledge their concern and suggest discussing specifics after the meeting",
+                    "Ask them to propose a better timeline since they know better",
+                    "Report the behavior to their functional manager immediately"
+                ],
+                correct: 1,
+                explanation: "This demonstrates 'working with people' skills - acknowledging concerns professionally while maintaining team dynamics and addressing specifics privately."
+            }
+        ];
+
+        function selectQuizType(type) {
+            currentQuizType = type;
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizScreen').style.display = 'block';
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = [];
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const questions = currentQuizType === 'concepts' ? conceptsQuestions : scenariosQuestions;
+            const question = questions[currentQuestion];
+            const questionCard = document.getElementById('questionCard');
+            const progressFill = document.getElementById('progressFill');
+            const questionCounter = document.getElementById('questionCounter');
+            
+            // Update progress
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressFill.style.width = progress + '%';
+            questionCounter.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            
+            // Build question HTML
+            let questionHTML = `
+                <div class="question-type">${question.type}</div>
+                ${question.scenario ? `<div class="scenario-text">${question.scenario}</div>` : ''}
+                <div class="question-text">${question.question}</div>
+                <div class="options">
+            `;
+            
+            question.options.forEach((option, index) => {
+                questionHTML += `
+                    <div class="option" onclick="selectOption(${index})" data-index="${index}">
+                        <span class="option-letter">${String.fromCharCode(65 + index)}.</span>
+                        ${option}
+                    </div>
+                `;
+            });
+            
+            questionHTML += `</div>`;
+            questionCard.innerHTML = questionHTML;
+            
+            // Hide next button and feedback
+            document.getElementById('nextButton').classList.remove('show');
+            const existingFeedback = document.querySelector('.feedback');
+            if (existingFeedback) {
+                existingFeedback.remove();
+            }
+        }
+
+        function selectOption(selectedIndex) {
+            const questions = currentQuizType === 'concepts' ? conceptsQuestions : scenariosQuestions;
+            const question = questions[currentQuestion];
+            const options = document.querySelectorAll('.option');
+            const nextButton = document.getElementById('nextButton');
+            
+            // Disable all options
+            options.forEach(option => {
+                option.style.pointerEvents = 'none';
+            });
+            
+            // Show correct/incorrect styling
+            options.forEach((option, index) => {
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex && index !== question.correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            // Record answer and update score
+            userAnswers[currentQuestion] = selectedIndex;
+            if (selectedIndex === question.correct) {
+                score++;
+            }
+            
+            // Show feedback
+            const isCorrect = selectedIndex === question.correct;
+            const feedback = document.createElement('div');
+            feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <strong>${isCorrect ? '✅ Correct!' : '❌ Incorrect'}</strong><br>
+                ${question.explanation}
+            `;
+            document.getElementById('questionCard').appendChild(feedback);
+            
+            // Animate feedback
+            setTimeout(() => {
+                feedback.classList.add('show');
+            }, 100);
+            
+            // Show next button
+            setTimeout(() => {
+                nextButton.classList.add('show');
+            }, 500);
+        }
+
+        function nextQuestion() {
+            const questions = currentQuizType === 'concepts' ? conceptsQuestions : scenariosQuestions;
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const questions = currentQuizType === 'concepts' ? conceptsQuestions : scenariosQuestions;
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('resultsScreen').style.display = 'block';
+            
+            const scoreCircle = document.getElementById('scoreCircle');
+            const scoreText = document.getElementById('scoreText');
+            const resultsMessage = document.getElementById('resultsMessage');
+            const scoreBreakdown = document.getElementById('scoreBreakdown');
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            scoreText.textContent = `${score}/${questions.length}`;
+            
+            // Determine performance level
+            let performanceClass, message;
+            if (percentage >= 80) {
+                performanceClass = 'excellent';
+                message = '🎉 Excellent Work!';
+            } else if (percentage >= 60) {
+                performanceClass = 'good';
+                message = '👍 Good Job!';
+            } else {
+                performanceClass = 'needs-improvement';
+                message = '📚 Keep Studying!';
+            }
+            
+            scoreCircle.className = `score-circle ${performanceClass}`;
+            resultsMessage.textContent = message;
+            
+            const quizTypeName = currentQuizType === 'concepts' ? 'Concepts' : 'Scenarios';
+            scoreBreakdown.innerHTML = `
+                You scored <strong>${percentage}%</strong> on the ${quizTypeName} Quiz (${score} out of ${questions.length} questions correct).<br>
+                ${percentage >= 80 ? 'You have a strong grasp of Week 1 concepts!' : 
+                  percentage >= 60 ? 'You understand most concepts but could benefit from review.' : 
+                  'Consider reviewing the Week 1 materials and trying again.'}
+            `;
+        }
+
+        function restartQuiz() {
+            // Restart the same quiz type
+            document.getElementById('resultsScreen').style.display = 'none';
+            document.getElementById('quizScreen').style.display = 'block';
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = [];
+            showQuestion();
+        }
+
+        function goToQuizSelection() {
+            // Go back to quiz selection screen
+            document.getElementById('resultsScreen').style.display = 'none';
+            document.getElementById('startScreen').style.display = 'block';
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = [];
+            currentQuizType = '';
+        }
+    </script>
+</body>
+</html>
