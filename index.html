@@ -21,6 +21,37 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             overflow: hidden;
+            position: relative;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-button:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .back-button:focus {
+            outline: 3px solid #ffd700;
+            outline-offset: 2px;
         }
         
         .header {
@@ -140,8 +171,19 @@
             border-color: #E1E8ED;
         }
         
-        .concept-card.coming-soon:hover::before {
-            transform: scaleX(0);
+        .concept-card.quiz-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-color: #667eea;
+        }
+        
+        .concept-card.quiz-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+        
+        .concept-card.quiz-card .concept-status {
+            background: #667eea;
+            color: white;
         }
         
         .concept-icon {
@@ -406,6 +448,11 @@
 </head>
 <body>
     <div class="container">
+        <a href="index.html" class="back-button">
+            <span>←</span>
+            Back to Course
+        </a>
+        
         <div class="header">
             <h1>Managing IT Projects</h1>
             <p>Interactive Concept Library for Project Management Success</p>
@@ -470,6 +517,13 @@
                     <div class="concept-title">PMI & PMBOK Guide</div>
                     <div class="concept-description">Project Management Institute overview, PMBOK Guide structure, PM Principles, and Performance Domains.</div>
                     <span class="concept-status status-available">Available Now</span>
+                </a>
+                
+                <a href="week-1-quiz.html" class="concept-card available quiz-card">
+                    <span class="concept-icon">🎮</span>
+                    <div class="concept-title">Week 1 Quiz Challenge</div>
+                    <div class="concept-description">Test your knowledge with interactive quizzes! Choose between Concepts or Scenarios - both with immediate feedback and explanations.</div>
+                    <span class="concept-status status-available">Test Yourself</span>
                 </a>
             </div>
             
