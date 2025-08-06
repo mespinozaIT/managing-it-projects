@@ -21,6 +21,37 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             overflow: hidden;
+            position: relative;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-button:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .back-button:focus {
+            outline: 3px solid #ffd700;
+            outline-offset: 2px;
         }
         
         .header {
@@ -65,24 +96,28 @@
             display: flex;
             background: #2d5d3b;
             border-bottom: 3px solid #4a7c59;
-            overflow-x: auto;
+            overflow-x: visible;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
         }
         
         .tab {
             background: #2d5d3b;
             border: 2px solid transparent;
             border-bottom: none;
-            padding: 18px 30px;
+            padding: 18px 20px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             color: rgba(255,255,255,0.8);
             transition: all 0.3s ease;
             white-space: nowrap;
             position: relative;
-            margin: 0 2px;
+            margin: 0 1px;
             border-radius: 8px 8px 0 0;
+            flex: 1;
+            min-width: 0;
+            text-align: center;
         }
         
         .tab:hover {
@@ -267,7 +302,7 @@
         }
         
         .help-flow {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #544677;
             color: white;
             border-radius: 12px;
             padding: 30px;
@@ -296,7 +331,7 @@
         }
         
         .quote-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #544677;
             color: white;
             border-radius: 12px;
             padding: 25px;
@@ -338,6 +373,38 @@
             margin-bottom: 10px;
         }
         
+        .footer-return {
+            background: #544677;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .return-button {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .return-button:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .return-button:focus {
+            outline: 3px solid #ffd700;
+            outline-offset: 2px;
+        }
+        
         /* Mobile responsiveness */
         @media (max-width: 768px) {
             body {
@@ -361,34 +428,43 @@
                 grid-template-columns: 1fr;
             }
             
-            .tabs {
-                flex-wrap: wrap;
-            }
-            
             .tab {
                 flex: 1;
-                min-width: 120px;
+                min-width: 100px;
+                font-size: 12px;
+                padding: 15px 10px;
+            }
+            
+            .back-button {
+                position: static;
+                margin: 10px;
+                display: inline-flex;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
+        <a href="index.html" class="back-button" aria-label="Return to course concepts homepage">
+            <span aria-hidden="true">←</span>
+            Back to Course
+        </a>
+        
+        <header class="header">
             <h1>Class Expectations</h1>
             <p>Your Guide to Success in this Class</p>
-        </div>
+        </header>
         
-        <div class="tabs-container">
-            <div class="tabs" role="tablist" aria-label="Class Expectations Navigation">
-                <button class="tab active" onclick="showTab('philosophy')" role="tab" aria-selected="true" aria-controls="philosophy" id="tab-philosophy">Teaching Philosophy</button>
-                <button class="tab" onclick="showTab('ground-rules')" role="tab" aria-selected="false" aria-controls="ground-rules" id="tab-ground-rules">Ground Rules</button>
-                <button class="tab" onclick="showTab('ai-policy')" role="tab" aria-selected="false" aria-controls="ai-policy" id="tab-ai-policy">AI Policy</button>
-                <button class="tab" onclick="showTab('help-flow')" role="tab" aria-selected="false" aria-controls="help-flow" id="tab-help-flow">Getting Help</button>
-                <button class="tab" onclick="showTab('improvements')" role="tab" aria-selected="false" aria-controls="improvements" id="tab-improvements">Course Evolution</button>
-            </div>
+        <main id="main-content" class="tabs-container">
+            <nav class="tabs" role="tablist" aria-label="Class Expectations Navigation">
+                <button class="tab active" onclick="showTab('philosophy')" role="tab" aria-selected="true" aria-controls="philosophy" id="tab-philosophy" tabindex="0">Teaching Philosophy</button>
+                <button class="tab" onclick="showTab('ground-rules')" role="tab" aria-selected="false" aria-controls="ground-rules" id="tab-ground-rules" tabindex="-1">Ground Rules</button>
+                <button class="tab" onclick="showTab('ai-policy')" role="tab" aria-selected="false" aria-controls="ai-policy" id="tab-ai-policy" tabindex="-1">AI Policy</button>
+                <button class="tab" onclick="showTab('help-flow')" role="tab" aria-selected="false" aria-controls="help-flow" id="tab-help-flow" tabindex="-1">Getting Help</button>
+                <button class="tab" onclick="showTab('improvements')" role="tab" aria-selected="false" aria-controls="improvements" id="tab-improvements" tabindex="-1">Course Evolution</button>
+            </nav>
             
-            <div id="philosophy" class="tab-content active" role="tabpanel" aria-labelledby="tab-philosophy">
+            <section id="philosophy" class="tab-content active" role="tabpanel" aria-labelledby="tab-philosophy" tabindex="0">
                 <h2>What to Expect in This Class</h2>
                 <p style="font-size: 18px; color: #666; margin-bottom: 30px;">My teaching approach is built on six core principles that will shape our learning experience together.</p>
                 
@@ -441,9 +517,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
             
-            <div id="ground-rules" class="tab-content" role="tabpanel" aria-labelledby="tab-ground-rules">
+            <section id="ground-rules" class="tab-content" role="tabpanel" aria-labelledby="tab-ground-rules" tabindex="0">
                 <h2>Ground Rules</h2>
                 <p style="font-size: 18px; color: #666; margin-bottom: 30px;">Clear expectations help create a productive learning environment for everyone.</p>
                 
@@ -513,9 +589,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
             
-            <div id="ai-policy" class="tab-content" role="tabpanel" aria-labelledby="tab-ai-policy">
+            <section id="ai-policy" class="tab-content" role="tabpanel" aria-labelledby="tab-ai-policy" tabindex="0">
                 <h2>AI Policy: Meaningful Use, Not Mindless Replacement</h2>
                 <p style="font-size: 18px; color: #666; margin-bottom: 20px;">
                     AI is an integral part of the future of work — in this class, we'll learn how to use it wisely. I encourage the use of AI tools (like ChatGPT, Copilot, Gemini, etc.) as long as the use is meaningful, collaborative, and intentional.
@@ -576,9 +652,9 @@
                 <div class="quote-box">
                     "Did I learn something from using this tool — or did I just avoid doing the work?"
                 </div>
-            </div>
+            </section>
             
-            <div id="help-flow" class="tab-content" role="tabpanel" aria-labelledby="tab-help-flow">
+            <section id="help-flow" class="tab-content" role="tabpanel" aria-labelledby="tab-help-flow" tabindex="0">
                 <h2>Getting Help: I'm the "Class Manager" — You're Teammates</h2>
                 <p style="font-size: 18px; color: #666; margin-bottom: 20px;">
                     Think of our classroom like a project team. I'm your manager (a.k.a. the Class Boss), and you are all colleagues. You're not here alone — you're here with a team.
@@ -620,9 +696,9 @@
                         <strong>I love when students come to me with curiosity or initiative, not just emergencies.</strong>
                     </p>
                 </div>
-            </div>
+            </section>
             
-            <div id="improvements" class="tab-content" role="tabpanel" aria-labelledby="tab-improvements">
+            <section id="improvements" class="tab-content" role="tabpanel" aria-labelledby="tab-improvements" tabindex="0">
                 <h2>Lessons Learned (and What I'm Doing Differently)</h2>
                 <p style="font-size: 18px; color: #666; margin-bottom: 30px;">
                     I believe in continuous improvement. Here's what I've learned from previous semesters and how I'm making this course even better.
@@ -687,8 +763,13 @@
                 <div class="quote-box">
                     "This course is a shared journey, and you'll have a voice in how we shape it."
                 </div>
-            </div>
-        </div>
+            </section>
+        </main>
+        
+        <footer class="footer-return">
+            <h3 style="margin: 0 0 15px 0;">Ready to continue learning?</h3>
+            <a href="index.html" class="return-button" aria-label="Return to course concepts homepage">Back to Course Concepts</a>
+        </footer>
     </div>
 
     <script>
@@ -697,6 +778,7 @@
             const tabContents = document.querySelectorAll('.tab-content');
             tabContents.forEach(content => {
                 content.classList.remove('active');
+                content.setAttribute('tabindex', '-1');
             });
             
             // Remove active class from all tabs and update ARIA attributes
@@ -704,19 +786,22 @@
             tabs.forEach(tab => {
                 tab.classList.remove('active');
                 tab.setAttribute('aria-selected', 'false');
+                tab.setAttribute('tabindex', '-1');
             });
             
             // Show selected tab content
             const selectedContent = document.getElementById(tabName);
             selectedContent.classList.add('active');
+            selectedContent.setAttribute('tabindex', '0');
             
             // Add active class to clicked tab and update ARIA attributes
             const clickedTab = event.target;
             clickedTab.classList.add('active');
             clickedTab.setAttribute('aria-selected', 'true');
+            clickedTab.setAttribute('tabindex', '0');
             
-            // Focus management for accessibility
-            selectedContent.focus();
+            // Keep focus on the clicked tab instead of moving to content
+            clickedTab.focus();
         }
         
         // Keyboard navigation for tabs
