@@ -10,7 +10,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: #f5f7fa;
             min-height: 100vh;
             line-height: 1.6;
             color: #333;
@@ -23,6 +23,37 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             overflow: hidden;
+            position: relative;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-button:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .back-button:focus {
+            outline: 3px solid #ffd700;
+            outline-offset: 2px;
         }
         
         .header {
@@ -69,7 +100,7 @@
             gap: 20px;
             margin-bottom: 40px;
             padding: 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #544677;
             border-radius: 15px;
             color: white;
         }
@@ -188,7 +219,7 @@
         }
         
         .grade-item {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #544677;
             color: white;
             padding: 15px;
             border-radius: 10px;
@@ -207,7 +238,7 @@
         }
         
         .highlight-box {
-            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            background: #ffeaa7;
             border-radius: 12px;
             padding: 25px;
             margin: 25px 0;
@@ -345,11 +376,22 @@
             .grading-table td {
                 padding: 10px;
             }
+            
+            .back-button {
+                position: static;
+                margin: 10px;
+                display: inline-flex;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <a href="index.html" class="back-button" aria-label="Return to course concepts homepage">
+            <span aria-hidden="true">←</span>
+            Back to Course
+        </a>
+        
         <div class="header">
             <h1>Course Syllabus</h1>
             <p>CIS 4860 | Managing Information Systems Projects • Fall 2025</p>
@@ -446,7 +488,7 @@
                 <ul>
                     <li>Laptop or desktop computer with reliable internet connection</li>
                     <li>Access to Microsoft Office Suite (available through university)</li>
-                    <li>Project management software (free versions will be introduced in class)</li>
+                    <li>Project management software</li>
                     <li>Web browser with up-to-date security settings</li>
                 </ul>
             </div>
@@ -677,8 +719,8 @@
                         </tr>
                         <tr>
                             <td>12</td>
-                            <td>Work Session and Peer Feedback</td>
-                            <td>Draft Presentation Slide Deck</td>
+                            <td><strong>Holiday - Veterans Day</strong></td>
+                            <td>—</td>
                         </tr>
                         <tr>
                             <td>13</td>
@@ -692,8 +734,8 @@
                         </tr>
                         <tr>
                             <td>15</td>
-                            <td>Break</td>
-                            <td>Break</td>
+                            <td>Fall Recess</td>
+                            <td>—</td>
                         </tr>
                         <tr>
                             <td>16</td>
