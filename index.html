@@ -131,13 +131,26 @@
         .concept-card.coming-soon {
             opacity: 0.7;
             cursor: default;
-            pointer-events: none;
+        }
+        
+        /* In admin mode, coming-soon cards should be interactive */
+        .admin-mode .concept-card.coming-soon {
+            opacity: 0.8;
+            cursor: pointer;
+            pointer-events: auto;
         }
         
         .concept-card.coming-soon:hover {
             transform: none;
             box-shadow: 0 2px 10px rgba(0,0,0,0.08);
             border-color: #E1E8ED;
+        }
+        
+        /* In admin mode, coming-soon cards can hover */
+        .admin-mode .concept-card.coming-soon:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: #2F5233;
         }
         
         .concept-card.quiz-card {
@@ -216,6 +229,16 @@
         .status-coming-soon {
             background: #FFF3CD;
             color: #856404;
+        }
+        
+        .status-hidden {
+            background: #F8D7DA;
+            color: #721C24;
+        }
+        
+        .concept-card.hidden {
+            opacity: 0.5;
+            border: 2px dashed #dc3545;
         }
         
         .footer {
@@ -414,8 +437,225 @@
             }
         }
     </style>
+    <!-- Firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
 </head>
 <body>
+    <script src="firebase-config.js"></script>
+    <script src="js/course-manager.js"></script>
+    <script src="js/admin-manager.js"></script>
+    <script>
+        // Remove the module import since we're using global scripts now
+        
+        class CourseApp {
+            constructor() {
+                this.courseManager = new CourseManager();
+                this.adminManager = new AdminManager(this.courseManager);
+                this.init();
+            }
+
+            async init() {
+                try {
+                    // Check if Firebase has any data, if not, initialize with sample data
+                    const hasData = await this.checkForExistingData();
+                    if (!hasData) {
+                        console.log('No data found in Firebase, initializing sample data...');
+                        await this.initializeSampleData();
+                    }
+                    
+                    await this.loadDynamicContent();
+                    this.setupProgressTracking();
+                    this.logPageView();
+                } catch (error) {
+                    console.warn('Firebase not configured yet. Using static content.', error);
+                }
+            }
+
+            async checkForExistingData() {
+                try {
+                    const snapshot = await this.courseManager.database.ref('course/content').once('value');
+                    return snapshot.exists() && snapshot.numChildren() > 0;
+                } catch (error) {
+                    console.error('Error checking for existing data:', error);
+                    return false;
+                }
+            }
+
+            async initializeSampleData() {
+                const sampleData = {
+                    "week1_pm_definition": {
+                        "id": "week1_pm_definition",
+                        "title": "Project Management Definition",
+                        "description": "Core definition plus the \"Musts\" of PM and common misconceptions. Foundation concept covering what PM is and is NOT.",
+                        "icon": "🎯",
+                        "url": "project-management-definition.html",
+                        "week": 1,
+                        "type": "concept",
+                        "status": "available",
+                        "statusText": "Available Now",
+                        "sortOrder": 1,
+                        "createdAt": Date.now(),
+                        "lastModified": Date.now()
+                    },
+                    "week1_project_definition": {
+                        "id": "week1_project_definition", 
+                        "title": "Project Definition",
+                        "description": "What makes something a project? Includes characteristics and real examples from both professional IT and personal contexts.",
+                        "icon": "📋",
+                        "url": "project-definition.html",
+                        "week": 1,
+                        "type": "concept", 
+                        "status": "available",
+                        "statusText": "Available Now",
+                        "sortOrder": 2,
+                        "createdAt": Date.now(),
+                        "lastModified": Date.now()
+                    },
+                    "week1_pm_role": {
+                        "id": "week1_pm_role",
+                        "title": "Project Manager Definition", 
+                        "description": "Role definition, essential skills, PM vs Functional Manager differences, and key people in project teams.",
+                        "icon": "👤",
+                        "url": "project-manager-role.html",
+                        "week": 1,
+                        "type": "concept",
+                        "status": "available",
+                        "statusText": "Available Now",
+                        "sortOrder": 3,
+                        "createdAt": Date.now(),
+                        "lastModified": Date.now()
+                    },
+                    "week1_pmo": {
+                        "id": "week1_pmo",
+                        "title": "PMO Definition",
+                        "description": "What is a Project Management Office and the different types of PMOs in organizations.",
+                        "icon": "🏢", 
+                        "url": "project-management-office-definition.html",
+                        "week": 1,
+                        "type": "concept",
+                        "status": "available",
+                        "statusText": "Available Now",
+                        "sortOrder": 4,
+                        "createdAt": Date.now(),
+                        "lastModified": Date.now()
+                    },
+                    "week1_pmi": {
+                        "id": "week1_pmi",
+                        "title": "PMI & PMBOK Guide",
+                        "description": "Project Management Institute overview, PMBOK Guide structure, PM Principles, and Performance Domains.",
+                        "icon": "📚",
+                        "url": "PMI.html", 
+                        "week": 1,
+                        "type": "concept",
+                        "status": "available",
+                        "statusText": "Available Now",
+                        "sortOrder": 5,
+                        "createdAt": Date.now(),
+                        "lastModified": Date.now()
+                    },
+                    "week1_quiz": {
+                        "id": "week1_quiz",
+                        "title": "Week 1 Quiz Challenge",
+                        "description": "Test your knowledge with interactive quizzes! Choose between Concepts or Scenarios - both with immediate feedback and explanations.",
+                        "icon": "🎮",
+                        "url": "week-1-quiz.html",
+                        "week": 1,
+                        "type": "quiz",
+                        "status": "available", 
+                        "statusText": "Test Yourself",
+                        "sortOrder": 6,
+                        "createdAt": Date.now(),
+                        "lastModified": Date.now()
+                    }
+                };
+
+                try {
+                    for (const [contentId, contentData] of Object.entries(sampleData)) {
+                        await this.courseManager.updateCourseContent(contentId, contentData);
+                    }
+                    console.log('Sample data initialized successfully');
+                } catch (error) {
+                    console.error('Error initializing sample data:', error);
+                }
+            }
+
+            async loadDynamicContent() {
+                const weekContent = await this.courseManager.getCourseContent(1);
+                if (weekContent.length > 0) {
+                    this.renderDynamicContent(weekContent);
+                }
+            }
+
+            renderDynamicContent(content) {
+                const conceptsGrid = document.querySelector('.concepts-grid');
+                if (!conceptsGrid) return;
+
+                // Filter out hidden content unless in admin mode
+                const filteredContent = content.filter(item => 
+                    item.status !== 'hidden' || (this.adminManager && this.adminManager.isAdminMode)
+                );
+
+                conceptsGrid.innerHTML = filteredContent.map(item => {
+                    const statusClass = item.status === 'available' ? 'status-available' : 
+                                      item.status === 'hidden' ? 'status-hidden' : 'status-coming-soon';
+                    
+                    return `
+                        <a href="${item.url || '#'}" class="concept-card ${item.status} ${item.type === 'quiz' ? 'quiz-card' : ''}" data-content-id="${item.id}">
+                            <span class="concept-icon">${item.icon || '📖'}</span>
+                            <div class="concept-title">${item.title}</div>
+                            <div class="concept-description">${item.description}</div>
+                            <span class="concept-status ${statusClass}">${item.statusText}</span>
+                        </a>
+                    `;
+                }).join('');
+            }
+
+            setupProgressTracking() {
+                document.querySelectorAll('.concept-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        // Don't track clicks on admin gears
+                        if (e.target.classList.contains('admin-gear')) {
+                            return;
+                        }
+                        
+                        // In admin mode, allow normal navigation when clicking tiles
+                        // Only prevent navigation if clicking the gear icon specifically
+                        
+                        const contentId = card.getAttribute('data-content-id');
+                        if (contentId) {
+                            this.courseManager.logAnalytics('content_click', {
+                                contentId: contentId,
+                                title: card.querySelector('.concept-title').textContent,
+                                week: 1
+                            });
+                        }
+                    });
+                });
+                
+                // Add gear icons if in admin mode
+                if (this.adminManager && this.adminManager.isAdminMode) {
+                    this.adminManager.addGearIcons();
+                }
+            }
+
+            logPageView() {
+                this.courseManager.logAnalytics('page_view', {
+                    page: 'index',
+                    week: 1,
+                    timestamp: new Date().toISOString()
+                });
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            // Wait for Firebase to be loaded
+            setTimeout(() => {
+                new CourseApp();
+            }, 1000);
+        });
+    </script>
     <div class="container">
 
         
@@ -450,42 +690,42 @@
             </div>
             
             <div class="concepts-grid">
-                <a href="project-management-definition.html" class="concept-card available">
+                <a href="project-management-definition.html" class="concept-card available" data-content-id="week1_pm_definition">
                     <span class="concept-icon">🎯</span>
                     <div class="concept-title">Project Management Definition</div>
                     <div class="concept-description">Core definition plus the "Musts" of PM and common misconceptions. Foundation concept covering what PM is and is NOT.</div>
                     <span class="concept-status status-available">Available Now</span>
                 </a>
                 
-                <a href="project-definition.html" class="concept-card available">
+                <a href="project-definition.html" class="concept-card available" data-content-id="week1_project_definition">
                     <span class="concept-icon">📋</span>
                     <div class="concept-title">Project Definition</div>
                     <div class="concept-description">What makes something a project? Includes characteristics and real examples from both professional IT and personal contexts.</div>
                     <span class="concept-status status-available">Available Now</span>
                 </a>
                 
-                <a href="project-manager-role.html" class="concept-card available">
+                <a href="project-manager-role.html" class="concept-card available" data-content-id="week1_pm_role">
                     <span class="concept-icon">👤</span>
                     <div class="concept-title">Project Manager Definition</div>
                     <div class="concept-description">Role definition, essential skills, PM vs Functional Manager differences, and key people in project teams.</div>
                     <span class="concept-status status-available">Available Now</span>
                 </a>
                 
-                <a href="project-management-office-definition.html" class="concept-card available">
+                <a href="project-management-office-definition.html" class="concept-card available" data-content-id="week1_pmo">
                     <span class="concept-icon">🏢</span>
                     <div class="concept-title">PMO Definition</div>
                     <div class="concept-description">What is a Project Management Office and the different types of PMOs in organizations.</div>
                     <span class="concept-status status-available">Available Now</span>
                 </a>
                 
-                <a href="PMI.html" class="concept-card available">
+                <a href="PMI.html" class="concept-card available" data-content-id="week1_pmi">
                     <span class="concept-icon">📚</span>
                     <div class="concept-title">PMI & PMBOK Guide</div>
                     <div class="concept-description">Project Management Institute overview, PMBOK Guide structure, PM Principles, and Performance Domains.</div>
                     <span class="concept-status status-available">Available Now</span>
                 </a>
                 
-                <a href="week-1-quiz.html" class="concept-card available quiz-card">
+                <a href="week-1-quiz.html" class="concept-card available quiz-card" data-content-id="week1_quiz">
                     <span class="concept-icon">🎮</span>
                     <div class="concept-title">Week 1 Quiz Challenge</div>
                     <div class="concept-description">Test your knowledge with interactive quizzes! Choose between Concepts or Scenarios - both with immediate feedback and explanations.</div>

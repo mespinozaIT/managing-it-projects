@@ -1,0 +1,21 @@
+{
+  "rules": {
+    "course": {
+      "content": {
+        ".read": true,
+        ".write": true,
+        ".indexOn": ["week", "type"]
+      },
+      "progress": {
+        "$uid": {
+          ".read": "$uid === auth.uid",
+          ".write": "$uid === auth.uid"
+        }
+      }
+    },
+    "analytics": {
+      ".read": true,
+      ".write": true
+    }
+  }
+}

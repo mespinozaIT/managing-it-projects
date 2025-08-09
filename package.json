@@ -1,0 +1,28 @@
+{
+  "name": "managing-it-projects-course",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mespinozaIT/managing-it-projects.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mespinozaIT/managing-it-projects/issues"
+  },
+  "homepage": "https://github.com/mespinozaIT/managing-it-projects#readme",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+  "dependencies": {
+    "firebase": "^12.1.0"
+  }
+}
