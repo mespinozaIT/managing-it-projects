@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1 Class Outline - Managing IT Projects</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+        }
+        
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 36px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header p {
+            margin: 0;
+            font-size: 18px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .class-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .info-item {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .info-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .info-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2d5d3b;
+        }
+        
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .schedule-table th {
+            background: #2d5d3b;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .schedule-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: middle;
+        }
+        
+        .schedule-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .activity-type {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-right: 10px;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .type-lesson {
+            background: #e8f4fd;
+            color: #2980b9;
+        }
+        
+        .type-activity {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .type-story {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .type-admin {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .type-homework {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+        
+        .activity-title {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .time-duration {
+            font-weight: bold;
+            color: #2d5d3b;
+            text-align: center;
+            font-size: 16px;
+        }
+        
+        .time-range {
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+        }
+        
+        .total-row {
+            background: #2d5d3b !important;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .total-row td {
+            border-bottom: none;
+            font-size: 16px;
+        }
+        
+        .summary-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .summary-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .summary-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2d5d3b;
+            margin-bottom: 10px;
+        }
+        
+        .summary-text {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .breakdown-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2d5d3b;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .schedule-table {
+                font-size: 14px;
+            }
+            
+            .schedule-table th,
+            .schedule-table td {
+                padding: 8px;
+            }
+            
+            .activity-type {
+                display: block;
+                margin-bottom: 5px;
+                margin-right: 0;
+            }
+            
+            .class-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .breakdown-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Week 1 Class Outline</h1>
+            <p>Managing IT Projects - Introduction to Project Management</p>
+        </div>
+        
+        <div class="content">
+            <div class="breakdown-stats">
+                <div class="stat-item">
+                    <span class="stat-number">60</span>
+                    <div class="stat-label">Lesson Minutes</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">45</span>
+                    <div class="stat-label">Activity Minutes</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">15</span>
+                    <div class="stat-label">Story Minutes</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">50</span>
+                    <div class="stat-label">Admin & Wrap-up</div>
+                </div>
+            </div>
+            
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Activity</th>
+                        <th style="width: 80px;">Time</th>
+                        <th style="width: 140px;">Pace Marker</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="activity-type type-admin">Admin</span>
+                            <span class="activity-title">Class Introduction | Expectations and Syllabus</span>
+                        </td>
+                        <td class="time-duration">20</td>
+                        <td class="time-range">Start: 6:00 PM</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity-type type-admin">Intro</span>
+                            <span class="activity-title">Teacher Intro | Journey & Resume</span>
+                        </td>
+                        <td class="time-duration">15</td>
+                        <td class="time-range">Check: 6:20 PM</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity-type type-lesson">Lesson</span>
+                            <span class="activity-title">Intro to Project Management : Project Definition</span>
+                        </td>
+                        <td class="time-duration">10</td>
+                        <td class="time-range">Check: 6:35 PM</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity-type type-activity">Activity</span>
+                            <span class="activity-title">Week 1 | Activity 1 | Examples of Projects & Short Discussion</span>
+                        </td>
+                        <td class="time-duration">15</td>
+                        <td class="time-range">Check: 6:50 PM</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity-type type-story">Story</span>
+                            <span class="activity-title">Intro to Project Management : Project Definition : My Examples</span>
+                        </td>
+                        <td class="time-duration">10</td>
+                        <td class="time-range">Check: 7:00 PM</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity-type type-lesson">Lesson</span>
+                            <span class="activity-title">Intro to Project Management : Project Management</span>
+                        </td>
+                        <td class="time-duration">10</td>
+                        <td class="time-range">Check: 7:10 PM</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity-type type-lesson">Lesson</span>
+                            <span class="activity-title">Intro to Project Management : Project Manager</span>
+                        </td>
+                        <td class="time-duration">10</td>
+                        <td class="time-range">Check: 7:20 PM</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity-type type-story">Story</span>
+                            <span class="activity-title">Intro to Project Management : Project Manager : Am I?</span>
+                        </td>
+                        <td class="time-duration">5</td>
+                        <td class="time-range">Check: 7:25 PM</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity-type type-activity">Activity</span>
+                            <span class="activity-title">Week 1 | Activity 2 | Project Manager Job Posting</span>
+                        </td>
+                        <td class="time-duration">15</td>
+                        <td class="time-range">Check: 7:40 PM</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity-type type-lesson">Lesson</span>
+                            <span class="activity-title">Intro to Project Management : PMO</span>
+                        </td>
+                        <td class="time-duration">10</td>
+                        <td class="time-range">Check: 7:50 PM</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity-type type-lesson">Lesson</span>
+                            <span class="activity-title">Intro to Project Management : PMI & PMBOK</span>
+                        </td>
+                        <td class="time-duration">10</td>
+                        <td class="time-range">Check: 8:00 PM</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity-type type-activity">Activity</span>
+                            <span class="activity-title">Week 1 | Activity 3 | Browse Website</span>
+                        </td>
+                        <td class="time-duration">15</td>
+                        <td class="time-range">Check: 8:15 PM</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity-type type-admin">Wrap-up</span>
+                            <span class="activity-title">Things to think about ... Elevator Pitch, LinkedIn Profile and Photo</span>
+                        </td>
+                        <td class="time-duration">10</td>
+                        <td class="time-range">Check: 8:25 PM</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity-type type-admin">Wrap-up</span>
+                            <span class="activity-title">Homework Instructions</span>
+                        </td>
+                        <td class="time-duration">10</td>
+                        <td class="time-range">Check: 8:35 PM</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="activity-type type-admin">Wrap-up</span>
+                            <span class="activity-title">Questions & Remaining Class Time to Catch Up on Activities</span>
+                        </td>
+                        <td class="time-duration">25</td>
+                        <td class="time-range">Until: 9:00 PM</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>Total Class Time</strong></td>
+                        <td><strong>180</strong></td>
+                        <td><strong>End: 9:00 PM</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="summary-section">
+                <h2 style="text-align: center; color: #2d5d3b; margin-bottom: 20px;">Class Structure Analysis</h2>
+                
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <span class="summary-icon">🎯</span>
+                        <div class="summary-title">Engagement Strategy</div>
+                        <div class="summary-text">Interactive activities every 20-30 minutes to maintain student attention and reinforce learning.</div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <span class="summary-icon">📚</span>
+                        <div class="summary-title">Content Flow</div>
+                        <div class="summary-text">Foundation concepts → Application → Real-world examples → Practice activities.</div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <span class="summary-icon">🤝</span>
+                        <div class="summary-title">Personal Connection</div>
+                        <div class="summary-text">Instructor's journey and stories create trust and demonstrate real-world application of concepts for students.</div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <span class="summary-icon">🚀</span>
+                        <div class="summary-title">Career Focus</div>
+                        <div class="summary-text">Job posting analysis connects learning to professional development opportunities.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
