@@ -1,7 +1,4 @@
-<div class="year-marker year-2024">
-                            <div class="year-tick"></div>
-                            2024
-                        </div><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -135,31 +132,31 @@
         .timeline-container {
             position: relative;
             padding: 60px 0;
-            overflow-x: auto;
-            overflow-y: visible;
+            width: 100%;
         }
         
         .timeline {
             position: relative;
-            width: 1400px;
-            height: 600px;
+            width: 100%;
+            max-width: 1400px;
+            height: 400px;
             margin: 0 auto;
         }
         
         .timeline-axis {
             position: absolute;
-            top: 50%;
+            top: 25%;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(to right, #3498db, #e74c3c, #2d5d3b, #e74c3c, #2d5d3b, #e74c3c);
-            border-radius: 2px;
+            height: 6px;
+            background: #2d5d3b;
+            border-radius: 3px;
             transform: translateY(-50%);
         }
         
         .year-markers {
             position: absolute;
-            top: 50%;
+            top: 25%;
             left: 0;
             right: 0;
             height: 1px;
@@ -168,24 +165,16 @@
         
         .year-marker {
             position: absolute;
-            top: 20px;
+            top: -15px;
             background: #2d5d3b;
             color: white;
             padding: 8px 16px;
-            border-radius: 20px;
+            border-radius: 25px;
             font-size: 14px;
             font-weight: bold;
             transform: translateX(-50%);
             white-space: nowrap;
-        }
-        
-        .year-tick {
-            position: absolute;
-            width: 2px;
-            height: 20px;
-            background: #2d5d3b;
-            top: -10px;
-            transform: translateX(-50%);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
         }
         
         /* Timeline positions for years 2009-2025 */
@@ -214,15 +203,15 @@
         }
         
         .timeline-item.education {
-            top: 60px;
+            top: 180px;
         }
         
         .timeline-item.work {
-            bottom: 120px;
+            top: 250px;
         }
         
         .timeline-item.teaching {
-            bottom: 0;
+            top: 320px;
         }
         
         .timeline-bar {
@@ -231,22 +220,19 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            border: 3px solid;
+            border: none;
         }
         
         .timeline-item.education .timeline-bar {
             background: linear-gradient(135deg, #3498db, #5dade2);
-            border-color: #2980b9;
         }
         
         .timeline-item.work .timeline-bar {
             background: linear-gradient(135deg, #e74c3c, #ec7063);
-            border-color: #c0392b;
         }
         
         .timeline-item.teaching .timeline-bar {
             background: linear-gradient(135deg, #9b59b6, #bb8fce);
-            border-color: #8e44ad;
         }
         
         .timeline-content {
@@ -264,17 +250,17 @@
         }
         
         .timeline-item.education .timeline-content {
-            top: 120px;
+            top: 60px;
             border-color: #3498db;
         }
         
         .timeline-item.work .timeline-content {
-            bottom: 180px;
+            top: 60px;
             border-color: #e74c3c;
         }
         
         .timeline-item.teaching .timeline-content {
-            bottom: 60px;
+            top: 60px;
             border-color: #9b59b6;
         }
         
@@ -318,11 +304,11 @@
         }
         
         .timeline-item.work:hover .timeline-content {
-            transform: translateY(-10px);
+            transform: translateY(10px);
         }
         
         .timeline-item.teaching:hover .timeline-content {
-            transform: translateY(-10px);
+            transform: translateY(10px);
         }
         
         .timeline-marker {
@@ -357,15 +343,29 @@
             transform: translate(-50%, -50%);
             color: white;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 11px;
             text-align: center;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-            line-height: 1.3;
+            line-height: 1.2;
             padding: 0 8px;
         }
         
-        .timeline-label.work-label {
+        .job-title {
             font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .company-name {
+            font-size: 10px;
+            font-weight: 500;
+            opacity: 0.95;
+            margin-top: 2px;
+        }
+        
+        .timeline-label.work-label {
+            font-size: 11px;
         }
         
         .item-type {
@@ -468,35 +468,38 @@
         
         .overlap-indicators {
             position: absolute;
-            top: 50%;
+            top: -10px;
             left: 0;
             right: 0;
-            height: 60px;
-            transform: translateY(-50%);
+            height: 100px;
             pointer-events: none;
         }
         
         .overlap-zone {
             position: absolute;
-            height: 100%;
-            background: rgba(255, 193, 7, 0.2);
-            border: 2px dashed #ffc107;
-            border-radius: 10px;
-            top: 0;
+            height: 60px;
+            background: #ffeaa7;
+            border: 2px solid #e17055;
+            border-radius: 12px;
+            top: 10px;
+            box-shadow: 0 4px 20px rgba(253, 203, 110, 0.3);
         }
         
         .overlap-label {
             position: absolute;
-            top: -25px;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            background: #ffc107;
-            color: #856404;
-            padding: 4px 12px;
-            border-radius: 15px;
+            transform: translate(-50%, -50%);
+            background: rgba(253, 203, 110, 0.95);
+            color: #2d3436;
+            padding: 8px 12px;
+            border-radius: 18px;
             font-size: 11px;
-            font-weight: bold;
+            font-weight: 700;
             white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            border: 1px solid #e17055;
+            backdrop-filter: blur(2px);
         }
         
         /* Specific timeline item positions and widths */
@@ -596,7 +599,7 @@
         
         @media (max-width: 1200px) {
             .timeline {
-                width: 1200px;
+                width: 100%;
             }
         }
         
@@ -614,8 +617,8 @@
             }
             
             .timeline {
-                width: 1000px;
-                height: 400px;
+                width: 100%;
+                height: 300px;
             }
             
             .timeline-content {
@@ -623,15 +626,15 @@
             }
             
             .timeline-item.education .timeline-content {
-                top: 60px;
+                top: 120px;
             }
             
             .timeline-item.work .timeline-content {
-                bottom: 180px;
+                top: 60px;
             }
             
             .timeline-item.teaching .timeline-content {
-                bottom: 60px;
+                top: 60px;
             }
             
             /* Reset smart positioning for mobile */
@@ -662,11 +665,6 @@
         </div>
         
         <div class="content">
-            <div class="intro">
-                <h2>From Community College to IT Leadership to Teaching</h2>
-                <p>This timeline visually demonstrates how education and work experience can overlap and reinforce each other. The yellow highlighted zones show periods where I was simultaneously studying and working, creating powerful synergies between classroom learning and practical application. Now I bring that full-circle experience to teaching the next generation.</p>
-            </div>
-            
             <div class="instructions">
                 <h4>📍 How to Read This Timeline</h4>
                 <p>Education appears above the timeline, work experience in the middle, and teaching at the bottom. Hover over any bar to see detailed information. Yellow zones highlight overlap periods.</p>
@@ -694,39 +692,32 @@
                     <!-- Year markers -->
                     <div class="year-markers">
                         <div class="year-marker year-2009">
-                            <div class="year-tick"></div>
                             2009
                         </div>
                         <div class="year-marker year-2013">
-                            <div class="year-tick"></div>
                             2013
                         </div>
                         <div class="year-marker year-2015">
-                            <div class="year-tick"></div>
                             2015
                         </div>
                         <div class="year-marker year-2018">
-                            <div class="year-tick"></div>
                             2018
                         </div>
                         <div class="year-marker year-2020">
-                            <div class="year-tick"></div>
                             2020
                         </div>
                         <div class="year-marker year-2023">
-                            <div class="year-tick"></div>
                             2023
                         </div>
                         <div class="year-marker year-2025">
-                            <div class="year-tick"></div>
                             2025
                         </div>
                     </div>
                     
                     <!-- Overlap indicators -->
                     <div class="overlap-indicators">
-                        <div class="overlap-zone" style="left: 6.25%; width: 12.5%;">
-                            <div class="overlap-label">Study + Work Overlap</div>
+                        <div class="overlap-zone" style="left: 6.25%; width: 16.25%;">
+                            <div class="overlap-label">Study + Work Foundation</div>
                         </div>
                         <div class="overlap-zone" style="left: 25%; width: 12.5%;">
                             <div class="overlap-label">Corporate + Bachelor's</div>
@@ -735,7 +726,7 @@
                             <div class="overlap-label">Analyst + Master's</div>
                         </div>
                         <div class="overlap-zone" style="left: 87.5%; width: 12.5%;">
-                            <div class="overlap-label">Teaching + LACCD Leader</div>
+                            <div class="overlap-label">Leadership + Teaching</div>
                         </div>
                     </div>
                     
@@ -835,7 +826,10 @@
                     <!-- Work experience items -->
                     <div class="timeline-item work gov-work">
                         <div class="timeline-bar">
-                            <div class="timeline-label work-label">Government<br>Subcontractor<br>Office Coordinator</div>
+                            <div class="timeline-label work-label">
+                                <div class="job-title">Office Coordinator</div>
+                                <div class="company-name">Government Subcontractor</div>
+                            </div>
                         </div>
                         <div class="timeline-content">
                             <div class="item-type work">Work Experience</div>
@@ -858,7 +852,10 @@
                     
                     <div class="timeline-item work big5-work">
                         <div class="timeline-bar">
-                            <div class="timeline-label work-label">Big 5 Sporting<br>Goods<br>Admin Assistant</div>
+                            <div class="timeline-label work-label">
+                                <div class="job-title">Admin Assistant</div>
+                                <div class="company-name">Big 5</div>
+                            </div>
                         </div>
                         <div class="timeline-content">
                             <div class="item-type work">Work Experience</div>
@@ -881,13 +878,16 @@
                     
                     <div class="timeline-item work tj-analyst">
                         <div class="timeline-bar">
-                            <div class="timeline-label work-label">Trader Joe's<br>Intern → IT Analyst</div>
+                            <div class="timeline-label work-label">
+                                <div class="job-title">Intern → IT Analyst</div>
+                                <div class="company-name">Trader Joe's</div>
+                            </div>
                         </div>
                         <div class="timeline-content">
                             <div class="item-type work">Work Experience</div>
                             <div class="institution">Trader Joe's</div>
                             <div class="item-title"><strong>Intern → IT Analyst</strong></div>
-                            <div class="timeline-date">April 2015 - September 2020</div>
+                            <div class="timeline-date">April 2015 - September 2019</div>
                             <div class="details">
                                 Started as intern while finishing bachelor's, promoted to IT Analyst. Applied dual education directly to retail technology systems.
                             </div>
@@ -895,7 +895,7 @@
                                 <h4>Career Progression:</h4>
                                 <ul>
                                     <li>Intern (Apr-Jun 2015)</li>
-                                    <li>IT Analyst (Jun 2015-Sep 2020)</li>
+                                    <li>IT Analyst (Jun 2015-Sep 2019)</li>
                                     <li>Business applications focus</li>
                                     <li>Retail & HR systems</li>
                                 </ul>
@@ -905,13 +905,16 @@
                     
                     <div class="timeline-item work tj-manager">
                         <div class="timeline-bar">
-                            <div class="timeline-label work-label">Trader Joe's<br>IT Manager</div>
+                            <div class="timeline-label work-label">
+                                <div class="job-title">IT Manager</div>
+                                <div class="company-name">Trader Joe's</div>
+                            </div>
                         </div>
                         <div class="timeline-content">
                             <div class="item-type work">Leadership Role</div>
                             <div class="institution">Trader Joe's</div>
                             <div class="item-title"><strong>IT Manager, Business Applications</strong></div>
-                            <div class="timeline-date">September 2020 - July 2024</div>
+                            <div class="timeline-date">September 2019 - August 2025</div>
                             <div class="details">
                                 Led IT projects and teams for nearly 4 years, applying educational foundations. Gained valuable leadership experience before transitioning to education sector.
                             </div>
@@ -929,13 +932,16 @@
                     
                     <div class="timeline-item work laccd-leader">
                         <div class="timeline-bar">
-                            <div class="timeline-label work-label">LACCD<br>Team Leader</div>
+                            <div class="timeline-label work-label">
+                                <div class="job-title">Team Leader</div>
+                                <div class="company-name">LACCD</div>
+                            </div>
                         </div>
                         <div class="timeline-content">
                             <div class="item-type work">Current Role</div>
                             <div class="institution">Los Angeles Community College District</div>
                             <div class="item-title"><strong>Team Leader, Applications Development and Programming</strong></div>
-                            <div class="timeline-date">August 2024 - Present</div>
+                            <div class="timeline-date">August 2025 - Present</div>
                             <div class="details">
                                 Leading applications development and programming initiatives across the LACCD system. Bringing private sector IT management experience to higher education technology.
                             </div>
@@ -953,7 +959,10 @@
                     
                     <div class="timeline-item teaching teaching">
                         <div class="timeline-bar">
-                            <div class="timeline-label work-label">Cal State LA<br>Adjunct Professor</div>
+                            <div class="timeline-label work-label">
+                                <div class="job-title">Adjunct Professor</div>
+                                <div class="company-name">Cal State LA</div>
+                            </div>
                         </div>
                         <div class="timeline-content">
                             <div class="item-type teaching">Teaching Role</div>
@@ -975,6 +984,11 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            
+            <div class="intro">
+                <h2>From Community College to IT Leadership to Teaching</h2>
+                <p>This timeline visually demonstrates how education and work experience can overlap and reinforce each other. The yellow highlighted zones show periods where I was simultaneously studying and working, creating powerful synergies between classroom learning and practical application. Now I bring that full-circle experience to teaching the next generation.</p>
             </div>
             
             <div class="insights">
