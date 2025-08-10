@@ -225,19 +225,22 @@ class AdminManager {
                 color: white;
                 border: none;
                 border-radius: 50%;
-                width: 32px;
-                height: 32px;
+                width: 36px;
+                height: 36px;
                 cursor: pointer;
-                font-size: 16px;
+                font-size: 18px;
                 display: none;
                 align-items: center;
                 justify-content: center;
                 z-index: 100;
                 box-shadow: 0 2px 8px rgba(0,0,0,0.3);
                 transition: all 0.2s ease;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
             }
 
-            .admin-gear:hover {
+            .admin-gear:hover,
+            .admin-gear:active {
                 background: rgba(47, 82, 51, 1);
                 transform: scale(1.1);
                 box-shadow: 0 4px 12px rgba(0,0,0,0.4);
@@ -245,6 +248,48 @@ class AdminManager {
 
             .admin-mode .admin-gear {
                 display: flex;
+            }
+
+            /* Mobile improvements for admin interface */
+            @media (max-width: 768px) {
+                .admin-gear {
+                    width: 44px;
+                    height: 44px;
+                    font-size: 20px;
+                    top: 8px;
+                    right: 8px;
+                }
+
+                .admin-modal-content {
+                    width: 95%;
+                    max-height: 90vh;
+                    margin: 2.5% auto;
+                    overflow-y: auto;
+                }
+
+                .admin-modal-body {
+                    max-height: calc(90vh - 120px);
+                    overflow-y: auto;
+                    padding: 15px;
+                }
+
+                .form-group input,
+                .form-group textarea,
+                .form-group select {
+                    font-size: 16px; /* Prevents zoom on iOS */
+                    padding: 12px;
+                }
+
+                .form-buttons {
+                    flex-direction: column;
+                    gap: 10px;
+                }
+
+                .form-buttons button {
+                    width: 100%;
+                    padding: 12px 20px;
+                    font-size: 16px;
+                }
             }
 
             .concept-card {
@@ -471,6 +516,9 @@ class AdminManager {
 
         console.log('Saving content data:', contentData);
 
+        // Show loading state
+        this.showLoading('Saving content...');
+        
         try {
             if (contentData.id === 'new' || !contentData.id) {
                 console.log('Adding new content');
@@ -482,16 +530,18 @@ class AdminManager {
                 console.log('Update result:', result);
             }
             
-            alert('Content saved successfully!');
+            this.showSuccess('Content saved successfully!');
             this.hideAdminModal();
             
             // Wait a moment then reload to ensure Firebase sync
             setTimeout(() => {
+                this.hideLoading();
                 window.location.reload();
             }, 1000);
         } catch (error) {
             console.error('Error saving content:', error);
-            alert('Error saving content: ' + error.message);
+            this.hideLoading();
+            this.showError('Error saving content: ' + error.message);
         }
     }
 
@@ -569,7 +619,97 @@ class AdminManager {
     logoutAdmin() {
         console.log('Logging out of admin mode');
         this.disableAdminMode();
-        alert('Logged out of admin mode');
+        this.showSuccess('Logged out of admin mode');
+    }
+
+    // Loading and notification methods
+    showLoading(message = 'Loading...') {
+        const overlay = document.getElementById('loading-overlay');
+        const text = document.getElementById('loading-text');
+        if (overlay && text) {
+            text.textContent = message;
+            overlay.classList.add('visible');
+        }
+    }
+
+    hideLoading() {
+        const overlay = document.getElementById('loading-overlay');
+        if (overlay) {
+            overlay.classList.remove('visible');
+        }
+    }
+
+    showSuccess(message) {
+        // Create a temporary success notification
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            z-index: 10001;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-size: 14px;
+            animation: slideIn 0.3s ease;
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        // Add slide-in animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideIn 0.3s ease reverse';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+                if (style.parentNode) {
+                    style.parentNode.removeChild(style);
+                }
+            }, 300);
+        }, 3000);
+    }
+
+    showError(message) {
+        // Create a temporary error notification
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #dc3545;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            z-index: 10001;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-size: 14px;
+            animation: slideIn 0.3s ease;
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        // Remove after 5 seconds (longer for errors)
+        setTimeout(() => {
+            notification.style.animation = 'slideIn 0.3s ease reverse';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }, 5000);
     }
 }
 
