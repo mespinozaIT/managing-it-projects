@@ -355,6 +355,10 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+    <script>
+        // IMMEDIATE BLOCKING - Default is to block everything
+        document.write('<style id="blockContent">body { display: none !important; }</style>');
+    </script>
 </head>
 <body>
     <script src="firebase-config.js"></script>
@@ -1341,7 +1345,101 @@
         }
 
         // Initialize when DOM is loaded
+        // Immediate protection check
+        function checkTeacherMode() {
+            // Default state is blocked - only unblock if verified through proper teacher mode
+            const isTeacherMode = sessionStorage.getItem('teacherMode') === 'true';
+            
+            if (!isTeacherMode) {
+                // Not in teacher mode, show restricted message
+                console.log('Access denied - not in teacher mode');
+                // Remove the blocking style to show restricted message
+                document.getElementById('blockContent').remove();
+                showRestrictedAccess();
+                return;
+            }
+            
+            // Teacher mode verified, show the content
+            console.log('Teacher mode verified - showing content');
+            // Remove the blocking style
+            document.getElementById('blockContent').remove();
+            document.body.style.display = 'block';
+            
+            // Ensure teacher mode class is added
+            document.body.classList.add('teacher-mode');
+        }
+        
+        function showRestrictedAccess() {
+            // Replace entire body content with restricted access message
+            document.body.innerHTML = `
+                <div style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    min-height: 100vh;
+                    background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    padding: 20px;
+                ">
+                    <div style="
+                        max-width: 600px;
+                        background: white;
+                        border-radius: 15px;
+                        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                        padding: 40px;
+                        text-align: center;
+                    ">
+                        <div style="
+                            font-size: 60px;
+                            margin-bottom: 20px;
+                        ">🔒</div>
+                        <h1 style="
+                            color: #2d5d3b;
+                            font-size: 28px;
+                            margin-bottom: 20px;
+                        ">Restricted Content</h1>
+                        <p style="
+                            color: #666;
+                            font-size: 18px;
+                            line-height: 1.6;
+                            margin-bottom: 30px;
+                        ">
+                            This content is meant to supplement class and is only accessible during instructor-led sessions.
+                        </p>
+                        <p style="
+                            color: #999;
+                            font-size: 16px;
+                            margin-bottom: 30px;
+                        ">
+                            Please return to class to view this material with your instructor.
+                        </p>
+                        <a href="index.html" style="
+                            display: inline-block;
+                            background: #2d5d3b;
+                            color: white;
+                            text-decoration: none;
+                            padding: 12px 30px;
+                            border-radius: 8px;
+                            font-size: 16px;
+                            font-weight: 600;
+                            transition: all 0.3s ease;
+                        " onmouseover="this.style.background='#4a7c59'" onmouseout="this.style.background='#2d5d3b'">
+                            Return to Course Home
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Check immediately
+        checkTeacherMode();
+        
         document.addEventListener('DOMContentLoaded', function() {
+            // Only initialize if in teacher mode
+            const isTeacherMode = sessionStorage.getItem('teacherMode') === 'true';
+            if (!isTeacherMode) return;
+            
             // Initialize Teacher Manager first
             if (!window.teacherManager) {
                 window.teacherManager = new TeacherManager(new CourseManager());
