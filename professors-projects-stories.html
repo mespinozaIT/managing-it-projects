@@ -403,11 +403,8 @@
     <script>
         // Immediate protection check
         function checkTeacherMode() {
-            // Default state is blocked - only unblock if verified
-            const urlParams = new URLSearchParams(window.location.search);
-            const teacherKey = urlParams.get('teacherKey');
-            const isTeacherMode = sessionStorage.getItem('teacherMode') === 'true' || 
-                                  teacherKey === 'CSULA2025';
+            // Default state is blocked - only unblock if verified through proper teacher mode
+            const isTeacherMode = sessionStorage.getItem('teacherMode') === 'true';
             
             if (!isTeacherMode) {
                 // Not in teacher mode, show restricted message
@@ -423,11 +420,6 @@
             // Remove the blocking style
             document.getElementById('blockContent').remove();
             document.body.style.display = 'block';
-            
-            // Store teacher mode in session for this session
-            if (teacherKey === 'CSULA2025') {
-                sessionStorage.setItem('teacherMode', 'true');
-            }
             
             // Ensure teacher mode class is added
             document.body.classList.add('teacher-mode');
