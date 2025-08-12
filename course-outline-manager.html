@@ -460,9 +460,6 @@
                 
                 // Update course statistics
                 this.updateCourseStats();
-                
-                // Set up teacher mode checking
-                this.setupTeacherModeCheck();
             }
 
             createWeekTabs() {
@@ -868,21 +865,6 @@
                 document.getElementById('total-class-time').textContent = totalClassTime;
             }
 
-            setupTeacherModeCheck() {
-                // Wait for teacher manager to be available
-                const checkTeacherManager = () => {
-                    if (window.teacherManager) {
-                        // Only show if in teacher mode
-                        if (!window.teacherManager.isTeacherMode) {
-                            // Redirect back to index if not in teacher mode
-                            window.location.href = 'index.html';
-                        }
-                    } else {
-                        setTimeout(checkTeacherManager, 100);
-                    }
-                };
-                checkTeacherManager();
-            }
 
             // Activity Management Methods
             addNewActivity() {
