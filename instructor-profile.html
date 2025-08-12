@@ -1819,8 +1819,9 @@
                     console.log('Teacher mode status:', isTeacherMode);
                     
                     if (!isTeacherMode) {
-                        console.log('Not in teacher mode, redirecting to index...');
-                        window.location.href = 'index.html';
+                        // Show restricted access message instead of redirecting
+                        console.log('Not in teacher mode, showing restricted message...');
+                        showRestrictedAccess();
                         return;
                     }
                     
@@ -1835,6 +1836,69 @@
             };
             
             waitForTeacherManager();
+        }
+        
+        function showRestrictedAccess() {
+            // Replace entire body content with restricted access message
+            document.body.innerHTML = `
+                <div style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    min-height: 100vh;
+                    background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    padding: 20px;
+                ">
+                    <div style="
+                        max-width: 600px;
+                        background: white;
+                        border-radius: 15px;
+                        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                        padding: 40px;
+                        text-align: center;
+                    ">
+                        <div style="
+                            font-size: 60px;
+                            margin-bottom: 20px;
+                        ">🔒</div>
+                        <h1 style="
+                            color: #2d5d3b;
+                            font-size: 28px;
+                            margin-bottom: 20px;
+                        ">Restricted Content</h1>
+                        <p style="
+                            color: #666;
+                            font-size: 18px;
+                            line-height: 1.6;
+                            margin-bottom: 30px;
+                        ">
+                            This content is meant to supplement class and is only accessible during instructor-led sessions.
+                        </p>
+                        <p style="
+                            color: #999;
+                            font-size: 16px;
+                            margin-bottom: 30px;
+                        ">
+                            Please return to class to view this material with your instructor.
+                        </p>
+                        <a href="index.html" style="
+                            display: inline-block;
+                            background: #2d5d3b;
+                            color: white;
+                            text-decoration: none;
+                            padding: 12px 30px;
+                            border-radius: 8px;
+                            font-size: 16px;
+                            font-weight: 600;
+                            transition: all 0.3s ease;
+                        " onmouseover="this.style.background='#4a7c59'" onmouseout="this.style.background='#2d5d3b'">
+                            Return to Course Home
+                        </a>
+                    </div>
+                </div>
+            `;
         }
         
         // Initialize when page loads
