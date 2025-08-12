@@ -387,6 +387,18 @@
     </style>
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/print.css">
+    <script>
+        // Immediate check before page renders
+        (function() {
+            const isTeacherMode = sessionStorage.getItem('teacherMode') === 'true';
+            if (!isTeacherMode) {
+                // Hide everything immediately
+                document.addEventListener('DOMContentLoaded', function() {
+                    document.body.style.display = 'none';
+                });
+            }
+        })();
+    </script>
 </head>
 <body>
     
@@ -399,30 +411,45 @@
     <script>
         // Check teacher mode on page load
         window.addEventListener('DOMContentLoaded', function() {
-            // Wait for TeacherManager to be available
-            setTimeout(() => {
-                checkTeacherMode();
-            }, 500);
+            // Immediate check without delay
+            checkTeacherMode();
         });
         
         function checkTeacherMode() {
+            // Check session storage immediately - this is the primary gate
+            const isTeacherMode = sessionStorage.getItem('teacherMode') === 'true';
+            
+            if (!isTeacherMode) {
+                // Not in teacher mode, show restricted message immediately
+                console.log('Access denied - not in teacher mode');
+                document.body.style.display = 'block'; // Show body for restricted message
+                showRestrictedAccess();
+                return;
+            }
+            
+            // Teacher mode verified, show the content
+            document.body.style.display = 'block';
+            
+            // If session check passes, wait for TeacherManager for additional verification
             const waitForTeacherManager = () => {
                 if (window.teacherManager) {
-                    const isTeacherMode = window.teacherManager.isTeacherMode || 
-                                         document.body.classList.contains('teacher-mode') ||
-                                         sessionStorage.getItem('teacherMode') === 'true';
+                    const teacherManagerMode = window.teacherManager.isTeacherMode || 
+                                               document.body.classList.contains('teacher-mode');
                     
-                    if (!isTeacherMode) {
-                        // Show restricted access message
+                    if (!teacherManagerMode) {
+                        // Double-check failed, show restricted access
+                        console.log('Teacher mode verification failed');
                         showRestrictedAccess();
                         return;
                     }
                     
                     // Ensure teacher mode is enabled on this page
                     document.body.classList.add('teacher-mode');
+                    console.log('Teacher mode verified - access granted');
                     
                 } else {
-                    setTimeout(waitForTeacherManager, 100);
+                    // Even if TeacherManager isn't ready, we already verified session
+                    document.body.classList.add('teacher-mode');
                 }
             };
             
