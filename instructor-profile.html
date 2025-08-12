@@ -554,23 +554,15 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
     <script>
-        // Immediate check before page renders
-        (function() {
-            const isTeacherMode = sessionStorage.getItem('teacherMode') === 'true';
-            if (!isTeacherMode) {
-                // Hide everything immediately
-                document.addEventListener('DOMContentLoaded', function() {
-                    document.body.style.display = 'none';
-                });
-            }
-        })();
+        // IMMEDIATE BLOCKING - Default is to block everything
+        document.write('<style id="blockContent">body { display: none !important; }</style>');
     </script>
 </head>
 <body>
     <script src="firebase-config.js"></script>
     <script src="js/course-manager.js"></script>
     <script src="js/teacher-manager.js"></script>
-    <div class="profile-container" style="display: none;" id="mainContent">
+    <div class="profile-container" id="mainContent">
         <div class="profile-header">
             <a href="index.html" class="profile-back-button">
                 <span aria-hidden="true">←</span>
@@ -1820,49 +1812,34 @@
         
         // Initialize teacher mode and check permissions
         function initializeTeacherMode() {
-            // Check session storage immediately
-            const isTeacherMode = sessionStorage.getItem('teacherMode') === 'true';
+            // Default state is blocked - only unblock if verified
+            const urlParams = new URLSearchParams(window.location.search);
+            const teacherKey = urlParams.get('teacherKey');
+            const isTeacherMode = sessionStorage.getItem('teacherMode') === 'true' || 
+                                  teacherKey === 'CSULA2025';
             
             if (!isTeacherMode) {
-                // Not in teacher mode, show restricted message immediately
-                console.log('Not in teacher mode, showing restricted message...');
-                document.body.style.display = 'block'; // Show body for restricted message
+                // Not in teacher mode, show restricted message
+                console.log('Access denied - not in teacher mode');
+                // Remove the blocking style to show restricted message
+                document.getElementById('blockContent').remove();
                 showRestrictedAccess();
                 return;
             }
             
             // Teacher mode verified, show the content
+            console.log('Teacher mode verified - showing content');
+            // Remove the blocking style
+            document.getElementById('blockContent').remove();
             document.body.style.display = 'block';
-            document.getElementById('mainContent').style.display = 'block';
             
-            // Wait for TeacherManager to be available for additional checks
-            const waitForTeacherManager = () => {
-                if (window.teacherManager) {
-                    console.log('TeacherManager found, checking teacher mode...');
-                    const teacherManagerMode = window.teacherManager.isTeacherMode || 
-                                               document.body.classList.contains('teacher-mode');
-                    
-                    console.log('Teacher mode status:', teacherManagerMode);
-                    
-                    if (!teacherManagerMode) {
-                        // Double-check failed, show restricted access
-                        console.log('Teacher mode verification failed, showing restricted message...');
-                        showRestrictedAccess();
-                        return;
-                    }
-                    
-                    // Ensure teacher mode is enabled on this page
-                    document.body.classList.add('teacher-mode');
-                    console.log('Teacher mode enabled on instructor profile page');
-                    
-                } else {
-                    console.log('TeacherManager not ready, but session check passed');
-                    // Even if TeacherManager isn't ready, we already verified session
-                    document.body.classList.add('teacher-mode');
-                }
-            };
+            // Store teacher mode in session for this session
+            if (teacherKey === 'CSULA2025') {
+                sessionStorage.setItem('teacherMode', 'true');
+            }
             
-            waitForTeacherManager();
+            // Ensure teacher mode class is added
+            document.body.classList.add('teacher-mode');
         }
         
         function showRestrictedAccess() {
@@ -1928,13 +1905,8 @@
             `;
         }
         
-        // Initialize when page loads
-        window.addEventListener('DOMContentLoaded', function() {
-            // Initialize teacher mode checking
-            setTimeout(() => {
-                initializeTeacherMode();
-            }, 500);
-        });
+        // Initialize immediately when script loads
+        initializeTeacherMode();
     </script>
 </body>
 </html>
