@@ -1,78 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 1 Quiz Challenge - Managing IT Projects</title>
+    <link rel="stylesheet" href="css/design-system.css">
     <style>
+        /* Quiz page specific overrides - minimal custom styling */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
         }
         
+        /* Quiz container customization */
         .container {
             max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            overflow: hidden;
-            position: relative;
         }
         
-        .back-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 8px;
-            padding: 10px 15px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .back-button:hover {
-            background: rgba(255,255,255,0.3);
-            border-color: rgba(255,255,255,0.5);
-            transform: translateY(-2px);
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #2F5233, #4A7C59);
-            color: white;
-            padding: 40px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .header h1 {
-            margin: 0 0 10px 0;
-            font-size: 32px;
-            font-weight: bold;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .header p {
-            margin: 0;
-            font-size: 16px;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-        }
-        
+        /* Game content spacing */
         .game-container {
             padding: 40px;
         }
@@ -83,132 +29,25 @@
         }
         
         .start-screen h2 {
-            color: #544677;
+            color: var(--color-secondary);
             font-size: 24px;
             margin-bottom: 30px;
         }
         
-        .quiz-selection {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
+        /* All quiz-option, quiz-icon, quiz-select-btn styles removed - using design system components */
         
-        .quiz-option {
-            background: white;
-            border: 3px solid #e9ecef;
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .quiz-option:hover {
-            border-color: #544677;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(84, 70, 119, 0.2);
-        }
-        
-        .quiz-option.concepts {
-            border-color: #3498db;
-        }
-        
-        .quiz-option.scenarios {
-            border-color: #e67e22;
-        }
-        
-        .quiz-option.concepts:hover {
-            border-color: #3498db;
-            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.2);
-        }
-        
-        .quiz-option.scenarios:hover {
-            border-color: #e67e22;
-            box-shadow: 0 10px 25px rgba(230, 126, 34, 0.2);
-        }
-        
-        .quiz-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-        
-        .quiz-option h3 {
-            color: #333;
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-        
-        .quiz-option p {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
-        
-        .quiz-option ul {
-            text-align: left;
-            margin: 15px 0;
-            padding-left: 0;
-            list-style: none;
-        }
-        
-        .quiz-option li {
-            padding: 3px 0;
-            font-size: 13px;
-            color: #555;
-            position: relative;
-            padding-left: 15px;
-        }
-        
-        .quiz-option li:before {
-            content: "•";
-            color: #544677;
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
-        
-        .quiz-select-btn {
-            background: linear-gradient(135deg, #544677, #6b5b95);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 14px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 15px;
-        }
-        
-        .quiz-option.concepts .quiz-select-btn {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-        }
-        
-        .quiz-option.scenarios .quiz-select-btn {
-            background: linear-gradient(135deg, #e67e22, #d35400);
-        }
-        
-        .quiz-select-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        
+        /* Game info card styling */
         .game-info {
-            background: #f8f9fa;
+            background: var(--color-surface-secondary);
             border-radius: 12px;
             padding: 25px;
             margin-bottom: 30px;
-            border-left: 5px solid #544677;
+            border-left: 5px solid var(--color-secondary);
         }
         
         .game-info h3 {
             margin-top: 0;
-            color: #333;
+            color: var(--color-text-primary);
         }
         
         .game-info ul {
@@ -221,265 +60,48 @@
             display: none;
         }
         
-        .progress-bar {
-            background: #e9ecef;
-            height: 8px;
-            border-radius: 4px;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
+        /* All progress-bar, question-card, question-counter, question-type, question-text removed - using design system */
         
-        .progress-fill {
-            background: linear-gradient(135deg, #544677, #6b5b95);
-            height: 100%;
-            border-radius: 4px;
-            transition: width 0.3s ease;
-            width: 0%;
-        }
+        /* All option, feedback, next-button styles removed - using design system components */
         
-        .question-counter {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 16px;
-            color: #666;
-        }
+        /* All results-screen, score-circle, action-button styles removed - using design system components */
         
-        .question-card {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 30px;
-            border-left: 5px solid #544677;
-            min-height: 200px;
-        }
-        
-        .question-type {
-            background: #544677;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 15px;
-        }
-        
-        .question-text {
-            font-size: 18px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 25px;
-            line-height: 1.5;
-        }
-        
-        .scenario-text {
-            background: #e8f5e8;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            font-style: italic;
-            color: #2d5d3b;
-            border-left: 4px solid #27ae60;
-        }
-        
-        .options {
-            display: grid;
-            gap: 12px;
-        }
-        
-        .option {
-            background: white;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            padding: 15px 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: left;
-            font-size: 14px;
-            position: relative;
-        }
-        
-        .option:hover {
-            border-color: #544677;
-            transform: translateX(5px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        
-        .option.selected {
-            border-color: #544677;
-            background: #f0f0ff;
-        }
-        
-        .option.correct {
-            border-color: #27ae60;
-            background: #d4edda;
-            color: #155724;
-        }
-        
-        .option.incorrect {
-            border-color: #e74c3c;
-            background: #f8d7da;
-            color: #721c24;
-        }
-        
-        .option-letter {
-            font-weight: bold;
-            color: #544677;
-            margin-right: 10px;
-        }
-        
-        .next-button {
-            background: linear-gradient(135deg, #544677, #6b5b95);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: block;
-            margin: 20px auto 0;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        
-        .next-button.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .next-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(84, 70, 119, 0.3);
-        }
-        
-        .feedback {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            font-weight: 500;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-        }
-        
-        .feedback.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .feedback.correct {
-            background: #d4edda;
-            color: #155724;
-            border-left: 4px solid #27ae60;
-        }
-        
-        .feedback.incorrect {
-            background: #f8d7da;
-            color: #721c24;
-            border-left: 4px solid #e74c3c;
-        }
-        
-        .results-screen {
-            display: none;
-            text-align: center;
-        }
-        
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin: 0 auto 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            font-weight: bold;
-            color: white;
-            position: relative;
-        }
-        
-        .score-circle.excellent {
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
-        }
-        
-        .score-circle.good {
-            background: linear-gradient(135deg, #f39c12, #e67e22);
-        }
-        
-        .score-circle.needs-improvement {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-        }
-        
-        .results-message {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        
-        .results-details {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 30px;
-            border-left: 5px solid #544677;
-        }
-        
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .action-button {
-            background: linear-gradient(135deg, #544677, #6b5b95);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 14px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .action-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(84, 70, 119, 0.3);
-        }
-        
-        .action-button.secondary {
-            background: #6c757d;
-        }
-        
+        /* Mobile overrides - most responsive styles now in design system */
         @media (max-width: 768px) {
-            body { padding: 10px; }
-            .header { padding: 30px 20px; }
-            .header h1 { font-size: 24px; }
-            .game-container { padding: 20px; }
-            .question-card { padding: 20px; }
-            .back-button { position: static; margin: 10px; }
-            .action-buttons { flex-direction: column; align-items: center; }
-            .quiz-selection { grid-template-columns: 1fr; gap: 20px; }
-            .quiz-option { padding: 20px; }
+            .game-container { 
+                padding: 20px; 
+            }
         }
     </style>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/print.css">
 </head>
 <body>
+    
+    <script src="js/search-system.js"></script>
+    <script src="js/dark-mode.js"></script>
+    
+    <script src="js/progressive-loading.js"></script>
+    <script src="js/performance-optimizer.js"></script>
+    <script src="js/teacher-manager.js"></script>
+    <script>
+        // Initialize teacher mode functionality immediately
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Teacher Manager (without courseManager for lesson pages)
+            if (!window.teacherManager) {
+                window.teacherManager = new TeacherManager(null);
+            }
+        });
+    </script>
     <div class="container">
         <a href="index.html" class="back-button" aria-label="Return to course concepts homepage">
             <span aria-hidden="true">←</span>
             Back to Course
         </a>
         
-        <header class="header">
-            <h1>🎯 Week 1 Quiz Challenge</h1>
-            <p>Test Your Foundation Knowledge</p>
+        <header class="page-header">
+            <h1 class="page-title">🎯 Week 1 Quiz Challenge</h1>
+            <p class="page-subtitle">Test Your Foundation Knowledge</p>
         </header>
         
         <main class="game-container">
@@ -852,7 +474,7 @@
             
             question.options.forEach((option, index) => {
                 questionHTML += `
-                    <div class="option" onclick="selectOption(${index})" data-index="${index}">
+                    <div class="option" onclick="selectOption(${index})" onkeypress="handleOptionKeypress(event, ${index})" data-index="${index}" tabindex="0" role="button" aria-label="Option ${String.fromCharCode(65 + index)}: ${option}">
                         <span class="option-letter">${String.fromCharCode(65 + index)}.</span>
                         ${option}
                     </div>
@@ -868,8 +490,32 @@
             if (existingFeedback) {
                 existingFeedback.remove();
             }
+            
+            // Add arrow key navigation for quiz options
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, index) => {
+                option.addEventListener('keydown', function(e) {
+                    if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        const nextIndex = (index + 1) % options.length;
+                        options[nextIndex].focus();
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        const prevIndex = (index - 1 + options.length) % options.length;
+                        options[prevIndex].focus();
+                    }
+                });
+            });
         }
 
+        function handleOptionKeypress(event, selectedIndex) {
+            // Handle Enter and Space key presses
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                selectOption(selectedIndex);
+            }
+        }
+        
         function selectOption(selectedIndex) {
             const questions = currentQuizType === 'concepts' ? conceptsQuestions : scenariosQuestions;
             const question = questions[currentQuestion];

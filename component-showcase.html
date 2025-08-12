@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component Showcase - Design System Demo</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f7fa;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .showcase-section {
+            margin-bottom: 40px;
+        }
+        
+        .component-demo {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--color-surface-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--color-border-primary);
+        }
+        
+        .component-title {
+            color: var(--color-primary);
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--color-border-accent);
+        }
+    </style>
+</head>
+<body>
+    <script src="js/dark-mode.js"></script>
+    
+    <div class="container">
+        <header class="page-header">
+            <h1 class="page-title">🎨 Component Showcase</h1>
+            <p class="page-subtitle">Design System Demo - All Components with Automatic Dark Mode</p>
+        </header>
+        
+        <div class="content-section">
+            <!-- Typography Components -->
+            <section class="showcase-section">
+                <h2 class="section-title">Typography Components</h2>
+                
+                <div class="component-demo">
+                    <div class="component-title">Text Colors</div>
+                    <p class="text-primary">Primary text (main content)</p>
+                    <p class="text-secondary">Secondary text (descriptions)</p>
+                    <p class="text-muted">Muted text (less important)</p>
+                    <p class="text-accent">Accent text (highlights)</p>
+                    <p class="text-success">Success text</p>
+                    <p class="text-warning">Warning text</p>
+                    <p class="text-error">Error text</p>
+                    <p class="text-info">Info text</p>
+                </div>
+            </section>
+
+            <!-- Card Components -->
+            <section class="showcase-section">
+                <h2 class="section-title">Card Components</h2>
+                
+                <div class="grid grid--2col">
+                    <div class="component-demo">
+                        <div class="component-title">Basic Cards</div>
+                        <div class="card">
+                            <h4>Default Card</h4>
+                            <p>This is a basic card component with default styling.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="component-demo">
+                        <div class="component-title">Themed Cards</div>
+                        <div class="card card--primary" style="margin-bottom: 15px;">
+                            <h4>Primary Card</h4>
+                            <p>Card with primary theme accent.</p>
+                        </div>
+                        <div class="card card--accent">
+                            <h4>Accent Card</h4>
+                            <p>Card with accent color theme.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid--2col">
+                    <div class="card card--success">
+                        <h4>Success Card</h4>
+                        <p>Perfect for positive messages and confirmations.</p>
+                    </div>
+                    
+                    <div class="card card--warning">
+                        <h4>Warning Card</h4>
+                        <p>Great for important notices and cautions.</p>
+                    </div>
+                    
+                    <div class="card card--error">
+                        <h4>Error Card</h4>
+                        <p>Used for error messages and critical alerts.</p>
+                    </div>
+                    
+                    <div class="card card--info">
+                        <h4>Info Card</h4>
+                        <p>Perfect for informational content and tips.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Info Box Components -->
+            <section class="showcase-section">
+                <h2 class="section-title">Info Box Components</h2>
+                
+                <div class="info-box info-box--success">
+                    <h3 class="info-box__title">✅ Success Info Box</h3>
+                    <div class="info-box__content">
+                        <p>This is a success info box. Perfect for positive feedback and completed actions.</p>
+                        <p><strong>Great for:</strong> Confirmations, achievements, and positive outcomes.</p>
+                    </div>
+                </div>
+                
+                <div class="info-box info-box--warning">
+                    <h3 class="info-box__title">⚠️ Warning Info Box</h3>
+                    <div class="info-box__content">
+                        <p>This is a warning info box. Use for important notices that need attention.</p>
+                        <p><strong>Great for:</strong> Important reminders, cautions, and policy changes.</p>
+                    </div>
+                </div>
+                
+                <div class="info-box info-box--error">
+                    <h3 class="info-box__title">❌ Error Info Box</h3>
+                    <div class="info-box__content">
+                        <p>This is an error info box. Use for critical issues and problems.</p>
+                        <p><strong>Great for:</strong> Error messages, failed validations, and critical alerts.</p>
+                    </div>
+                </div>
+                
+                <div class="info-box info-box--info">
+                    <h3 class="info-box__title">ℹ️ Info Box</h3>
+                    <div class="info-box__content">
+                        <p>This is a general info box. Perfect for helpful information and tips.</p>
+                        <p><strong>Great for:</strong> Instructions, helpful tips, and general information.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Button Components -->
+            <section class="showcase-section">
+                <h2 class="section-title">Button Components</h2>
+                
+                <div class="component-demo">
+                    <div class="component-title">Button Variations</div>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+                        <button class="btn btn--primary">Primary Button</button>
+                        <button class="btn btn--secondary">Secondary Button</button>
+                        <button class="btn btn--outline">Outline Button</button>
+                        <a href="#" class="btn btn--primary">Link Button</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Table Components -->
+            <section class="showcase-section">
+                <h2 class="section-title">Table Components</h2>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="table__header table__cell">Component</th>
+                            <th class="table__header table__cell">Status</th>
+                            <th class="table__header table__cell">Dark Mode</th>
+                            <th class="table__header table__cell">Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table__row">
+                            <td class="table__cell">Cards</td>
+                            <td class="table__cell"><span class="text-success">✅ Complete</span></td>
+                            <td class="table__cell"><span class="text-success">✅ Auto</span></td>
+                            <td class="table__cell">Fully responsive with hover effects</td>
+                        </tr>
+                        <tr class="table__row">
+                            <td class="table__cell">Info Boxes</td>
+                            <td class="table__cell"><span class="text-success">✅ Complete</span></td>
+                            <td class="table__cell"><span class="text-success">✅ Auto</span></td>
+                            <td class="table__cell">Perfect for callouts and notices</td>
+                        </tr>
+                        <tr class="table__row">
+                            <td class="table__cell">Buttons</td>
+                            <td class="table__cell"><span class="text-success">✅ Complete</span></td>
+                            <td class="table__cell"><span class="text-success">✅ Auto</span></td>
+                            <td class="table__cell">Multiple variants available</td>
+                        </tr>
+                        <tr class="table__row">
+                            <td class="table__cell">Tables</td>
+                            <td class="table__cell"><span class="text-success">✅ Complete</span></td>
+                            <td class="table__cell"><span class="text-success">✅ Auto</span></td>
+                            <td class="table__cell">Accessible and responsive</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Grid System -->
+            <section class="showcase-section">
+                <h2 class="section-title">Grid System</h2>
+                
+                <div class="component-demo">
+                    <div class="component-title">2-Column Grid</div>
+                    <div class="grid grid--2col">
+                        <div class="card">
+                            <h4>Grid Item 1</h4>
+                            <p>Responsive grid system using CSS Grid.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Grid Item 2</h4>
+                            <p>Automatically adjusts to screen size.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="component-demo">
+                    <div class="component-title">3-Column Grid</div>
+                    <div class="grid grid--3col">
+                        <div class="card card--primary">
+                            <h4>Item 1</h4>
+                            <p>Three column layout.</p>
+                        </div>
+                        <div class="card card--accent">
+                            <h4>Item 2</h4>
+                            <p>Responsive design.</p>
+                        </div>
+                        <div class="card card--info">
+                            <h4>Item 3</h4>
+                            <p>Auto-sizing columns.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="component-demo">
+                    <div class="component-title">4-Column Grid</div>
+                    <div class="grid grid--4col">
+                        <div class="card card--success"><h4>Success</h4></div>
+                        <div class="card card--warning"><h4>Warning</h4></div>
+                        <div class="card card--error"><h4>Error</h4></div>
+                        <div class="card card--info"><h4>Info</h4></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Navigation Components -->
+            <section class="showcase-section">
+                <h2 class="section-title">Navigation Components</h2>
+                
+                <div class="component-demo">
+                    <div class="component-title">Back Button</div>
+                    <div style="position: relative; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; border-radius: 10px;">
+                        <a href="#" class="back-button">
+                            <span aria-hidden="true">←</span>
+                            Back to Course
+                        </a>
+                        <p style="color: white; text-align: center; margin-top: 20px;">Back button with glassmorphism effect (positioned absolutely on gradient backgrounds)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Foundation Components -->
+            <section class="showcase-section">
+                <h2 class="section-title">Foundation Components</h2>
+                
+                <div class="component-demo">
+                    <div class="component-title">Definition Box</div>
+                    <div class="definition-box">
+                        A <strong>definition box</strong> is used to highlight key definitions and important concepts throughout the course materials. It provides emphasis and visual distinction for critical information.
+                    </div>
+                </div>
+
+                <div class="component-demo">
+                    <div class="component-title">Footer Section</div>
+                    <div class="footer-section">
+                        <h3 class="text-primary">Remember</h3>
+                        <p class="text-secondary">This is how footer sections appear throughout the site with consistent styling and proper contrast.</p>
+                        <a href="#" class="btn btn--primary">Back to Course Concepts</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lesson Components -->
+            <section class="showcase-section">
+                <h2 class="section-title">Lesson Components</h2>
+                
+                <div class="component-demo">
+                    <div class="component-title">Lesson Metadata</div>
+                    <div style="background: linear-gradient(135deg, #2d5d3b, #4a7c59); padding: 20px; border-radius: 10px;">
+                        <div class="lesson-metadata">
+                            <span class="lesson-duration">⏱️ 15 min read</span>
+                            <span class="lesson-difficulty">📈 Beginner</span>
+                            <span class="lesson-type">📖 Foundation Concept</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="component-demo">
+                    <div class="component-title">Lesson Navigation</div>
+                    <div class="lesson-navigation">
+                        <h3>📍 On This Page</h3>
+                        <ul class="nav-links">
+                            <li><a href="#">Four Key Characteristics</a></li>
+                            <li><a href="#">Professional IT Examples</a></li>
+                            <li><a href="#">Personal Examples</a></li>
+                            <li><a href="#">Story Time</a></li>
+                            <li><a href="#">Week 1 Assignment</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Characteristics and Examples -->
+            <section class="showcase-section">
+                <h2 class="section-title">Characteristics & Example Components</h2>
+                
+                <div class="component-demo">
+                    <div class="component-title">Characteristics Cards</div>
+                    <div class="grid grid--2col">
+                        <div class="characteristics-card card" data-number="01">
+                            <div class="characteristics-title">A temporary endeavor</div>
+                            <div class="characteristics-description">Projects are not ongoing operations—they aim to deliver value or solve a problem.</div>
+                        </div>
+                        
+                        <div class="characteristics-card card" data-number="02">
+                            <div class="characteristics-title">Goal-driven and outcome-focused</div>
+                            <div class="characteristics-description">PM ensures teams don't just stay busy—they stay aligned with business value.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="component-demo">
+                    <div class="component-title">Example Cards</div>
+                    <div class="card card--info">
+                        <div class="example-header">
+                            <div class="example-scenario">Launching a company website redesign</div>
+                            <div class="example-why">Involves multiple stakeholders</div>
+                        </div>
+                        <div class="example-pm-concepts">
+                            <strong>PM Concepts Illustrated:</strong>
+                            <div class="example-content">Involves scope planning, stakeholder input, timelines, budgets, and managing developers/designers.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Element and Must Cards -->
+            <section class="showcase-section">
+                <h2 class="section-title">Element & Must Components</h2>
+                
+                <div class="component-demo">
+                    <div class="component-title">Element Cards</div>
+                    <div class="grid grid--2col">
+                        <div class="card card--warning" style="text-align: center;">
+                            <span class="element-icon">🧠</span>
+                            <div class="element-title">Knowledge</div>
+                            <div class="element-description">What you know from formal learning <em>and</em> real-world experience</div>
+                            <div class="element-examples">
+                                <strong>IT Examples:</strong>
+                                <ul>
+                                    <li>PMBOK & Agile frameworks</li>
+                                    <li>Risk management principles</li>
+                                    <li>Project lifecycle phases</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="card card--info" style="text-align: center;">
+                            <span class="element-icon">⚙️</span>
+                            <div class="element-title">Skills</div>
+                            <div class="element-description">What you can do—your applied abilities</div>
+                            <div class="element-examples">
+                                <strong>IT Examples:</strong>
+                                <ul>
+                                    <li>Leading effective meetings</li>
+                                    <li>Creating realistic schedules</li>
+                                    <li>Managing change requests</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="component-demo">
+                    <div class="component-title">Must Cards</div>
+                    <div class="grid grid--2col">
+                        <div class="card card--success" style="text-align: center;">
+                            <div class="must-number">01</div>
+                            <div class="must-title">Balance Constraints</div>
+                            <div class="must-description">The "triple constraint" shapes how you plan, execute, and adjust.</div>
+                        </div>
+                        <div class="card card--success" style="text-align: center;">
+                            <div class="must-number">02</div>
+                            <div class="must-title">Mix of Technical Tools and Soft Skills</div>
+                            <div class="must-description">Gantt charts and budgets matter—but so do empathy, trust, and leadership.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Manager and Role Components -->
+            <section class="showcase-section">
+                <h2 class="section-title">Manager & Role Components</h2>
+                
+                <div class="component-demo">
+                    <div class="component-title">Manager Comparison Cards</div>
+                    <div class="grid grid--2col">
+                        <div class="manager-card functional-manager card">
+                            <div class="manager-title">🏢 Functional Manager</div>
+                            <div class="manager-definition">
+                                A functional manager oversees a specific department or function within an organization (e.g., IT, HR, Finance, Marketing).
+                            </div>
+                            <div class="manager-section">
+                                <h4>Focus:</h4>
+                                <p>Operations and people – long-term functional excellence</p>
+                            </div>
+                        </div>
+                        
+                        <div class="manager-card project-manager card">
+                            <div class="manager-title">👤 Project Manager</div>
+                            <div class="manager-definition">
+                                A project manager is responsible for leading a temporary initiative with a defined scope, timeline, and budget.
+                            </div>
+                            <div class="manager-section">
+                                <h4>Focus:</h4>
+                                <p>Deliverables and results – short-term project success</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="component-demo">
+                    <div class="component-title">Role Cards</div>
+                    <div class="grid grid--3col">
+                        <div class="card card--error">
+                            <div class="role-title">Project Manager</div>
+                            <div class="role-description">Oversees the entire project, coordinating the team, managing resources, and ensuring the project meets its objectives.</div>
+                        </div>
+                        
+                        <div class="card card--error">
+                            <div class="role-title">Technical Lead</div>
+                            <div class="role-description">Provides technical guidance, designs the system architecture, and ensures technical feasibility.</div>
+                        </div>
+                        
+                        <div class="card card--error">
+                            <div class="role-title">Business Analyst</div>
+                            <div class="role-description">Acts as a bridge between business stakeholders and the technical team, gathering requirements.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Matrix Organization -->
+            <section class="showcase-section">
+                <h2 class="section-title">Matrix Organization Components</h2>
+                
+                <div class="component-demo">
+                    <div class="component-title">Matrix Cards</div>
+                    <div class="grid grid--3col">
+                        <div class="matrix-card weak-matrix card">
+                            <div class="matrix-title">Weak Matrix</div>
+                            <div class="matrix-visual">
+                                <div style="font-size: 14px; margin-bottom: 10px; color: var(--color-error); font-weight: bold;">Authority Level</div>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="background: var(--color-error); color: white; padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: bold;">Functional Manager</div>
+                                    <div style="font-size: 18px; color: var(--color-error);">▶</div>
+                                    <div style="background: var(--color-surface-error); color: var(--color-error); padding: 8px 12px; border-radius: 6px; font-size: 12px;">Project Manager</div>
+                                </div>
+                            </div>
+                            <div class="matrix-description">Functional managers have more authority, and the project manager's role is more of a coordinator.</div>
+                        </div>
+                        
+                        <div class="matrix-card balanced-matrix card">
+                            <div class="matrix-title">Balanced Matrix</div>
+                            <div class="matrix-visual">
+                                <div style="font-size: 14px; margin-bottom: 10px; color: var(--color-warning); font-weight: bold;">Authority Level</div>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="background: var(--color-warning); color: white; padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: bold;">Functional Manager</div>
+                                    <div style="font-size: 18px; color: var(--color-warning);">⚖️</div>
+                                    <div style="background: var(--color-warning); color: white; padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: bold;">Project Manager</div>
+                                </div>
+                            </div>
+                            <div class="matrix-description">Power is shared equally between functional and project managers, requiring negotiation.</div>
+                        </div>
+                        
+                        <div class="matrix-card strong-matrix card">
+                            <div class="matrix-title">Strong Matrix</div>
+                            <div class="matrix-visual">
+                                <div style="font-size: 14px; margin-bottom: 10px; color: var(--color-accent); font-weight: bold;">Authority Level</div>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="background: var(--color-surface-accent); color: var(--color-accent); padding: 8px 12px; border-radius: 6px; font-size: 12px;">Functional Manager</div>
+                                    <div style="font-size: 18px; color: var(--color-accent);">◀</div>
+                                    <div style="background: var(--color-accent); color: white; padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: bold;">Project Manager</div>
+                                </div>
+                            </div>
+                            <div class="matrix-description">Project managers have more authority and control over resources, similar to a projectized organization.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Story Time Section -->
+            <section class="showcase-section">
+                <h2 class="section-title">Story Time & Assignment Components</h2>
+                
+                <div class="component-demo">
+                    <div class="component-title">Story Time Section</div>
+                    <div class="story-time-section">
+                        <h2 class="story-time-header">
+                            <span class="story-icon">⭐</span>
+                            Story Time: Professor's Projects
+                            <span class="story-subtitle">Real-world project management in action</span>
+                        </h2>
+                        
+                        <div class="story-student-view">
+                            <div class="story-teaser">
+                                <p class="story-intro">Want to see how these project management concepts play out in the real world? Professor Espinoza has led numerous IT projects that showcase these principles in action.</p>
+                                
+                                <div class="story-unlock-message">
+                                    <p><em>💡 These detailed project stories will be discussed in class.</em></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="component-demo">
+                    <div class="component-title">Assignment Section</div>
+                    <div class="assignment-section">
+                        <h2 class="assignment-header">
+                            <span class="assignment-icon">📝</span>
+                            Week 1 | Activity 1 | Examples of Projects
+                        </h2>
+                        
+                        <div class="assignment-content">
+                            <div class="assignment-instructions">
+                                <h3>📌 Instructions</h3>
+                                <p>Search online and find one real-world IT project that has been documented in a news article, blog post, press release, case study, or video.</p>
+                            </div>
+                            
+                            <div class="assignment-objective">
+                                <h3>🎯 Objective</h3>
+                                <p>This assignment will help you apply what you've learned about what defines a project by exploring a real-world example from the IT field.</p>
+                            </div>
+                            
+                            <div class="assignment-submit">
+                                <button class="assignment-button">
+                                    <span class="assignment-button-icon">📤</span>
+                                    Submit Assignment on Canvas
+                                    <span class="assignment-button-subtitle">Worth 15 points total</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quiz Components -->
+            <section class="showcase-section">
+                <h2 class="section-title">Quiz System Components</h2>
+                
+                <div class="component-demo">
+                    <div class="component-title">Quiz Selection</div>
+                    <div class="quiz-selection">
+                        <div class="quiz-option concepts">
+                            <div class="quiz-icon">🧠</div>
+                            <h3>Concepts Quiz</h3>
+                            <p>Test your knowledge of definitions, principles, and core PM concepts</p>
+                            <ul>
+                                <li>Definitions & terminology</li>
+                                <li>PM principles & characteristics</li>
+                                <li>Roles & responsibilities</li>
+                            </ul>
+                            <button class="quiz-select-btn">Take Concepts Quiz</button>
+                        </div>
+                        
+                        <div class="quiz-option scenarios">
+                            <div class="quiz-icon">🎭</div>
+                            <h3>Scenarios Quiz</h3>
+                            <p>Apply your knowledge to real-world situations and problem-solving</p>
+                            <ul>
+                                <li>Workplace scenarios</li>
+                                <li>Decision-making situations</li>
+                                <li>Problem identification</li>
+                            </ul>
+                            <button class="quiz-select-btn">Take Scenarios Quiz</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="component-demo">
+                    <div class="component-title">Quiz Progress Components</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%;"></div>
+                    </div>
+                    <div class="question-counter">Question 6 of 10</div>
+                    
+                    <div class="question-card">
+                        <div class="question-type">Definition</div>
+                        <div class="question-text">Which of the following BEST completes the project management definition?</div>
+                        
+                        <div class="options">
+                            <div class="option">
+                                <span class="option-letter">A.</span>
+                                Processes to deliver successful outcomes
+                            </div>
+                            <div class="option selected">
+                                <span class="option-letter">B.</span>
+                                The ability to work with people to deliver value
+                            </div>
+                            <div class="option">
+                                <span class="option-letter">C.</span>
+                                Methodologies to ensure quality deliverables
+                            </div>
+                        </div>
+                        
+                        <div class="feedback correct show">
+                            <strong>✅ Correct!</strong><br>
+                            The complete definition emphasizes the human element - 'the ability to work with people' - which distinguishes effective PMs.
+                        </div>
+                    </div>
+                    
+                    <button class="next-button show">Next Question</button>
+                </div>
+
+                <div class="component-demo">
+                    <div class="component-title">Quiz Results</div>
+                    <div style="text-align: center;">
+                        <div class="score-circle excellent">
+                            <span>8/10</span>
+                        </div>
+                        <div class="results-message">🎉 Excellent Work!</div>
+                        <div class="results-details">
+                            <p>You scored <strong>80%</strong> on the Concepts Quiz (8 out of 10 questions correct).</p>
+                            <p>You have a strong grasp of Week 1 concepts!</p>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-button">🔄 Try Again</button>
+                            <button class="action-button secondary">🎯 Try Other Quiz</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Team Structure Components -->
+            <section class="showcase-section">
+                <h2 class="section-title">Team Structure Components</h2>
+                
+                <div class="component-demo">
+                    <div class="component-title">Team Structure Preview</div>
+                    <div class="team-structure-preview">
+                        <div class="team-structure-header">
+                            <h3>🏢 Professor Espinoza's IT Team Structure</h3>
+                            <p>Real-world application of PM skills in team leadership</p>
+                        </div>
+                        
+                        <div class="team-structure-grid">
+                            <div class="team-member-card manager">
+                                <div class="member-icon">👨‍💼</div>
+                                <div class="member-title">IT Manager</div>
+                                <div class="member-name">Professor Espinoza</div>
+                            </div>
+                            
+                            <div class="team-member-card bsa">
+                                <div class="member-icon">📊</div>
+                                <div class="member-title">Business Systems Analysts</div>
+                                <div class="member-name">Report to IT Manager</div>
+                            </div>
+                            
+                            <div class="team-member-card pm">
+                                <div class="member-icon">🎯</div>
+                                <div class="member-title">Project Managers</div>
+                                <div class="member-name">Report to IT Manager</div>
+                            </div>
+                        </div>
+                        
+                        <div class="key-insight">
+                            <p>
+                                <strong>Key Insight:</strong> This structure demonstrates how IT Managers use project management skills to coordinate multiple PM and BSA resources, manage cross-functional initiatives, and deliver organizational outcomes.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="component-demo">
+                    <div class="component-title">PM Skills Grid</div>
+                    <div class="pm-skills-grid">
+                        <div class="pm-skill-card bsa-color">
+                            <strong>BSA Coordination:</strong> Managing requirements gathering across multiple business units
+                        </div>
+                        <div class="pm-skill-card pm-color">
+                            <strong>PM Oversight:</strong> Coordinating project portfolios and resource allocation
+                        </div>
+                        <div class="pm-skill-card manager-color">
+                            <strong>Stakeholder Management:</strong> Balancing competing priorities from multiple departments
+                        </div>
+                        <div class="pm-skill-card risk-color">
+                            <strong>Risk Management:</strong> Identifying and mitigating risks across team initiatives
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skill Components -->
+            <section class="showcase-section">
+                <h2 class="section-title">Skill & Function Components</h2>
+                
+                <div class="component-demo">
+                    <div class="component-title">Skill Cards</div>
+                    <div class="grid grid--2col">
+                        <div class="card">
+                            <div class="skill-title">🔹 Leadership & Interpersonal Skills</div>
+                            <div class="skill-description">Project managers must lead and inspire teams, manage conflicts, and build trust with stakeholders.</div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="skill-title">🔹 Technical Skills</div>
+                            <div class="skill-description">A strong grasp of project management methodologies (e.g., Agile, Waterfall), tools, and core techniques.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="component-demo">
+                    <div class="component-title">Function Cards</div>
+                    <div class="grid grid--2col">
+                        <div class="card">
+                            <div class="function-title">Governance</div>
+                            <div class="function-description">Ensures projects follow consistent processes, policies, and templates</div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="function-title">Support</div>
+                            <div class="function-description">Helps project managers with tools, training, and guidance</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dark Mode Demo -->
+            <section class="showcase-section">
+                <h2 class="section-title">🌙 Dark Mode Benefits</h2>
+                
+                <div class="info-box info-box--success">
+                    <h3 class="info-box__title">✨ Automatic Theme Switching</h3>
+                    <div class="info-box__content">
+                        <p><strong>Zero manual overrides needed!</strong> All components automatically adapt to dark mode using CSS variables.</p>
+                        <ul>
+                            <li>Toggle the dark mode button to see instant theme switching</li>
+                            <li>All colors, backgrounds, and borders adapt automatically</li>
+                            <li>Maintains WCAG AA contrast ratios in both themes</li>
+                            <li>No massive CSS override files required</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="grid grid--2col">
+                    <div class="card card--primary">
+                        <h4>🎨 Design Consistency</h4>
+                        <p>Single source of truth for all colors and spacing ensures consistency across the entire site.</p>
+                    </div>
+                    
+                    <div class="card card--accent">
+                        <h4>⚡ Performance</h4>
+                        <p>Much smaller CSS files and faster load times compared to massive override approaches.</p>
+                    </div>
+                    
+                    <div class="card card--info">
+                        <h4>🔧 Maintainability</h4>
+                        <p>Change a color once in the design system and it updates everywhere automatically.</p>
+                    </div>
+                    
+                    <div class="card card--success">
+                        <h4>♿ Accessibility</h4>
+                        <p>Built-in WCAG compliance with proper contrast ratios for both light and dark themes.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

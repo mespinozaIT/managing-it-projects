@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor Profile - Maria Espinoza</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
+            min-height: 100vh;
+        }
+        
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--color-surface-primary);
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .profile-back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .profile-back-button:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .profile-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 36px;
+            font-weight: bold;
+        }
+        
+        .profile-header p {
+            margin: 0;
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            background: var(--color-surface-secondary);
+            border-bottom: 1px solid var(--color-border-primary);
+        }
+        
+        .tab-button {
+            flex: 1;
+            padding: 20px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-button:hover {
+            background: var(--color-surface-hover);
+            color: var(--color-text-primary);
+        }
+        
+        .tab-button.active {
+            color: var(--color-success);
+            border-bottom-color: var(--color-success);
+            background: var(--color-surface-primary);
+        }
+        
+        /* Tab Content */
+        .tab-content {
+            padding: 40px;
+            min-height: 600px;
+        }
+        
+        .tab-panel {
+            display: none;
+        }
+        
+        .tab-panel.active {
+            display: block;
+        }
+        
+        /* Content Styling */
+        .intro {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: var(--color-surface-secondary, #f8f9fa);
+            border-radius: 15px;
+        }
+        
+        .intro h2 {
+            color: var(--color-success, #2d5d3b);
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        
+        .intro p {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.7;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .journey-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--color-success, #2d5d3b);
+        }
+        
+        .journey-section h3 {
+            color: var(--color-success, #2d5d3b);
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        
+        .journey-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .journey-section li {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .journey-section li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--color-success, #2d5d3b);
+            font-weight: bold;
+        }
+        
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .insight-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .insight-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        .insight-card h4 {
+            color: var(--color-success, #2d5d3b);
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        
+        .insight-card p {
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .experience-section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            color: var(--color-success, #2d5d3b);
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .job-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--color-success, #2d5d3b);
+            transition: all 0.3s ease;
+        }
+        
+        .job-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .job-header h4 {
+            color: var(--color-success, #2d5d3b);
+            margin: 0 0 5px 0;
+            font-size: 20px;
+        }
+        
+        .company {
+            color: #666;
+            font-style: italic;
+            margin: 0;
+        }
+        
+        .job-period {
+            background: var(--color-success, #2d5d3b);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .job-description ul {
+            margin-top: 15px;
+        }
+        
+        .job-description li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .philosophy-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 2px solid var(--color-success, #2d5d3b);
+        }
+        
+        .teaching-highlights {
+            margin-top: 25px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+        }
+        
+        .teaching-highlights h4 {
+            color: var(--color-success, #2d5d3b);
+            margin-bottom: 15px;
+        }
+        
+        /* Professional Experience Styles from original professional-experience.html */
+        .experience-section {
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            color: #2d5d3b;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .job-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #2d5d3b;
+            transition: all 0.3s ease;
+        }
+        
+        .job-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .job-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2d5d3b;
+            margin-bottom: 5px;
+        }
+        
+        .company-name {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .job-dates {
+            font-size: 16px;
+            color: #2d5d3b;
+            font-weight: 600;
+            background: #e8f4fd;
+            padding: 8px 16px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        
+        .job-summary {
+            font-size: 16px;
+            color: #444;
+            margin-bottom: 25px;
+            font-style: italic;
+            line-height: 1.7;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 3px solid #4a7c59;
+        }
+        
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .achievement-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 3px solid #e74c3c;
+            transition: all 0.3s ease;
+        }
+        
+        .achievement-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .achievement-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 8px;
+        }
+        
+        .achievement-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .laccd-card {
+            border-left-color: #3498db;
+        }
+        
+        .laccd-card .achievement-item {
+            border-left-color: #3498db;
+        }
+        
+        .laccd-card .achievement-title {
+            color: #3498db;
+        }
+        
+        .tj-card {
+            border-left-color: #2d5d3b;
+        }
+        
+        .tj-card .achievement-item {
+            border-left-color: #e74c3c;
+        }
+        
+        .tj-card .achievement-title {
+            color: #e74c3c;
+        }
+        
+        .skills-section {
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .skill-category {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .skill-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .skill-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2d5d3b;
+            margin-bottom: 10px;
+        }
+        
+        .skill-items {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .metrics-highlight {
+            background: linear-gradient(135deg, #e8f4fd, #d4edda);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #3498db;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .metric-item {
+            text-align: center;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .metric-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2d5d3b;
+            display: block;
+        }
+        
+        .metric-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .photo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .profile-header {
+                padding: 30px 20px;
+            }
+            
+            .profile-header h1 {
+                font-size: 28px;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+            
+            .tab-button {
+                padding: 15px 10px;
+                font-size: 14px;
+            }
+            
+            .photo-gallery div[style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .job-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="css/shared-styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/print.css">
+    <!-- Firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+</head>
+<body>
+    <script src="firebase-config.js"></script>
+    <script src="js/course-manager.js"></script>
+    <script src="js/teacher-manager.js"></script>
+    <div class="profile-container">
+        <div class="profile-header">
+            <a href="index.html" class="profile-back-button">
+                <span aria-hidden="true">←</span>
+                Back to Course
+            </a>
+            <h1>Maria Espinoza</h1>
+            <p>Instructor Profile & Professional Background</p>
+        </div>
+        
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-button active" onclick="showTab('journey')">
+                🎯 My Journey
+            </button>
+            <button class="tab-button" onclick="showTab('experience')">
+                💼 Professional Experience
+            </button>
+        </div>
+        
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- Journey Tab -->
+            <div id="journey" class="tab-panel active">
+                <!-- Exact content from original journey.html -->
+                <style>
+                    /* All original journey.html styles */
+                    #journey .container {
+                        max-width: 1600px;
+                        margin: 0 auto;
+                        background: white;
+                        border-radius: 20px;
+                        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+                        overflow: hidden;
+                    }
+                    
+                    #journey .header {
+                        background: linear-gradient(135deg, #2d5d3b, #4a7c59);
+                        color: white;
+                        padding: 40px;
+                        text-align: center;
+                        position: relative;
+                    }
+                    
+                    #journey .header::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+                    }
+                    
+                    #journey .header h1 {
+                        margin: 0 0 10px 0;
+                        font-size: 36px;
+                        font-weight: bold;
+                        position: relative;
+                        z-index: 1;
+                    }
+                    
+                    #journey .header p {
+                        margin: 0;
+                        font-size: 18px;
+                        opacity: 0.9;
+                        position: relative;
+                        z-index: 1;
+                    }
+                    
+                    #journey .content {
+                        padding: 50px 40px;
+                    }
+                    
+                    #journey .intro {
+                        text-align: center;
+                        margin-bottom: 50px;
+                    }
+                    
+                    #journey .intro h2 {
+                        color: #2d5d3b;
+                        font-size: 28px;
+                        margin-bottom: 15px;
+                    }
+                    
+                    #journey .intro p {
+                        font-size: 18px;
+                        color: #666;
+                        max-width: 900px;
+                        margin: 0 auto;
+                        line-height: 1.7;
+                    }
+                    
+                    #journey .legend {
+                        display: flex;
+                        justify-content: center;
+                        gap: 40px;
+                        margin-bottom: 50px;
+                        flex-wrap: wrap;
+                    }
+                    
+                    #journey .legend-item {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        padding: 12px 24px;
+                        background: white;
+                        border-radius: 30px;
+                        font-size: 16px;
+                        font-weight: 600;
+                        border: 3px solid;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                    }
+                    
+                    #journey .legend-item.education-legend {
+                        border-color: #3498db;
+                        background: #e8f4fd;
+                        color: #2980b9;
+                    }
+                    
+                    #journey .legend-item.work-legend {
+                        border-color: #e74c3c;
+                        background: #fdf2f2;
+                        color: #c0392b;
+                    }
+                    
+                    #journey .legend-item.teaching-legend {
+                        border-color: #9b59b6;
+                        background: #f4f1f8;
+                        color: #8e44ad;
+                    }
+                    
+                    #journey .legend-dot {
+                        width: 16px;
+                        height: 16px;
+                        border-radius: 50%;
+                    }
+                    
+                    #journey .legend-education { background-color: #3498db; }
+                    #journey .legend-work { background-color: #e74c3c; }
+                    #journey .legend-teaching { background-color: #9b59b6; }
+                    
+                    #journey .timeline-container {
+                        position: relative;
+                        padding: 60px 0;
+                        width: 100%;
+                    }
+                    
+                    #journey .timeline {
+                        position: relative;
+                        width: 100%;
+                        max-width: 1400px;
+                        height: 400px;
+                        margin: 0 auto;
+                    }
+                    
+                    #journey .timeline-axis {
+                        position: absolute;
+                        top: 25%;
+                        left: 0;
+                        right: 0;
+                        height: 6px;
+                        background: #2d5d3b;
+                        border-radius: 3px;
+                        transform: translateY(-50%);
+                    }
+                    
+                    #journey .year-markers {
+                        position: absolute;
+                        top: 25%;
+                        left: 0;
+                        right: 0;
+                        height: 1px;
+                        transform: translateY(-50%);
+                    }
+                    
+                    #journey .year-marker {
+                        position: absolute;
+                        top: -15px;
+                        background: #2d5d3b;
+                        color: white;
+                        padding: 8px 16px;
+                        border-radius: 25px;
+                        font-size: 14px;
+                        font-weight: bold;
+                        transform: translateX(-50%);
+                        white-space: nowrap;
+                        box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+                    }
+                    
+                    /* Timeline positions for years 2009-2025 */
+                    #journey .year-2009 { left: 0%; }
+                    #journey .year-2010 { left: 6.25%; }
+                    #journey .year-2011 { left: 12.5%; }
+                    #journey .year-2012 { left: 18.75%; }
+                    #journey .year-2013 { left: 25%; }
+                    #journey .year-2014 { left: 31.25%; }
+                    #journey .year-2015 { left: 37.5%; }
+                    #journey .year-2016 { left: 43.75%; }
+                    #journey .year-2017 { left: 50%; }
+                    #journey .year-2018 { left: 56.25%; }
+                    #journey .year-2019 { left: 62.5%; }
+                    #journey .year-2020 { left: 68.75%; }
+                    #journey .year-2021 { left: 75%; }
+                    #journey .year-2022 { left: 81.25%; }
+                    #journey .year-2023 { left: 87.5%; }
+                    #journey .year-2024 { left: 93.75%; }
+                    #journey .year-2025 { left: 100%; }
+                    
+                    #journey .timeline-item {
+                        position: absolute;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    }
+                    
+                    #journey .timeline-item.education {
+                        top: 180px;
+                    }
+                    
+                    #journey .timeline-item.work {
+                        top: 250px;
+                    }
+                    
+                    #journey .timeline-item.teaching {
+                        top: 320px;
+                    }
+                    
+                    #journey .timeline-bar {
+                        height: 60px;
+                        border-radius: 30px;
+                        position: relative;
+                        overflow: hidden;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                        border: none;
+                    }
+                    
+                    #journey .timeline-item.education .timeline-bar {
+                        background: linear-gradient(135deg, #3498db, #5dade2);
+                    }
+                    
+                    #journey .timeline-item.work .timeline-bar {
+                        background: linear-gradient(135deg, #e74c3c, #ec7063);
+                    }
+                    
+                    #journey .timeline-item.teaching .timeline-bar {
+                        background: linear-gradient(135deg, #9b59b6, #bb8fce);
+                    }
+                    
+                    #journey .timeline-content {
+                        position: absolute;
+                        background: white;
+                        border-radius: 15px;
+                        padding: 20px;
+                        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                        width: 320px;
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: all 0.3s ease;
+                        z-index: 100;
+                        border: 2px solid;
+                    }
+                    
+                    #journey .timeline-item.education .timeline-content {
+                        top: 60px;
+                        border-color: #3498db;
+                    }
+                    
+                    #journey .timeline-item.work .timeline-content {
+                        top: 60px;
+                        border-color: #e74c3c;
+                    }
+                    
+                    #journey .timeline-item.teaching .timeline-content {
+                        top: 60px;
+                        border-color: #9b59b6;
+                    }
+                    
+                    /* Smart positioning for items near edges */
+                    #journey .timeline-item.education.aa-degree .timeline-content,
+                    #journey .timeline-item.education.bs-degree .timeline-content {
+                        left: 0;
+                    }
+                    
+                    #journey .timeline-item.education.ms-degree .timeline-content {
+                        left: -200px;
+                    }
+                    
+                    #journey .timeline-item.work.gov-work .timeline-content,
+                    #journey .timeline-item.work.big5-work .timeline-content {
+                        left: 0;
+                    }
+                    
+                    #journey .timeline-item.work.tj-analyst .timeline-content,
+                    #journey .timeline-item.work.tj-manager .timeline-content,
+                    #journey .timeline-item.work.laccd-leader .timeline-content {
+                        left: -200px;
+                    }
+                    
+                    #journey .timeline-item.teaching.teaching .timeline-content {
+                        left: -200px;
+                    }
+                    
+                    #journey .timeline-item.education.certifications .timeline-content {
+                        left: -200px;
+                    }
+                    
+                    #journey .timeline-item:hover .timeline-content {
+                        opacity: 1;
+                        visibility: visible;
+                        transform: translateY(10px);
+                    }
+                    
+                    #journey .timeline-label {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        color: white;
+                        font-weight: bold;
+                        font-size: 11px;
+                        text-align: center;
+                        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+                        line-height: 1.2;
+                        padding: 0 8px;
+                    }
+                    
+                    #journey .job-title {
+                        font-size: 12px;
+                        font-weight: 800;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                    }
+                    
+                    #journey .company-name {
+                        font-size: 10px;
+                        font-weight: 500;
+                        opacity: 0.95;
+                        margin-top: 2px;
+                    }
+                    
+                    #journey .timeline-label.work-label {
+                        font-size: 11px;
+                    }
+                    
+                    #journey .item-type {
+                        font-size: 12px;
+                        font-weight: bold;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        margin-bottom: 5px;
+                    }
+                    
+                    #journey .item-type.education {
+                        color: #3498db;
+                    }
+                    
+                    #journey .item-type.work {
+                        color: #e74c3c;
+                    }
+                    
+                    #journey .item-type.teaching {
+                        color: #9b59b6;
+                    }
+                    
+                    #journey .item-title {
+                        font-size: 16px;
+                        font-weight: bold;
+                        color: #333;
+                        margin-bottom: 8px;
+                        line-height: 1.3;
+                    }
+                    
+                    #journey .timeline-date {
+                        font-size: 13px;
+                        color: #666;
+                        margin-bottom: 10px;
+                        font-weight: 500;
+                    }
+                    
+                    #journey .institution {
+                        font-size: 14px;
+                        color: #2d5d3b;
+                        font-weight: 600;
+                        margin-bottom: 10px;
+                    }
+                    
+                    #journey .details {
+                        color: #666;
+                        font-size: 13px;
+                        line-height: 1.5;
+                    }
+                    
+                    #journey .specialization {
+                        background: #f8f9fa;
+                        padding: 10px;
+                        border-radius: 6px;
+                        margin-top: 10px;
+                        border-left: 3px solid #3498db;
+                    }
+                    
+                    #journey .specialization h4 {
+                        margin: 0 0 6px 0;
+                        color: #2980b9;
+                        font-size: 12px;
+                    }
+                    
+                    #journey .specialization ul {
+                        margin: 0;
+                        padding-left: 14px;
+                        color: #666;
+                        font-size: 11px;
+                    }
+                    
+                    #journey .specialization li {
+                        margin-bottom: 3px;
+                    }
+                    
+                    #journey .work-highlight {
+                        background: #f8f9fa;
+                        padding: 10px;
+                        border-radius: 6px;
+                        margin-top: 10px;
+                        border-left: 3px solid #e74c3c;
+                    }
+                    
+                    #journey .work-highlight h4 {
+                        margin: 0 0 6px 0;
+                        color: #c0392b;
+                        font-size: 12px;
+                    }
+                    
+                    #journey .work-highlight ul {
+                        margin: 0;
+                        padding-left: 14px;
+                        color: #666;
+                        font-size: 11px;
+                    }
+                    
+                    #journey .work-highlight li {
+                        margin-bottom: 3px;
+                    }
+                    
+                    #journey .overlap-indicators {
+                        position: absolute;
+                        top: -10px;
+                        left: 0;
+                        right: 0;
+                        height: 100px;
+                        pointer-events: none;
+                    }
+                    
+                    #journey .overlap-zone {
+                        position: absolute;
+                        height: 60px;
+                        background: #ffeaa7;
+                        border: 2px solid #e17055;
+                        border-radius: 12px;
+                        top: 10px;
+                        box-shadow: 0 4px 20px rgba(253, 203, 110, 0.3);
+                    }
+                    
+                    #journey .overlap-label {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background: rgba(253, 203, 110, 0.95);
+                        color: #2d3436;
+                        padding: 8px 12px;
+                        border-radius: 18px;
+                        font-size: 11px;
+                        font-weight: 700;
+                        white-space: nowrap;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                        border: 1px solid #e17055;
+                        backdrop-filter: blur(2px);
+                    }
+                    
+                    /* Specific timeline item positions and widths */
+                    #journey .aa-degree { left: 0%; width: 18.75%; } /* 2009-2012 */
+                    #journey .bs-degree { left: 25%; width: 12.5%; } /* 2013-2015 */
+                    #journey .ms-degree { left: 56.25%; width: 6.25%; } /* 2018-2019 */
+                    #journey .certifications { left: 93.75%; width: 6.25%; } /* 2024 */
+                    
+                    #journey .gov-work { left: 6.25%; width: 16.75%; } /* 2010-2013 */
+                    #journey .big5-work { left: 25%; width: 12.5%; } /* 2013-2015 */
+                    #journey .tj-analyst { left: 37.5%; width: 31.25%; } /* 2015-2020 */
+                    #journey .tj-manager { left: 68.75%; width: 24.75%; } /* 2020-July 2024 */
+                    #journey .laccd-leader { left: 94%; width: 6%; } /* Aug 2024-Present */
+                    
+                    #journey .teaching { left: 87.5%; width: 12.5%; } /* 2023-Present */
+                    
+                    #journey .insights {
+                        background: #f8f9fa;
+                        padding: 40px;
+                        border-radius: 15px;
+                        margin-top: 60px;
+                        text-align: center;
+                    }
+                    
+                    #journey .insights h3 {
+                        color: #2d5d3b;
+                        font-size: 24px;
+                        margin-bottom: 20px;
+                    }
+                    
+                    #journey .insights-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                        gap: 25px;
+                        margin-top: 30px;
+                    }
+                    
+                    #journey .insight-card {
+                        background: white;
+                        padding: 25px;
+                        border-radius: 12px;
+                        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+                        text-align: center;
+                        border-top: 4px solid #3498db;
+                    }
+                    
+                    #journey .insight-card:nth-child(2) {
+                        border-top-color: #e74c3c;
+                    }
+                    
+                    #journey .insight-card:nth-child(3) {
+                        border-top-color: #2d5d3b;
+                    }
+                    
+                    #journey .insight-card:nth-child(4) {
+                        border-top-color: #f39c12;
+                    }
+                    
+                    #journey .insight-icon {
+                        font-size: 36px;
+                        margin-bottom: 15px;
+                        display: block;
+                    }
+                    
+                    #journey .insight-title {
+                        font-size: 18px;
+                        font-weight: bold;
+                        color: #333;
+                        margin-bottom: 10px;
+                    }
+                    
+                    #journey .insight-text {
+                        color: #666;
+                        font-size: 15px;
+                        line-height: 1.6;
+                    }
+                    
+                    #journey .instructions {
+                        background: #e8f4fd;
+                        padding: 20px;
+                        border-radius: 10px;
+                        margin-bottom: 30px;
+                        text-align: center;
+                        border: 2px solid #3498db;
+                    }
+                    
+                    #journey .instructions h4 {
+                        color: #2980b9;
+                        margin: 0 0 10px 0;
+                    }
+                    
+                    #journey .instructions p {
+                        color: #2980b9;
+                        margin: 0;
+                        font-weight: 500;
+                    }
+                    
+                    @media (max-width: 1200px) {
+                        #journey .timeline {
+                            width: 100%;
+                        }
+                    }
+                    
+                    @media (max-width: 768px) {
+                        #journey .content {
+                            padding: 30px 20px;
+                        }
+                        
+                        #journey .timeline-container {
+                            padding: 20px 0;
+                        }
+                        
+                        #journey .timeline {
+                            width: 100%;
+                            height: 300px;
+                        }
+                        
+                        #journey .timeline-content {
+                            width: 280px;
+                        }
+                        
+                        #journey .timeline-item.education .timeline-content {
+                            top: 120px;
+                        }
+                        
+                        #journey .timeline-item.work .timeline-content {
+                            top: 60px;
+                        }
+                        
+                        #journey .timeline-item.teaching .timeline-content {
+                            top: 60px;
+                        }
+                        
+                        /* Reset smart positioning for mobile */
+                        #journey .timeline-item.education.aa-degree .timeline-content,
+                        #journey .timeline-item.education.bs-degree .timeline-content,
+                        #journey .timeline-item.education.ms-degree .timeline-content,
+                        #journey .timeline-item.education.certifications .timeline-content,
+                        #journey .timeline-item.work.gov-work .timeline-content,
+                        #journey .timeline-item.work.big5-work .timeline-content,
+                        #journey .timeline-item.work.tj-analyst .timeline-content,
+                        #journey .timeline-item.work.tj-manager .timeline-content,
+                        #journey .timeline-item.work.laccd-leader .timeline-content,
+                        #journey .timeline-item.teaching.teaching .timeline-content {
+                            left: 0 !important;
+                        }
+                        
+                        #journey .insights-grid {
+                            grid-template-columns: 1fr;
+                        }
+                    }
+                </style>
+                
+                <div class="container">
+                    <div class="header">
+                        <h1>My Educational & Professional Timeline</h1>
+                        <p>A Visual Journey from Student to IT Leader to Educator</p>
+                    </div>
+                    
+                    <div class="content">
+                        <div class="instructions">
+                            <h4>📍 How to Read This Timeline</h4>
+                            <p>Education appears above the timeline, work experience in the middle, and teaching at the bottom. Hover over any bar to see detailed information. Yellow zones highlight overlap periods.</p>
+                        </div>
+                        
+                        <div class="legend">
+                            <div class="legend-item education-legend">
+                                <div class="legend-dot legend-education"></div>
+                                <span>📚 Education (Above Timeline)</span>
+                            </div>
+                            <div class="legend-item work-legend">
+                                <div class="legend-dot legend-work"></div>
+                                <span>💼 Work Experience (Middle Row)</span>
+                            </div>
+                            <div class="legend-item teaching-legend">
+                                <div class="legend-dot legend-teaching"></div>
+                                <span>🎓 Teaching (Bottom Row)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-container">
+                            <div class="timeline">
+                                <div class="timeline-axis"></div>
+                                
+                                <!-- Year markers -->
+                                <div class="year-markers">
+                                    <div class="year-marker year-2009">
+                                        2009
+                                    </div>
+                                    <div class="year-marker year-2013">
+                                        2013
+                                    </div>
+                                    <div class="year-marker year-2015">
+                                        2015
+                                    </div>
+                                    <div class="year-marker year-2018">
+                                        2018
+                                    </div>
+                                    <div class="year-marker year-2020">
+                                        2020
+                                    </div>
+                                    <div class="year-marker year-2023">
+                                        2023
+                                    </div>
+                                    <div class="year-marker year-2025">
+                                        2025
+                                    </div>
+                                </div>
+                                
+                                <!-- Overlap indicators -->
+                                <div class="overlap-indicators">
+                                    <div class="overlap-zone" style="left: 6.25%; width: 16.25%;">
+                                        <div class="overlap-label">Study + Work Foundation</div>
+                                    </div>
+                                    <div class="overlap-zone" style="left: 25%; width: 12.5%;">
+                                        <div class="overlap-label">Corporate + Bachelor's</div>
+                                    </div>
+                                    <div class="overlap-zone" style="left: 56.25%; width: 12.5%;">
+                                        <div class="overlap-label">Analyst + Master's</div>
+                                    </div>
+                                    <div class="overlap-zone" style="left: 87.5%; width: 12.5%;">
+                                        <div class="overlap-label">Leadership + Teaching</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Education items -->
+                                <div class="timeline-item education aa-degree">
+                                    <div class="timeline-bar">
+                                        <div class="timeline-label">Associate<br>Degree</div>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="item-type education">Education</div>
+                                        <div class="item-title">Associate of Arts - Business</div>
+                                        <div class="timeline-date">August 2009 - December 2012</div>
+                                        <div class="institution">LA Community College District</div>
+                                        <div class="details">
+                                            Built educational foundation across multiple LACCD campuses while working. Learned business fundamentals and developed study skills.
+                                        </div>
+                                        <div class="specialization">
+                                            <h4>Key Colleges:</h4>
+                                            <ul>
+                                                <li>LA City College</li>
+                                                <li>LA Harbor College</li>
+                                                <li>LA Trade-Technical</li>
+                                                <li>And 5 others</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="timeline-item education bs-degree">
+                                    <div class="timeline-bar">
+                                        <div class="timeline-label">Bachelor's<br>Degree</div>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="item-type education">Education</div>
+                                        <div class="item-title">Bachelor of Science</div>
+                                        <div class="timeline-date">August 2013 - June 2015</div>
+                                        <div class="institution">Cal State Los Angeles</div>
+                                        <div class="details">
+                                            Strategic dual focus based on corporate work experience at Big 5. Combined business operations with technology systems knowledge.
+                                        </div>
+                                        <div class="specialization">
+                                            <h4>Dual Concentrations:</h4>
+                                            <ul>
+                                                <li>Business Admin - Operations & Supply Chain</li>
+                                                <li>Computer Information Systems</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="timeline-item education ms-degree">
+                                    <div class="timeline-bar">
+                                        <div class="timeline-label">Master's<br>Degree</div>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="item-type education">Education</div>
+                                        <div class="item-title">Master of Science in Information Systems</div>
+                                        <div class="timeline-date">August 2018 - December 2019</div>
+                                        <div class="institution">Cal State Los Angeles</div>
+                                        <div class="details">
+                                            Advanced degree while working full-time as IT Analyst. Focused on leadership and strategic IT management.
+                                        </div>
+                                        <div class="specialization">
+                                            <h4>Professional Focus:</h4>
+                                            <ul>
+                                                <li>Advanced Systems Analysis</li>
+                                                <li>IT Project Management</li>
+                                                <li>Strategic Planning</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="timeline-item education certifications">
+                                    <div class="timeline-bar">
+                                        <div class="timeline-label">Professional<br>Certifications</div>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="item-type education">Certifications</div>
+                                        <div class="item-title">Professional Certifications</div>
+                                        <div class="timeline-date">2024</div>
+                                        <div class="institution">Industry Leading Certifications</div>
+                                        <div class="details">
+                                            Earned key industry certifications to enhance project management and technical expertise while working and teaching.
+                                        </div>
+                                        <div class="specialization">
+                                            <h4>2024 Certifications:</h4>
+                                            <ul>
+                                                <li>Project Management Professional (PMP)</li>
+                                                <li>ITIL 4 Foundation</li>
+                                                <li>Azure Fundamentals (AZ-900)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Work experience items -->
+                                <div class="timeline-item work gov-work">
+                                    <div class="timeline-bar">
+                                        <div class="timeline-label work-label">
+                                            <div class="job-title">Office Coordinator</div>
+                                            <div class="company-name">Government Subcontractor</div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="item-type work">Work Experience</div>
+                                        <div class="institution">Government Subcontractor</div>
+                                        <div class="item-title"><strong>Office Coordinator</strong></div>
+                                        <div class="timeline-date">May 2010 - January 2013</div>
+                                        <div class="details">
+                                            First professional role while completing associate degree. Gained experience in professional communication and government processes.
+                                        </div>
+                                        <div class="work-highlight">
+                                            <h4>Key Skills Developed:</h4>
+                                            <ul>
+                                                <li>Professional office environment</li>
+                                                <li>Government contracting processes</li>
+                                                <li>Time management (work + school)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="timeline-item work big5-work">
+                                    <div class="timeline-bar">
+                                        <div class="timeline-label work-label">
+                                            <div class="job-title">Admin Assistant</div>
+                                            <div class="company-name">Big 5</div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="item-type work">Work Experience</div>
+                                        <div class="institution">Big 5 Sporting Goods</div>
+                                        <div class="item-title"><strong>Administrative Assistant – Executive Office</strong></div>
+                                        <div class="timeline-date">January 2013 - April 2015</div>
+                                        <div class="details">
+                                            Corporate headquarters role supporting executive operations. This experience directly influenced my bachelor's degree focus areas.
+                                        </div>
+                                        <div class="work-highlight">
+                                            <h4>Corporate Insights:</h4>
+                                            <ul>
+                                                <li>Executive-level support</li>
+                                                <li>Retail operations exposure</li>
+                                                <li>Cross-departmental coordination</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="timeline-item work tj-analyst">
+                                    <div class="timeline-bar">
+                                        <div class="timeline-label work-label">
+                                            <div class="job-title">Intern → IT Analyst</div>
+                                            <div class="company-name">Trader Joe's</div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="item-type work">Work Experience</div>
+                                        <div class="institution">Trader Joe's</div>
+                                        <div class="item-title"><strong>Intern → IT Analyst</strong></div>
+                                        <div class="timeline-date">April 2015 - September 2019</div>
+                                        <div class="details">
+                                            Started as intern while finishing bachelor's, promoted to IT Analyst. Applied dual education directly to retail technology systems.
+                                        </div>
+                                        <div class="work-highlight">
+                                            <h4>Career Progression:</h4>
+                                            <ul>
+                                                <li>Intern (Apr-Jun 2015)</li>
+                                                <li>IT Analyst (Jun 2015-Sep 2019)</li>
+                                                <li>Business applications focus</li>
+                                                <li>Retail & HR systems</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="timeline-item work tj-manager">
+                                    <div class="timeline-bar">
+                                        <div class="timeline-label work-label">
+                                            <div class="job-title">IT Manager</div>
+                                            <div class="company-name">Trader Joe's</div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="item-type work">Leadership Role</div>
+                                        <div class="institution">Trader Joe's</div>
+                                        <div class="item-title"><strong>IT Manager, Business Applications</strong></div>
+                                        <div class="timeline-date">September 2019 - August 2025</div>
+                                        <div class="details">
+                                            Led IT projects and teams for nearly 4 years, applying educational foundations. Gained valuable leadership experience before transitioning to education sector.
+                                        </div>
+                                        <div class="work-highlight">
+                                            <h4>Management Achievements:</h4>
+                                            <ul>
+                                                <li>IT project management leadership</li>
+                                                <li>Cross-functional team development</li>
+                                                <li>Strategic system implementations</li>
+                                                <li>Retail & HR application oversight</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="timeline-item work laccd-leader">
+                                    <div class="timeline-bar">
+                                        <div class="timeline-label work-label">
+                                            <div class="job-title">Team Leader</div>
+                                            <div class="company-name">LACCD</div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="item-type work">Current Role</div>
+                                        <div class="institution">Los Angeles Community College District</div>
+                                        <div class="item-title"><strong>Team Leader, Applications Development and Programming</strong></div>
+                                        <div class="timeline-date">August 2025 - Present</div>
+                                        <div class="details">
+                                            Leading applications development and programming initiatives across the LACCD system. Bringing private sector IT management experience to higher education technology.
+                                        </div>
+                                        <div class="work-highlight">
+                                            <h4>Current Responsibilities:</h4>
+                                            <ul>
+                                                <li>Applications development leadership</li>
+                                                <li>Programming team management</li>
+                                                <li>Educational technology solutions</li>
+                                                <li>Cross-campus system integration</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="timeline-item teaching teaching">
+                                    <div class="timeline-bar">
+                                        <div class="timeline-label work-label">
+                                            <div class="job-title">Adjunct Professor</div>
+                                            <div class="company-name">Cal State LA</div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="item-type teaching">Teaching Role</div>
+                                        <div class="institution">California State University, Los Angeles</div>
+                                        <div class="item-title"><strong>Adjunct Professor, Managing IT Projects (Part-Time)</strong></div>
+                                        <div class="timeline-date">January 2023 - Present</div>
+                                        <div class="details">
+                                            Teaching the next generation of IT professionals while continuing full-time management role. Sharing real-world project management experience with students.
+                                        </div>
+                                        <div class="work-highlight">
+                                            <h4>Teaching Excellence:</h4>
+                                            <ul>
+                                                <li>Managing IT Projects course instruction</li>
+                                                <li>Real-world case studies and examples</li>
+                                                <li>Mentoring students in PM careers</li>
+                                                <li>Bridging theory and practice</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="intro">
+                            <h2>From Community College to IT Leadership to Teaching</h2>
+                            <p>This timeline visually demonstrates how education and work experience can overlap and reinforce each other. The yellow highlighted zones show periods where I was simultaneously studying and working, creating powerful synergies between classroom learning and practical application. Now I bring that full-circle experience to teaching the next generation.</p>
+                        </div>
+                        
+                        <div class="insights">
+                            <h3>Key Lessons from This Timeline</h3>
+                            <div class="insights-grid">
+                                <div class="insight-card">
+                                    <span class="insight-icon">⚡</span>
+                                    <div class="insight-title">Overlap = Acceleration</div>
+                                    <div class="insight-text">Working while studying created powerful synergies. I could immediately apply classroom concepts to real business problems, making both more meaningful.</div>
+                                </div>
+                                
+                                <div class="insight-card">
+                                    <span class="insight-icon">🎯</span>
+                                    <div class="insight-title">Experience Informs Education</div>
+                                    <div class="insight-text">My corporate work at Big 5 directly shaped my bachelor's degree choices. Seeing the need for both business and tech knowledge guided my specializations.</div>
+                                </div>
+                                
+                                <div class="insight-card">
+                                    <span class="insight-icon">🚀</span>
+                                    <div class="insight-title">Strategic Timing</div>
+                                    <div class="insight-text">Completing my master's while working as an IT Analyst perfectly positioned me for promotion to IT Manager. Education + experience = opportunity.</div>
+                                </div>
+                                
+                                <div class="insight-card">
+                                    <span class="insight-icon">🎓</span>
+                                    <div class="insight-title">Full Circle to Education</div>
+                                    <div class="insight-text">From community college student to leading technology initiatives at LACCD while teaching at Cal State LA. Bringing real-world IT leadership back to education.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Experience Tab -->
+            <div id="experience" class="tab-panel">
+                <!-- Copy exact styles and content from professional-experience.html -->
+                <div class="container" style="background: transparent; box-shadow: none; border-radius: 0; overflow: visible;">
+                    <div class="header">
+                        <h1>Professional Experience</h1>
+                        <p>IT Leadership & Strategic Technology Management</p>
+                    </div>
+                    
+                    <div class="content">
+                        <div class="experience-section">
+                            <h2 class="section-title">Professional Experience</h2>
+                            
+                            <div class="job-card tj-card">
+                                <div class="job-header">
+                                    <div>
+                                        <div class="job-title">IT Manager, Business Applications – Retail & HR</div>
+                                        <div class="company-name">Trader Joe's Corporate Office | Monrovia, CA</div>
+                                    </div>
+                                    <div class="job-dates">April 2015 – August 2025</div>
+                                </div>
+                                
+                                <div class="job-summary">
+                                    Transformed IT's role at Trader Joe's by shifting from system-first to user-first solutions, ensuring technology aligned with real-world workflows while maintaining the company's strong culture of putting crew members and customers at the heart of every decision. This significantly improved trust between IT and business units, making IT a strategic partner rather than an enforcer of rigid systems.
+                                </div>
+                                
+                                <!-- TJ Photos Gallery -->
+                                <div class="photo-gallery" style="margin: 30px 0;">
+                                    <h4 style="color: #2d5d3b; margin-bottom: 20px; text-align: center; font-size: 18px;">Project Highlights & Team Impact</h4>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                                        <div class="photo-card" style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+                                            <img src="images/TJ_01.jpg" alt="Maria in Trader Joe's uniform" style="width: 100%; height: 200px; object-fit: cover;" loading="lazy">
+                                            <div style="padding: 15px;">
+                                                <h5 style="margin: 0 0 8px 0; color: #2d5d3b; font-size: 16px;">10+ Years at Trader Joe's</h5>
+                                                <p style="margin: 0; color: #666; font-size: 14px; line-height: 1.5;">This photo shows me in my uniform during my decade-plus tenure at Trader Joe's, where I grew from intern to IT Manager.</p>
+                                            </div>
+                                        </div>
+                                        <div class="photo-card" style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+                                            <img src="images/TJ_02.jpg" alt="Annual Meeting Projects" style="width: 100%; height: 200px; object-fit: cover;" loading="lazy">
+                                            <div style="padding: 15px;">
+                                                <h5 style="margin: 0 0 8px 0; color: #2d5d3b; font-size: 16px;">Annual Meeting Projects</h5>
+                                                <p style="margin: 0; color: #666; font-size: 14px; line-height: 1.5;">Presenting key IT initiatives and achievements to company leadership at the annual corporate meeting.</p>
+                                            </div>
+                                        </div>
+                                        <div class="photo-card" style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+                                            <img src="images/TJ_03.jpg" alt="Former Students at TJ" style="width: 100%; height: 200px; object-fit: cover;" loading="lazy">
+                                            <div style="padding: 15px;">
+                                                <h5 style="margin: 0 0 8px 0; color: #2d5d3b; font-size: 16px;">Alumni Success</h5>
+                                                <p style="margin: 0; color: #666; font-size: 14px; line-height: 1.5;">Former students now working in IT roles at Trader Joe's.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="metrics-highlight">
+                                    <h4 style="margin: 0 0 15px 0; color: #2d5d3b; text-align: center;">Overview</h4>
+                                    <div class="metrics-grid">
+                                        <div class="metric-item">
+                                            <span class="metric-number">65,000+</span>
+                                            <div class="metric-label">System Users</div>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-number">7</span>
+                                            <div class="metric-label">Team Members</div>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-number">10+</span>
+                                            <div class="metric-label">Mission-Critical Apps</div>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-number">15+</span>
+                                            <div class="metric-label">Concurrent Projects</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <h3 style="color: #2d5d3b; margin: 30px 0 20px 0; font-size: 20px;">Leadership & Team Management</h3>
+                                <div class="achievements-grid">
+                                    <div class="achievement-item">
+                                        <div class="achievement-title">Cross-Functional Team Leadership</div>
+                                        <div class="achievement-desc">Lead 7-person team (4 Business Systems Analysts, 3 Project Managers/Scrum Masters) who coordinate delivery across OpEx and CapEx portfolios.</div>
+                                    </div>
+                                    
+                                    <div class="achievement-item">
+                                        <div class="achievement-title">Business Relationship Management</div>
+                                        <div class="achievement-desc">Serve as primary IT liaison to department management, building trust through deep understanding of business processes and goals.</div>
+                                    </div>
+                                    
+                                    <div class="achievement-item">
+                                        <div class="achievement-title">Executive Briefings & Strategic Prioritization</div>
+                                        <div class="achievement-desc">Developed and presented steering committee updates to CEO and EVPs, facilitating alignment between IT initiatives and field insights for long-range planning.</div>
+                                    </div>
+                                </div>
+                                
+                                <h3 style="color: #2d5d3b; margin: 30px 0 20px 0; font-size: 20px;">Product & Project Management</h3>
+                                <div class="achievements-grid">
+                                    <div class="achievement-item">
+                                        <div class="achievement-title">Product Ownership & Strategic Roadmap</div>
+                                        <div class="achievement-desc">Serve as Product Owner for 10+ mission-critical applications supporting 65,000+ users. Define and execute IT roadmaps, manage backlog and feature prioritization.</div>
+                                    </div>
+                                    
+                                    <div class="achievement-item">
+                                        <div class="achievement-title">Project Portfolio Management</div>
+                                        <div class="achievement-desc">Oversee 15+ concurrent IT projects and initiatives, ensuring alignment with business objectives, operational efficiency, and timely delivery.</div>
+                                    </div>
+                                    
+                                    <div class="achievement-item">
+                                        <div class="achievement-title">Application Development Management</div>
+                                        <div class="achievement-desc">Oversee offshore and in-house development teams, ensuring SDLC adherence and delivering efficient solutions that enhance customer satisfaction and business outcomes.</div>
+                                    </div>
+                                </div>
+                                
+                                <h3 style="color: #2d5d3b; margin: 30px 0 20px 0; font-size: 20px;">Strategic Technology & Process</h3>
+                                <div class="achievements-grid">
+                                    <div class="achievement-item">
+                                        <div class="achievement-title">Tech-Agnostic Solutioning</div>
+                                        <div class="achievement-desc">Partner with business stakeholders to assess requirements and recommend right-fit technology solutions—custom development or SaaS—ensuring alignment with business objectives.</div>
+                                    </div>
+                                    
+                                    <div class="achievement-item">
+                                        <div class="achievement-title">Agile Transformation & Workflow Optimization</div>
+                                        <div class="achievement-desc">Led Agile transformation, driving adoption of Agile principles and implementing Jira and Confluence to streamline development workflows and enhance collaboration.</div>
+                                    </div>
+                                    
+                                    <div class="achievement-item">
+                                        <div class="achievement-title">Data-Driven Decision Making</div>
+                                        <div class="achievement-desc">Utilize Tableau, Power BI, SQL Server, and PLSQL to generate business intelligence insights for executive stakeholders, improving IT strategy execution.</div>
+                                    </div>
+                                </div>
+                                
+                                <h3 style="color: #2d5d3b; margin: 30px 0 20px 0; font-size: 20px;">Business Operations & Compliance</h3>
+                                <div class="achievements-grid">
+                                    <div class="achievement-item">
+                                        <div class="achievement-title">Vendor Management</div>
+                                        <div class="achievement-desc">Developed strategic partnerships with external vendors and technology partners, ensuring contract negotiations aligned with business growth objectives and product strategy.</div>
+                                    </div>
+                                    
+                                    <div class="achievement-item">
+                                        <div class="achievement-title">Budget Planning & Financial Strategy</div>
+                                        <div class="achievement-desc">Spearhead financial planning for IT initiatives by developing Budget IOs, forecasting costs, and securing executive approvals.</div>
+                                    </div>
+                                    
+                                    <div class="achievement-item">
+                                        <div class="achievement-title">Compliance & Data Privacy</div>
+                                        <div class="achievement-desc">Collaborated with legal counsel to ensure CCPA compliance, building processes for data-inquiry requests.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="job-card laccd-card">
+                                <div class="job-header">
+                                    <div>
+                                        <div class="job-title">Team Leader, Applications Development and Programming</div>
+                                        <div class="company-name">Los Angeles Community College District</div>
+                                    </div>
+                                    <div class="job-dates">August 2025 – Present</div>
+                                </div>
+                                
+                                <div class="job-summary">
+                                    Leading applications development and programming initiatives across the LACCD system, managing a team of 5 professionals while overseeing critical systems that support student success and institutional operations.
+                                </div>
+                                
+                                <div class="metrics-highlight">
+                                    <h4 style="margin: 0 0 15px 0; color: #2d5d3b; text-align: center;">Overview</h4>
+                                    <div class="metrics-grid">
+                                        <div class="metric-item">
+                                            <span class="metric-number">5</span>
+                                            <div class="metric-label">Team Members</div>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-number">9</span>
+                                            <div class="metric-label">Colleges</div>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-number">205,000</span>
+                                            <div class="metric-label">Students</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="achievements-grid">
+                                    <div class="achievement-item">
+                                        <div class="achievement-title">Team Leadership</div>
+                                        <div class="achievement-desc">Manage and develop a team of 3 Programmers and 2 Business Systems Analysts, fostering collaborative development and professional growth.</div>
+                                    </div>
+                                    <div class="achievement-item">
+                                        <div class="achievement-title">Critical Systems Management</div>
+                                        <div class="achievement-desc">Responsible for systems around Admissions and Student Records, ensuring reliable operations that directly impact student success and institutional effectiveness.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="skills-section">
+                            <h2 class="section-title">Core Competencies</h2>
+                            <div class="skills-grid">
+                                <div class="skill-category">
+                                    <span class="skill-icon">👥</span>
+                                    <div class="skill-title">Leadership & Management</div>
+                                    <div class="skill-items">Team Leadership • Cross-Functional Collaboration • Strategic Planning • Executive Communications</div>
+                                </div>
+                                
+                                <div class="skill-category">
+                                    <span class="skill-icon">🚀</span>
+                                    <div class="skill-title">Project & Product Management</div>
+                                    <div class="skill-items">Agile/Scrum • Portfolio Management • Product Ownership • SDLC • Change Management</div>
+                                </div>
+                                
+                                <div class="skill-category">
+                                    <span class="skill-icon">🔧</span>
+                                    <div class="skill-title">Technical Expertise</div>
+                                    <div class="skill-items">SQL Server • PLSQL • Tableau • Power BI • Jira • Confluence • Application Development</div>
+                                </div>
+                                
+                                <div class="skill-category">
+                                    <span class="skill-icon">🤝</span>
+                                    <div class="skill-title">Business Strategy</div>
+                                    <div class="skill-items">Vendor Management • Contract Negotiation • Budget Planning • Compliance • Stakeholder Management</div>
+                                </div>
+                                
+                                <div class="skill-category">
+                                    <span class="skill-icon">📊</span>
+                                    <div class="skill-title">Data & Analytics</div>
+                                    <div class="skill-items">Business Intelligence • Data-Driven Decision Making • Performance Metrics • Strategic Analysis</div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tab panels
+            document.querySelectorAll('.tab-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab panel
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+        
+        // Initialize teacher mode and check permissions
+        function initializeTeacherMode() {
+            // Wait for TeacherManager to be available
+            const waitForTeacherManager = () => {
+                if (window.teacherManager) {
+                    console.log('TeacherManager found, checking teacher mode...');
+                    const isTeacherMode = window.teacherManager.isTeacherMode || 
+                                         document.body.classList.contains('teacher-mode') ||
+                                         sessionStorage.getItem('teacherMode') === 'true';
+                    
+                    console.log('Teacher mode status:', isTeacherMode);
+                    
+                    if (!isTeacherMode) {
+                        console.log('Not in teacher mode, redirecting to index...');
+                        window.location.href = 'index.html';
+                        return;
+                    }
+                    
+                    // Ensure teacher mode is enabled on this page
+                    document.body.classList.add('teacher-mode');
+                    console.log('Teacher mode enabled on instructor profile page');
+                    
+                } else {
+                    console.log('TeacherManager not ready, waiting...');
+                    setTimeout(waitForTeacherManager, 100);
+                }
+            };
+            
+            waitForTeacherManager();
+        }
+        
+        // Initialize when page loads
+        window.addEventListener('DOMContentLoaded', function() {
+            // Initialize teacher mode checking
+            setTimeout(() => {
+                initializeTeacherMode();
+            }, 500);
+        });
+    </script>
+</body>
+</html>

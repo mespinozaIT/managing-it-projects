@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Outline Manager - Managing IT Projects</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
+            min-height: 100vh;
+        }
+        
+        .outline-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--color-surface-primary);
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        
+        .outline-header {
+            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .outline-back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .outline-back-button:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .outline-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 36px;
+            font-weight: bold;
+        }
+        
+        .outline-header p {
+            margin: 0;
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        /* Week Tabs */
+        .week-tabs {
+            display: flex;
+            background: var(--color-surface-secondary);
+            border-bottom: 1px solid var(--color-border-primary);
+            overflow-x: auto;
+            padding: 0 20px;
+        }
+        
+        .week-tab {
+            padding: 15px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            background: none;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+        }
+        
+        .week-tab:hover {
+            background: var(--color-surface-hover);
+            color: var(--color-text-primary);
+        }
+        
+        .week-tab.active {
+            color: var(--color-success);
+            border-bottom-color: var(--color-success);
+            background: var(--color-surface-primary);
+        }
+        
+        /* Main Content Area */
+        .outline-content {
+            padding: 40px;
+            min-height: 600px;
+        }
+        
+        .course-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--color-surface-secondary);
+            border-radius: 10px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            background: var(--color-surface-primary);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--color-success);
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Activity Table */
+        .schedule-table-container {
+            padding: 20px;
+            background: var(--color-surface-secondary);
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--color-surface-primary);
+            box-shadow: var(--shadow-md);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .schedule-table th {
+            background: var(--color-success);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .schedule-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--color-border-primary);
+            vertical-align: middle;
+        }
+        
+        .schedule-table tr:hover {
+            background: var(--color-surface-hover);
+        }
+        
+        .activity-type {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-right: 10px;
+            min-width: 70px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .type-lesson {
+            background: var(--color-surface-info);
+            color: var(--color-info);
+        }
+        
+        .type-activity {
+            background: var(--color-surface-success);
+            color: var(--color-success);
+        }
+        
+        .type-story {
+            background: var(--color-surface-warning);
+            color: var(--color-warning);
+        }
+        
+        .type-admin {
+            background: var(--color-surface-error);
+            color: var(--color-error);
+        }
+        
+        .activity-title {
+            font-weight: 500;
+            color: var(--color-text-primary);
+        }
+        
+        .time-duration {
+            font-weight: bold;
+            color: var(--color-success);
+            text-align: center;
+            font-size: 16px;
+        }
+        
+        .time-range {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            text-align: center;
+        }
+        
+        .total-row {
+            background: var(--color-success) !important;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .total-row td {
+            border-bottom: none;
+            font-size: 16px;
+        }
+        
+        /* Loading State */
+        .loading-content {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--color-text-secondary);
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--color-border-primary);
+            border-top: 4px solid var(--color-success);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .action-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--color-success);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: var(--color-warning);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: var(--color-error);
+            color: white;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .outline-content {
+                padding: 20px;
+            }
+            
+            .week-tabs {
+                padding: 0 10px;
+            }
+            
+            .week-tab {
+                padding: 12px 15px;
+                font-size: 13px;
+            }
+            
+            .course-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .schedule-table {
+                font-size: 14px;
+            }
+            
+            .schedule-table th,
+            .schedule-table td {
+                padding: 8px;
+            }
+            
+            .activity-type {
+                display: block;
+                margin-bottom: 5px;
+                margin-right: 0;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="css/shared-styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/print.css">
+    <!-- Firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+</head>
+<body>
+    <script src="firebase-config.js"></script>
+    <script src="js/course-manager.js"></script>
+    <script src="js/teacher-manager.js"></script>
+    <script src="js/search-system.js"></script>
+    <script src="js/dark-mode.js"></script>
+    
+    <div class="outline-container">
+        <div class="outline-header">
+            <a href="index.html" class="outline-back-button">
+                <span aria-hidden="true">←</span>
+                Back to Course
+            </a>
+            <h1>Course Outline Manager</h1>
+            <p>Managing IT Projects - Complete Course Planning</p>
+        </div>
+        
+        <!-- Week Tabs -->
+        <div class="week-tabs" id="week-tabs">
+            <!-- Tabs will be generated dynamically -->
+        </div>
+        
+        <!-- Main Content -->
+        <div class="outline-content">
+            <!-- Course Statistics -->
+            <div class="course-stats" id="course-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="lesson-stats">0 min (0)</span>
+                    <div class="stat-label">Lessons</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="activity-stats">0 min (0)</span>
+                    <div class="stat-label">Activities</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="story-stats">0 min (0)</span>
+                    <div class="stat-label">Stories</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="total-class-time">0</span>
+                    <div class="stat-label">Total Class Time</div>
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-btn btn-secondary" onclick="outlineManager.toggleEditMode()">
+                    📝 Edit Mode
+                </button>
+                <button class="action-btn btn-primary edit-mode-only" onclick="outlineManager.addNewActivity()" style="display: none;">
+                    ➕ Add Activity
+                </button>
+                <button class="action-btn btn-secondary edit-mode-only" onclick="outlineManager.copyFromWeek()" style="display: none;">
+                    📋 Copy from Week...
+                </button>
+                <button class="action-btn btn-danger edit-mode-only" onclick="outlineManager.resetCurrentWeek()" style="display: none;">
+                    🔄 Reset Week
+                </button>
+            </div>
+            
+            <!-- Week Content Area -->
+            <div id="week-content">
+                <div class="loading-content">
+                    <div class="loading-spinner"></div>
+                    <p>Loading course outlines...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class CourseOutlineManager {
+            constructor() {
+                this.courseManager = new CourseManager();
+                this.teacherManager = new TeacherManager(this.courseManager);
+                this.currentWeek = this.getInitialWeek();
+                this.totalWeeks = 16;
+                this.weekData = new Map();
+                this.editMode = false;
+                this.init();
+            }
+
+            getInitialWeek() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const week = urlParams.get('week');
+                return week ? parseInt(week) : 1;
+            }
+
+            async init() {
+                // Create week tabs
+                this.createWeekTabs();
+                
+                // Load all week data
+                await this.loadAllWeekData();
+                
+                // Display current week
+                this.displayWeek(this.currentWeek);
+                
+                // Update course statistics
+                this.updateCourseStats();
+                
+                // Set up teacher mode checking
+                this.setupTeacherModeCheck();
+            }
+
+            createWeekTabs() {
+                const tabsContainer = document.getElementById('week-tabs');
+                tabsContainer.innerHTML = '';
+                
+                for (let week = 1; week <= this.totalWeeks; week++) {
+                    const tab = document.createElement('button');
+                    tab.className = `week-tab ${week === this.currentWeek ? 'active' : ''}`;
+                    tab.textContent = `Week ${week}`;
+                    tab.addEventListener('click', () => this.switchToWeek(week));
+                    tabsContainer.appendChild(tab);
+                }
+            }
+
+            async loadAllWeekData() {
+                console.log('Loading all week data...');
+                
+                for (let week = 1; week <= this.totalWeeks; week++) {
+                    try {
+                        const outlineId = `week-${week}-outline`;
+                        const snapshot = await this.courseManager.database.ref(`outlines/${outlineId}`).once('value');
+                        
+                        if (snapshot.exists()) {
+                            this.weekData.set(week, snapshot.val());
+                        } else {
+                            // Create default template for this week
+                            const template = this.createWeekTemplate(week);
+                            this.weekData.set(week, template);
+                        }
+                    } catch (error) {
+                        console.warn(`Failed to load Week ${week}:`, error);
+                        // Create default template as fallback
+                        const template = this.createWeekTemplate(week);
+                        this.weekData.set(week, template);
+                    }
+                }
+            }
+
+            createWeekTemplate(weekNumber) {
+                if (weekNumber === 1) {
+                    return {
+                        id: `week-${weekNumber}-outline`,
+                        weekNumber: weekNumber,
+                        title: `Week ${weekNumber} Class Outline`,
+                        subtitle: `Managing IT Projects - Week ${weekNumber} Topics`,
+                        activities: [
+                            {
+                                type: 'Admin',
+                                title: 'Class Introduction | Expectations and Syllabus',
+                                duration: 20,
+                                timeRange: 'Start: 6:00 PM',
+                                pageLink: 'course-syllabus.html',
+                                order: 0
+                            },
+                            {
+                                type: 'Admin',
+                                title: 'Teacher Intro | Journey & Resume',
+                                duration: 15,
+                                timeRange: 'Check: 6:20 PM',
+                                pageLink: 'journey.html',
+                                order: 1
+                            },
+                            {
+                                type: 'Lesson',
+                                title: 'Intro to Project Management : Project Definition',
+                                duration: 10,
+                                timeRange: 'Check: 6:35 PM',
+                                pageLink: 'project-definition.html',
+                                order: 2
+                            },
+                            {
+                                type: 'Activity',
+                                title: 'Week 1 | Activity 1 | Examples of Projects & Short Discussion',
+                                duration: 15,
+                                timeRange: 'Check: 6:45 PM',
+                                pageLink: '',
+                                order: 3
+                            },
+                            {
+                                type: 'Story',
+                                title: 'Intro to Project Management : Project Definition : My Examples',
+                                duration: 10,
+                                timeRange: 'Check: 7:00 PM',
+                                pageLink: 'professors-projects-stories.html',
+                                order: 4
+                            },
+                            {
+                                type: 'Lesson',
+                                title: 'Intro to Project Management : Project Management',
+                                duration: 10,
+                                timeRange: 'Check: 7:10 PM',
+                                pageLink: 'project-management-definition.html',
+                                order: 5
+                            },
+                            {
+                                type: 'Lesson',
+                                title: 'Intro to Project Management : Project Manager',
+                                duration: 10,
+                                timeRange: 'Check: 7:20 PM',
+                                pageLink: 'project-manager-role.html',
+                                order: 6
+                            },
+                            {
+                                type: 'Story',
+                                title: 'Intro to Project Management : Project Manager : Am I?',
+                                duration: 5,
+                                timeRange: 'Check: 7:30 PM',
+                                pageLink: 'professional-experience.html',
+                                order: 7
+                            },
+                            {
+                                type: 'Activity',
+                                title: 'Week 1 | Activity 2 | Project Manager Job Posting',
+                                duration: 15,
+                                timeRange: 'Check: 7:35 PM',
+                                pageLink: '',
+                                order: 8
+                            },
+                            {
+                                type: 'Lesson',
+                                title: 'Intro to Project Management : PMO',
+                                duration: 10,
+                                timeRange: 'Check: 7:50 PM',
+                                pageLink: 'project-management-office-definition.html',
+                                order: 9
+                            },
+                            {
+                                type: 'Lesson',
+                                title: 'Intro to Project Management : PMI & PMBOK',
+                                duration: 10,
+                                timeRange: 'Check: 8:00 PM',
+                                pageLink: 'PMI.html',
+                                order: 10
+                            },
+                            {
+                                type: 'Activity',
+                                title: 'Week 1 | Activity 3 | Browse Website',
+                                duration: 15,
+                                timeRange: 'Check: 8:10 PM',
+                                pageLink: '',
+                                order: 11
+                            }
+                        ],
+                        lastModified: Date.now(),
+                        version: '1.0'
+                    };
+                } else {
+                    return {
+                        id: `week-${weekNumber}-outline`,
+                        weekNumber: weekNumber,
+                        title: `Week ${weekNumber} Class Outline`,
+                        subtitle: `Managing IT Projects - Week ${weekNumber} Topics`,
+                        activities: [],
+                        lastModified: Date.now(),
+                        version: '1.0'
+                    };
+                }
+            }
+
+            switchToWeek(weekNumber) {
+                this.currentWeek = weekNumber;
+                
+                // Update URL without reload
+                const url = new URL(window.location);
+                url.searchParams.set('week', weekNumber);
+                window.history.pushState({}, '', url);
+                
+                // Update active tab
+                document.querySelectorAll('.week-tab').forEach((tab, index) => {
+                    tab.classList.toggle('active', index + 1 === weekNumber);
+                });
+                
+                // Display week content
+                this.displayWeek(weekNumber);
+            }
+
+            displayWeek(weekNumber) {
+                const weekData = this.weekData.get(weekNumber);
+                if (!weekData) {
+                    console.error(`No data for week ${weekNumber}`);
+                    return;
+                }
+
+                const contentArea = document.getElementById('week-content');
+                
+                contentArea.innerHTML = `
+                    <div class="schedule-table-container">
+                        <h2 style="margin: 0 0 20px 0; color: var(--color-success);">
+                            ${weekData.title}
+                        </h2>
+                        <table class="schedule-table">
+                            <thead>
+                                <tr>
+                                    <th>Activity</th>
+                                    <th style="width: 80px;">Time</th>
+                                    <th style="width: 140px;">Pace Marker</th>
+                                    <th style="width: 180px;">Page Link</th>
+                                </tr>
+                            </thead>
+                            <tbody id="activities-tbody">
+                                ${this.generateActivityRows(weekData.activities)}
+                                <tr class="total-row">
+                                    <td><strong>Total Class Time</strong></td>
+                                    <td><strong id="total-duration">0</strong></td>
+                                    <td><strong id="end-time">End: 6:00 PM</strong></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+
+                // Calculate times and stats
+                this.calculateTimesAndTotal();
+                this.updateWeekStats(weekNumber);
+            }
+
+            generateActivityRows(activities) {
+                return activities
+                    .sort((a, b) => a.order - b.order)
+                    .map(activity => `
+                        <tr draggable="true" data-activity-order="${activity.order}">
+                            <td>
+                                <span class="activity-type ${this.getActivityTypeClass(activity.type)}">${activity.type}</span>
+                                <span class="activity-title">${activity.title}</span>
+                            </td>
+                            <td class="time-duration">${activity.duration}</td>
+                            <td class="time-range">${activity.timeRange}</td>
+                            <td class="page-link">${this.formatPageLink(activity.pageLink || '')}</td>
+                        </tr>
+                    `).join('');
+            }
+
+            formatPageLink(pageLink) {
+                if (!pageLink) {
+                    return '<span style="color: #999; font-style: italic;">No page assigned</span>';
+                }
+                return `<a href="${pageLink}" target="_blank" style="color: #007bff; text-decoration: none;">${pageLink}</a>`;
+            }
+
+            extractPageLinkFromCell(cell) {
+                const link = cell.querySelector('a');
+                if (link) {
+                    return link.textContent;
+                }
+                return '';
+            }
+
+            generatePageLinkOptions(selectedPage = '') {
+                const pages = [
+                    '',
+                    'class-expectations.html',
+                    'course-syllabus.html',
+                    'instructor-profile.html',
+                    'professional-experience.html',
+                    'professors-projects-stories.html',
+                    'project-definition.html',
+                    'case-study.html',
+                    'journey.html',
+                    'project-manager-role.html',
+                    'project-management-office-definition.html',
+                    'PMI.html',
+                    'week-1-quiz.html',
+                    'week-1-summary.html',
+                    'project-management-definition.html'
+                ];
+                
+                return pages.map(page => {
+                    const displayText = page || 'No page assigned';
+                    const selected = page === selectedPage ? 'selected' : '';
+                    return `<option value="${page}" ${selected}>${displayText}</option>`;
+                }).join('');
+            }
+
+            getActivityTypeClass(type) {
+                switch(type.toLowerCase()) {
+                    case 'lesson': return 'type-lesson';
+                    case 'activity': return 'type-activity';
+                    case 'story': return 'type-story';
+                    case 'admin': return 'type-admin';
+                    case 'intro': return 'type-admin';
+                    case 'wrap-up': return 'type-admin';
+                    default: return 'type-lesson';
+                }
+            }
+
+            calculateTimesAndTotal() {
+                const rows = document.querySelectorAll('#activities-tbody tr:not(.total-row)');
+                let currentTime = new Date();
+                currentTime.setHours(18, 0, 0, 0); // Start at 6:00 PM
+                let totalMinutes = 0;
+                
+                rows.forEach((row, index) => {
+                    const durationElement = row.querySelector('.time-duration');
+                    const timeRangeElement = row.querySelector('.time-range');
+                    
+                    if (durationElement && timeRangeElement) {
+                        const duration = parseInt(durationElement.textContent.trim()) || 0;
+                        
+                        const timeString = currentTime.toLocaleTimeString('en-US', { 
+                            hour: 'numeric', 
+                            minute: '2-digit',
+                            hour12: true 
+                        });
+                        
+                        if (index === 0) {
+                            timeRangeElement.textContent = `Start: ${timeString}`;
+                        } else {
+                            timeRangeElement.textContent = `Check: ${timeString}`;
+                        }
+                        
+                        currentTime.setMinutes(currentTime.getMinutes() + duration);
+                        totalMinutes += duration;
+                    }
+                });
+                
+                // Update total row
+                const totalDuration = document.getElementById('total-duration');
+                const endTime = document.getElementById('end-time');
+                
+                if (totalDuration) totalDuration.textContent = totalMinutes;
+                if (endTime) {
+                    const endTimeObj = new Date();
+                    endTimeObj.setHours(18, 0, 0, 0);
+                    endTimeObj.setMinutes(endTimeObj.getMinutes() + totalMinutes);
+                    const endTimeString = endTimeObj.toLocaleTimeString('en-US', { 
+                        hour: 'numeric', 
+                        minute: '2-digit',
+                        hour12: true 
+                    });
+                    endTime.textContent = `End: ${endTimeString}`;
+                }
+            }
+
+            updateWeekStats(weekNumber) {
+                const weekData = this.weekData.get(weekNumber);
+                if (!weekData || !weekData.activities) return;
+
+                let lessonMinutes = 0, lessonCount = 0;
+                let activityMinutes = 0, activityCount = 0;
+                let storyMinutes = 0, storyCount = 0;
+
+                weekData.activities.forEach(activity => {
+                    const type = activity.type.toLowerCase();
+                    switch(type) {
+                        case 'lesson':
+                            lessonMinutes += activity.duration;
+                            lessonCount++;
+                            break;
+                        case 'activity':
+                            activityMinutes += activity.duration;
+                            activityCount++;
+                            break;
+                        case 'story':
+                            storyMinutes += activity.duration;
+                            storyCount++;
+                            break;
+                    }
+                });
+
+                // Update current week stats in the display
+                const totalMinutes = weekData.activities.reduce((sum, activity) => sum + activity.duration, 0);
+                document.getElementById('total-class-time').textContent = totalMinutes;
+                document.getElementById('lesson-stats').textContent = `${lessonMinutes} min (${lessonCount})`;
+                document.getElementById('activity-stats').textContent = `${activityMinutes} min (${activityCount})`;
+                document.getElementById('story-stats').textContent = `${storyMinutes} min (${storyCount})`;
+            }
+
+            updateCourseStats() {
+                let totalLessonMinutes = 0, totalLessonCount = 0;
+                let totalActivityMinutes = 0, totalActivityCount = 0;
+                let totalStoryMinutes = 0, totalStoryCount = 0;
+                let totalClassTime = 0;
+
+                this.weekData.forEach(weekData => {
+                    if (weekData.activities) {
+                        weekData.activities.forEach(activity => {
+                            const type = activity.type.toLowerCase();
+                            totalClassTime += activity.duration;
+                            
+                            switch(type) {
+                                case 'lesson':
+                                    totalLessonMinutes += activity.duration;
+                                    totalLessonCount++;
+                                    break;
+                                case 'activity':
+                                    totalActivityMinutes += activity.duration;
+                                    totalActivityCount++;
+                                    break;
+                                case 'story':
+                                    totalStoryMinutes += activity.duration;
+                                    totalStoryCount++;
+                                    break;
+                            }
+                        });
+                    }
+                });
+
+                document.getElementById('lesson-stats').textContent = `${totalLessonMinutes} min (${totalLessonCount})`;
+                document.getElementById('activity-stats').textContent = `${totalActivityMinutes} min (${totalActivityCount})`;
+                document.getElementById('story-stats').textContent = `${totalStoryMinutes} min (${totalStoryCount})`;
+                document.getElementById('total-class-time').textContent = totalClassTime;
+            }
+
+            setupTeacherModeCheck() {
+                // Wait for teacher manager to be available
+                const checkTeacherManager = () => {
+                    if (window.teacherManager) {
+                        // Only show if in teacher mode
+                        if (!window.teacherManager.isTeacherMode) {
+                            // Redirect back to index if not in teacher mode
+                            window.location.href = 'index.html';
+                        }
+                    } else {
+                        setTimeout(checkTeacherManager, 100);
+                    }
+                };
+                checkTeacherManager();
+            }
+
+            // Activity Management Methods
+            addNewActivity() {
+                const weekData = this.weekData.get(this.currentWeek);
+                if (!weekData) return;
+
+                const newActivity = {
+                    type: 'Lesson',
+                    title: '',
+                    duration: 15,
+                    timeRange: 'TBD',
+                    pageLink: '',
+                    order: weekData.activities.length
+                };
+
+                weekData.activities.push(newActivity);
+                this.weekData.set(this.currentWeek, weekData);
+                
+                if (this.editMode) {
+                    // In edit mode, add the new row without exiting edit mode
+                    this.addNewRowInEditMode(newActivity);
+                    this.calculateTimesAndTotal();
+                    this.updateWeekStats(this.currentWeek);
+                } else {
+                    // Regular mode - refresh display
+                    this.displayWeek(this.currentWeek);
+                }
+                
+                this.saveWeekToDatabase(this.currentWeek);
+                this.showSaveIndicator('Activity added');
+            }
+
+            addNewRowInEditMode(activity) {
+                const tbody = document.getElementById('activities-tbody');
+                const totalRow = tbody.querySelector('.total-row');
+                
+                // Create new row
+                const newRow = document.createElement('tr');
+                newRow.draggable = true;
+                newRow.setAttribute('data-activity-order', activity.order);
+                
+                newRow.innerHTML = `
+                    <td>
+                        <span class="activity-type ${this.getActivityTypeClass(activity.type)}">${activity.type}</span>
+                        <span class="activity-title">${activity.title}</span>
+                    </td>
+                    <td class="time-duration">${activity.duration}</td>
+                    <td class="time-range">${activity.timeRange}</td>
+                    <td class="page-link">${this.formatPageLink(activity.pageLink || '')}</td>
+                `;
+                
+                // Insert before total row
+                tbody.insertBefore(newRow, totalRow);
+                
+                // Apply edit mode formatting to the new row
+                this.applyEditModeToRow(newRow);
+            }
+
+            applyEditModeToRow(row) {
+                const typeElement = row.querySelector('.activity-type');
+                const titleElement = row.querySelector('.activity-title');
+                const durationCell = row.querySelector('.time-duration');
+                const firstCell = row.querySelector('td');
+                
+                if (!firstCell) return;
+                
+                // Create container for title
+                const titleContainer = document.createElement('div');
+                titleContainer.style.cssText = 'display: flex; flex-direction: column; width: 100%;';
+                
+                // Make title editable (goes first)
+                if (titleElement) {
+                    const currentTitle = titleElement.textContent.trim();
+                    const titleInput = document.createElement('input');
+                    titleInput.type = 'text';
+                    titleInput.value = currentTitle;
+                    titleInput.style.cssText = 'width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 3px; font-size: 14px; margin-bottom: 4px;';
+                    titleInput.setAttribute('data-original-element', 'activity-title');
+                    titleContainer.appendChild(titleInput);
+                }
+                
+                // Create controls row (delete button + type dropdown + up/down buttons)
+                const controlsRow = document.createElement('div');
+                controlsRow.style.cssText = 'display: flex; align-items: center; gap: 8px;';
+                
+                // Add delete button
+                if (!firstCell.querySelector('.delete-row-btn')) {
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'delete-row-btn';
+                    deleteBtn.innerHTML = '🗑️';
+                    deleteBtn.style.cssText = `
+                        background: #dc3545;
+                        color: white;
+                        border: none;
+                        border-radius: 3px;
+                        padding: 4px 6px;
+                        font-size: 12px;
+                        cursor: pointer;
+                        flex-shrink: 0;
+                    `;
+                    deleteBtn.title = 'Delete this row';
+                    deleteBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.deleteActivityRow(row);
+                    });
+                    controlsRow.appendChild(deleteBtn);
+                }
+                
+                // Make type editable with select
+                if (typeElement) {
+                    const currentType = typeElement.textContent.trim();
+                    const select = document.createElement('select');
+                    select.style.cssText = 'padding: 4px; border: 1px solid #ddd; border-radius: 3px; font-size: 11px; flex-shrink: 0;';
+                    select.innerHTML = `
+                        <option value="Admin" ${currentType === 'Admin' ? 'selected' : ''}>Admin</option>
+                        <option value="Intro" ${currentType === 'Intro' ? 'selected' : ''}>Intro</option>
+                        <option value="Lesson" ${currentType === 'Lesson' ? 'selected' : ''}>Lesson</option>
+                        <option value="Activity" ${currentType === 'Activity' ? 'selected' : ''}>Activity</option>
+                        <option value="Story" ${currentType === 'Story' ? 'selected' : ''}>Story</option>
+                        <option value="Break" ${currentType === 'Break' ? 'selected' : ''}>Break</option>
+                        <option value="Wrap-up" ${currentType === 'Wrap-up' ? 'selected' : ''}>Wrap-up</option>
+                    `;
+                    select.setAttribute('data-original-element', 'activity-type');
+                    controlsRow.appendChild(select);
+                }
+                
+                // Add up/down buttons for reordering
+                const upBtn = document.createElement('button');
+                upBtn.className = 'move-up-btn';
+                upBtn.innerHTML = '⬆️';
+                upBtn.style.cssText = `
+                    background: #6c757d;
+                    color: white;
+                    border: none;
+                    border-radius: 3px;
+                    padding: 4px 6px;
+                    font-size: 12px;
+                    cursor: pointer;
+                    flex-shrink: 0;
+                `;
+                upBtn.title = 'Move up';
+                upBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.moveActivityUp(row);
+                });
+                controlsRow.appendChild(upBtn);
+                
+                const downBtn = document.createElement('button');
+                downBtn.className = 'move-down-btn';
+                downBtn.innerHTML = '⬇️';
+                downBtn.style.cssText = `
+                    background: #6c757d;
+                    color: white;
+                    border: none;
+                    border-radius: 3px;
+                    padding: 4px 6px;
+                    font-size: 12px;
+                    cursor: pointer;
+                    flex-shrink: 0;
+                `;
+                downBtn.title = 'Move down';
+                downBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.moveActivityDown(row);
+                });
+                controlsRow.appendChild(downBtn);
+                
+                titleContainer.appendChild(controlsRow);
+                
+                // Replace the original content with our new structure
+                firstCell.innerHTML = '';
+                firstCell.appendChild(titleContainer);
+                
+                // Remove the original elements since they're now replaced
+                if (typeElement) typeElement.remove();
+                if (titleElement) titleElement.remove();
+                
+                // Make duration editable
+                if (durationCell) {
+                    const currentDuration = durationCell.textContent.trim();
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.value = currentDuration;
+                    input.min = '1';
+                    input.style.cssText = 'width: 60px; padding: 4px; border: 1px solid #ddd; border-radius: 3px; font-size: 14px; text-align: center;';
+                    input.setAttribute('data-original-element', 'time-duration');
+                    
+                    durationCell.innerHTML = '';
+                    durationCell.appendChild(input);
+                }
+
+                // Make page link editable
+                const pageLinkCell = row.querySelector('.page-link');
+                if (pageLinkCell) {
+                    const currentPageLink = this.extractPageLinkFromCell(pageLinkCell);
+                    const select = document.createElement('select');
+                    select.style.cssText = 'width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 3px; font-size: 14px;';
+                    select.innerHTML = this.generatePageLinkOptions(currentPageLink);
+                    select.setAttribute('data-original-element', 'page-link');
+                    
+                    pageLinkCell.innerHTML = '';
+                    pageLinkCell.appendChild(select);
+                }
+            }
+
+            toggleEditMode() {
+                this.editMode = !this.editMode;
+                const button = document.querySelector('.action-btn.btn-secondary');
+                const editModeButtons = document.querySelectorAll('.edit-mode-only');
+                
+                if (this.editMode) {
+                    this.enterEditMode();
+                    button.innerHTML = '💾 Save Changes';
+                    button.style.background = 'var(--color-success)';
+                    
+                    // Show edit mode buttons
+                    editModeButtons.forEach(btn => btn.style.display = 'flex');
+                } else {
+                    this.exitEditMode();
+                    button.innerHTML = '📝 Edit Mode';
+                    button.style.background = 'var(--color-warning)';
+                    
+                    // Hide edit mode buttons
+                    editModeButtons.forEach(btn => btn.style.display = 'none');
+                }
+            }
+
+            enterEditMode() {
+                document.body.classList.add('edit-mode');
+                
+                // Make all activity cells editable
+                const rows = document.querySelectorAll('#activities-tbody tr:not(.total-row)');
+                rows.forEach(row => {
+                    this.applyEditModeToRow(row);
+                });
+                
+                this.showSaveIndicator('Edit mode enabled');
+            }
+
+            exitEditMode() {
+                document.body.classList.remove('edit-mode');
+                
+                // Convert all inputs back to display elements
+                const rows = document.querySelectorAll('#activities-tbody tr:not(.total-row)');
+                rows.forEach(row => {
+                    const firstCell = row.querySelector('td');
+                    if (!firstCell) return;
+                    
+                    // Get values from the edit mode inputs
+                    const titleInput = row.querySelector('input[data-original-element="activity-title"]');
+                    const typeSelect = row.querySelector('select[data-original-element="activity-type"]');
+                    const durationInput = row.querySelector('input[data-original-element="time-duration"]');
+                    const pageLinkSelect = row.querySelector('select[data-original-element="page-link"]');
+                    
+                    const titleValue = titleInput ? titleInput.value : '';
+                    const typeValue = typeSelect ? typeSelect.value : 'Lesson';
+                    const durationValue = durationInput ? durationInput.value : '15';
+                    const pageLinkValue = pageLinkSelect ? pageLinkSelect.value : '';
+                    
+                    // Rebuild the cell with normal display format
+                    firstCell.innerHTML = `
+                        <span class="activity-type ${this.getActivityTypeClass(typeValue)}">${typeValue}</span>
+                        <span class="activity-title">${titleValue}</span>
+                    `;
+                    
+                    // Handle duration cell
+                    if (durationInput) {
+                        const durationCell = durationInput.closest('td');
+                        durationCell.innerHTML = '';
+                        durationCell.textContent = durationValue;
+                        durationCell.className = 'time-duration';
+                    }
+                    
+                    // Handle page link cell
+                    if (pageLinkSelect) {
+                        const pageLinkCell = pageLinkSelect.closest('td');
+                        pageLinkCell.innerHTML = this.formatPageLink(pageLinkValue);
+                        pageLinkCell.className = 'page-link';
+                    }
+                });
+                
+                // Update the week data with changes
+                this.updateWeekDataFromDOM();
+                
+                // Recalculate times and save all changes
+                this.calculateTimesAndTotal();
+                this.saveWeekToDatabase(this.currentWeek);
+                this.updateCourseStats();
+                
+                this.showSaveIndicator('All changes saved');
+            }
+
+            updateWeekDataFromDOM() {
+                const weekData = this.weekData.get(this.currentWeek);
+                if (!weekData) return;
+
+                const rows = document.querySelectorAll('#activities-tbody tr:not(.total-row)');
+                const updatedActivities = [];
+
+                rows.forEach((row, index) => {
+                    const typeElement = row.querySelector('.activity-type');
+                    const titleElement = row.querySelector('.activity-title');
+                    const durationElement = row.querySelector('.time-duration');
+                    const timeRangeElement = row.querySelector('.time-range');
+                    const pageLinkElement = row.querySelector('.page-link');
+
+                    if (typeElement && titleElement && durationElement && timeRangeElement) {
+                        const pageLinkValue = pageLinkElement ? this.extractPageLinkFromCell(pageLinkElement) : '';
+                        
+                        updatedActivities.push({
+                            type: typeElement.textContent.trim(),
+                            title: titleElement.textContent.trim(),
+                            duration: parseInt(durationElement.textContent.trim()) || 0,
+                            timeRange: timeRangeElement.textContent.trim(),
+                            pageLink: pageLinkValue,
+                            order: index
+                        });
+                    }
+                });
+
+                weekData.activities = updatedActivities;
+                weekData.lastModified = Date.now();
+                this.weekData.set(this.currentWeek, weekData);
+            }
+
+            async saveWeekToDatabase(weekNumber) {
+                const weekData = this.weekData.get(weekNumber);
+                if (!weekData) return;
+
+                // Save directly to Firebase database
+                try {
+                    await this.courseManager.database.ref(`outlines/${weekData.id}`).set(weekData);
+                    console.log(`Week ${weekNumber} saved to database`);
+                    this.showSaveIndicator(`Week ${weekNumber} saved`);
+                } catch (error) {
+                    console.error(`Failed to save Week ${weekNumber} to database:`, error);
+                    this.showSaveIndicator(`Save failed: ${error.message}`, 'error');
+                }
+            }
+
+            copyFromWeek() {
+                const sourceWeek = prompt(`Copy activities from which week? (1-${this.totalWeeks})`);
+                const weekNum = parseInt(sourceWeek);
+                
+                if (weekNum >= 1 && weekNum <= this.totalWeeks && weekNum !== this.currentWeek) {
+                    const sourceData = this.weekData.get(weekNum);
+                    const targetData = this.weekData.get(this.currentWeek);
+                    
+                    if (sourceData && targetData) {
+                        // Copy activities but update titles to current week
+                        const copiedActivities = sourceData.activities.map(activity => ({
+                            ...activity,
+                            title: activity.title.replace(`Week ${weekNum}`, `Week ${this.currentWeek}`)
+                        }));
+                        
+                        targetData.activities = copiedActivities;
+                        targetData.lastModified = Date.now();
+                        
+                        this.weekData.set(this.currentWeek, targetData);
+                        this.displayWeek(this.currentWeek);
+                        this.saveWeekToDatabase(this.currentWeek);
+                        this.showSaveIndicator(`Copied from Week ${weekNum}`);
+                    }
+                } else if (sourceWeek !== null) {
+                    alert('Invalid week number');
+                }
+            }
+
+            resetCurrentWeek() {
+                if (confirm(`Reset Week ${this.currentWeek} to default template?`)) {
+                    const template = this.createWeekTemplate(this.currentWeek);
+                    this.weekData.set(this.currentWeek, template);
+                    this.displayWeek(this.currentWeek);
+                    this.saveWeekToDatabase(this.currentWeek);
+                    this.showSaveIndicator(`Week ${this.currentWeek} reset to template`);
+                }
+            }
+
+            deleteActivityRow(row) {
+                if (confirm('Are you sure you want to delete this activity?')) {
+                    // Add fade-out animation
+                    row.style.transition = 'opacity 0.3s ease';
+                    row.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        row.remove();
+                        
+                        // Update the week data immediately after removing the row
+                        this.updateWeekDataFromDOM();
+                        
+                        // Recalculate times and totals
+                        this.calculateTimesAndTotal();
+                        this.updateWeekStats(this.currentWeek);
+                        
+                        this.showSaveIndicator('Activity deleted');
+                    }, 300);
+                }
+            }
+
+            moveActivityUp(row) {
+                const previousRow = row.previousElementSibling;
+                if (previousRow && !previousRow.classList.contains('total-row')) {
+                    row.parentNode.insertBefore(row, previousRow);
+                    this.updateWeekDataFromDOM();
+                    this.calculateTimesAndTotal();
+                    this.updateWeekStats(this.currentWeek);
+                    this.showSaveIndicator('Activity moved up');
+                }
+            }
+
+            moveActivityDown(row) {
+                const nextRow = row.nextElementSibling;
+                if (nextRow && !nextRow.classList.contains('total-row')) {
+                    row.parentNode.insertBefore(nextRow, row);
+                    this.updateWeekDataFromDOM();
+                    this.calculateTimesAndTotal();
+                    this.updateWeekStats(this.currentWeek);
+                    this.showSaveIndicator('Activity moved down');
+                }
+            }
+
+            showSaveIndicator(message, type = 'success') {
+                // Remove any existing indicator
+                const existing = document.querySelector('.save-indicator');
+                if (existing) existing.remove();
+                
+                const indicator = document.createElement('div');
+                indicator.className = 'save-indicator';
+                indicator.textContent = message;
+                indicator.style.cssText = `
+                    position: fixed;
+                    top: 80px;
+                    right: 20px;
+                    background: ${type === 'error' ? '#dc3545' : '#28a745'};
+                    color: white;
+                    padding: 8px 15px;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    z-index: 10001;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                `;
+                
+                document.body.appendChild(indicator);
+                
+                // Fade in
+                setTimeout(() => indicator.style.opacity = '1', 10);
+                
+                // Fade out and remove
+                setTimeout(() => {
+                    indicator.style.opacity = '0';
+                    setTimeout(() => {
+                        if (indicator.parentNode) {
+                            indicator.parentNode.removeChild(indicator);
+                        }
+                    }, 300);
+                }, 2000);
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Teacher Manager first
+            if (!window.teacherManager) {
+                window.teacherManager = new TeacherManager(new CourseManager());
+            }
+            
+            // Initialize the outline manager after teacher manager is ready
+            setTimeout(() => {
+                window.outlineManager = new CourseOutlineManager();
+            }, 1000);
+        });
+    </script>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div style="text-align: center;">
+            <div class="loading-spinner"></div>
+            <div class="loading-text" id="loading-text">Loading...</div>
+        </div>
+    </div>
+</body>
+</html>

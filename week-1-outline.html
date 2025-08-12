@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 1 Class Outline - Managing IT Projects</title>
+    <link rel="stylesheet" href="css/design-system.css">
     <style>
+        /* Week outline styles - preserve teacher mode functionality */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
             background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
             min-height: 100vh;
-            line-height: 1.6;
         }
         
-        .container {
+        .outline-container {
             max-width: 1200px;
             margin: 0 auto;
-            background: white;
+            background: var(--color-surface-primary);
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: var(--shadow-lg);
             overflow: hidden;
         }
         
-        .header {
+        .outline-header {
             background: linear-gradient(135deg, #2d5d3b, #4a7c59);
             color: white;
             padding: 40px;
@@ -31,7 +31,33 @@
             position: relative;
         }
         
-        .header::before {
+        .outline-back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .outline-back-button:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .outline-header::before {
             content: '';
             position: absolute;
             top: 0;
@@ -41,7 +67,7 @@
             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
         }
         
-        .header h1 {
+        .outline-header h1 {
             margin: 0 0 10px 0;
             font-size: 36px;
             font-weight: bold;
@@ -49,7 +75,7 @@
             z-index: 1;
         }
         
-        .header p {
+        .outline-header p {
             margin: 0;
             font-size: 18px;
             opacity: 0.9;
@@ -57,7 +83,7 @@
             z-index: 1;
         }
         
-        .content {
+        .outline-content {
             padding: 40px;
         }
         
@@ -66,7 +92,7 @@
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             margin-bottom: 40px;
-            background: #f8f9fa;
+            background: var(--color-surface-secondary);
             padding: 20px;
             border-radius: 10px;
         }
@@ -74,14 +100,14 @@
         .info-item {
             text-align: center;
             padding: 15px;
-            background: white;
+            background: var(--color-surface-primary);
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-sm);
         }
         
         .info-label {
             font-size: 14px;
-            color: #666;
+            color: var(--color-text-secondary);
             margin-bottom: 5px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -90,21 +116,28 @@
         .info-value {
             font-size: 18px;
             font-weight: bold;
-            color: #2d5d3b;
+            color: var(--color-success);
         }
         
         .schedule-table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: var(--color-surface-primary);
+            box-shadow: var(--shadow-md);
             border-radius: 10px;
             overflow: hidden;
             margin-bottom: 30px;
         }
         
+        .schedule-table-container {
+            padding: 20px;
+            background: var(--color-surface-secondary);
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
         .schedule-table th {
-            background: #2d5d3b;
+            background: var(--color-success);
             color: white;
             padding: 15px;
             text-align: left;
@@ -114,72 +147,74 @@
         
         .schedule-table td {
             padding: 12px 15px;
-            border-bottom: 1px solid #e9ecef;
+            border-bottom: 1px solid var(--color-border-primary);
             vertical-align: middle;
         }
         
         .schedule-table tr:hover {
-            background: #f8f9fa;
+            background: var(--color-surface-hover);
         }
         
         .activity-type {
             display: inline-block;
-            padding: 4px 12px;
+            padding: 6px 12px;
             border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
+            font-size: 11px;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-right: 10px;
-            min-width: 60px;
+            min-width: 70px;
             text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
         }
         
         .type-lesson {
-            background: #e8f4fd;
-            color: #2980b9;
+            background: var(--color-surface-info);
+            color: var(--color-info);
         }
         
         .type-activity {
-            background: #d4edda;
-            color: #155724;
+            background: var(--color-surface-success);
+            color: var(--color-success);
         }
         
         .type-story {
-            background: #fff3cd;
-            color: #856404;
+            background: var(--color-surface-warning);
+            color: var(--color-warning);
         }
         
         .type-admin {
-            background: #f8d7da;
-            color: #721c24;
+            background: var(--color-surface-error);
+            color: var(--color-error);
         }
         
         .type-homework {
-            background: #e2e3e5;
-            color: #383d41;
+            background: var(--color-surface-secondary);
+            color: var(--color-text-primary);
         }
         
         .activity-title {
             font-weight: 500;
-            color: #333;
+            color: var(--color-text-primary);
         }
         
         .time-duration {
             font-weight: bold;
-            color: #2d5d3b;
+            color: var(--color-success);
             text-align: center;
             font-size: 16px;
         }
         
         .time-range {
             font-size: 14px;
-            color: #666;
+            color: var(--color-text-secondary);
             text-align: center;
         }
         
         .total-row {
-            background: #2d5d3b !important;
+            background: var(--color-success) !important;
             color: white;
             font-weight: bold;
         }
@@ -190,7 +225,7 @@
         }
         
         .summary-section {
-            background: #f8f9fa;
+            background: var(--color-surface-secondary);
             padding: 30px;
             border-radius: 15px;
             margin-top: 30px;
@@ -204,10 +239,10 @@
         }
         
         .summary-card {
-            background: white;
+            background: var(--color-surface-primary);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-sm);
             text-align: center;
         }
         
@@ -220,12 +255,12 @@
         .summary-title {
             font-size: 18px;
             font-weight: bold;
-            color: #2d5d3b;
+            color: var(--color-success);
             margin-bottom: 10px;
         }
         
         .summary-text {
-            color: #666;
+            color: var(--color-text-secondary);
             font-size: 14px;
             line-height: 1.5;
         }
@@ -239,22 +274,22 @@
         
         .stat-item {
             text-align: center;
-            background: white;
+            background: var(--color-surface-primary);
             padding: 15px;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-sm);
         }
         
         .stat-number {
             font-size: 24px;
             font-weight: bold;
-            color: #2d5d3b;
+            color: var(--color-success);
             display: block;
         }
         
         .stat-label {
             font-size: 12px;
-            color: #666;
+            color: var(--color-text-secondary);
             margin-top: 5px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -265,7 +300,7 @@
                 padding: 10px;
             }
             
-            .content {
+            .outline-content {
                 padding: 20px;
             }
             
@@ -293,15 +328,35 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="css/shared-styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/print.css">
+    <!-- Firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
+    <script src="firebase-config.js"></script>
+    <script src="js/course-manager.js"></script>
+    <script src="js/teacher-manager.js"></script>
+    
+    <script src="js/search-system.js"></script>
+    <script src="js/dark-mode.js"></script>
+    
+    <script src="js/progressive-loading.js"></script>
+    <script src="js/performance-optimizer.js"></script>
+    <div class="outline-container">
+        <div class="outline-header">
+            <a href="index.html" class="outline-back-button">
+                <span aria-hidden="true">←</span>
+                Back to Course
+            </a>
             <h1>Week 1 Class Outline</h1>
             <p>Managing IT Projects - Introduction to Project Management</p>
         </div>
         
-        <div class="content">
+        <div class="outline-content">
             <div class="breakdown-stats">
                 <div class="stat-item">
                     <span class="stat-number">60</span>
@@ -315,13 +370,10 @@
                     <span class="stat-number">15</span>
                     <div class="stat-label">Story Minutes</div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number">50</span>
-                    <div class="stat-label">Admin & Wrap-up</div>
-                </div>
             </div>
             
-            <table class="schedule-table">
+            <div class="schedule-table-container">
+                <table class="schedule-table">
                 <thead>
                     <tr>
                         <th>Activity</th>
@@ -457,9 +509,10 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
             
             <div class="summary-section">
-                <h2 style="text-align: center; color: #2d5d3b; margin-bottom: 20px;">Class Structure Analysis</h2>
+                <h2 style="text-align: center; color: var(--color-success); margin-bottom: 20px;">Class Structure Analysis</h2>
                 
                 <div class="summary-grid">
                     <div class="summary-card">
@@ -487,6 +540,905 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <script>
+        class OutlineManager {
+            constructor() {
+                this.courseManager = new CourseManager();
+                // Get week number from URL or default to 1
+                this.weekNumber = this.getWeekFromUrl() || 1;
+                this.outlineId = `week-${this.weekNumber}-outline`;
+                this.init();
+            }
+
+            getWeekFromUrl() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const week = urlParams.get('week');
+                return week ? parseInt(week) : null;
+            }
+
+            async init() {
+                // Always calculate times first with existing static content
+                this.calculateTimesAndTotal();
+                
+                // Ensure CSS classes are correct on static content
+                this.fixStaticContentClasses();
+                
+                // Set up admin elements
+                this.setupAdminEditableElements();
+                
+                // Try to load saved content (this may update the display)
+                try {
+                    await this.loadOutlineContent();
+                } catch (error) {
+                    console.warn('Content loading failed, keeping static content:', error);
+                }
+            }
+
+            fixStaticContentClasses() {
+                // Fix CSS classes for static HTML content on page load
+                const rows = document.querySelectorAll('tbody tr:not(.total-row)');
+                rows.forEach(row => {
+                    const activityTypeElement = row.querySelector('.activity-type');
+                    if (activityTypeElement) {
+                        const type = activityTypeElement.textContent.trim();
+                        const correctClass = this.getActivityTypeClass(type);
+                        activityTypeElement.className = `activity-type ${correctClass}`;
+                    }
+                });
+            }
+
+            async loadOutlineContent() {
+                try {
+                    // Try to load from Firebase first
+                    const snapshot = await this.courseManager.database.ref(`outlines/${this.outlineId}`).once('value');
+                    if (snapshot.exists()) {
+                        const outlineData = snapshot.val();
+                        console.log(`Loaded Week ${this.weekNumber} outline from database`);
+                        this.updateOutlineDisplay(outlineData);
+                        return;
+                    }
+                } catch (error) {
+                    console.warn('Database load failed:', error.message);
+                }
+
+                // If no database content, check localStorage
+                if (this.loadActivitiesFromLocalStorage()) {
+                    console.log(`Loaded Week ${this.weekNumber} outline from localStorage`);
+                    return;
+                }
+                
+                // If nothing exists, initialize with template
+                console.log(`Initializing new Week ${this.weekNumber} outline`);
+                this.initializeWeekTemplate();
+            }
+
+            initializeWeekTemplate() {
+                // Create a default template for new weeks
+                const templateActivities = [
+                    {
+                        type: 'Admin',
+                        title: 'Class Introduction & Review',
+                        duration: 15,
+                        order: 0
+                    },
+                    {
+                        type: 'Lesson',
+                        title: `Week ${this.weekNumber} - Core Concepts`,
+                        duration: 20,
+                        order: 1
+                    },
+                    {
+                        type: 'Activity',
+                        title: `Week ${this.weekNumber} - Activity 1`,
+                        duration: 15,
+                        order: 2
+                    },
+                    {
+                        type: 'Lesson',
+                        title: `Week ${this.weekNumber} - Advanced Topics`,
+                        duration: 15,
+                        order: 3
+                    },
+                    {
+                        type: 'Activity',
+                        title: `Week ${this.weekNumber} - Activity 2`,
+                        duration: 20,
+                        order: 4
+                    },
+                    {
+                        type: 'Wrap-up',
+                        title: 'Questions & Next Week Preview',
+                        duration: 15,
+                        order: 5
+                    }
+                ];
+
+                // Update page title
+                document.querySelector('.outline-header h1').textContent = `Week ${this.weekNumber} Class Outline`;
+                document.querySelector('.outline-header p').textContent = `Managing IT Projects - Week ${this.weekNumber} Topics`;
+
+                // Load template into display
+                this.updateActivitiesDisplay(templateActivities);
+                
+                // Save the template
+                this.saveActivitiesToDatabase();
+            }
+
+            saveCurrentActivitiesAsInitial() {
+                // Save the current static content to localStorage for future edits
+                if (!localStorage.getItem(`outline-${this.outlineId}`)) {
+                    const activities = [];
+                    const rows = document.querySelectorAll('tbody tr:not(.total-row)');
+                    
+                    rows.forEach((row, index) => {
+                        const activityTypeElement = row.querySelector('.activity-type');
+                        const activityTitleElement = row.querySelector('.activity-title');
+                        const durationElement = row.querySelector('.time-duration');
+                        const timeRangeElement = row.querySelector('.time-range');
+
+                        if (activityTypeElement && activityTitleElement && durationElement && timeRangeElement) {
+                            const type = activityTypeElement.textContent.trim();
+                            
+                            // Ensure proper CSS class is applied when saving initial data
+                            const correctClass = this.getActivityTypeClass(type);
+                            if (!activityTypeElement.classList.contains(correctClass)) {
+                                activityTypeElement.className = `activity-type ${correctClass}`;
+                            }
+                            
+                            activities.push({
+                                type: type,
+                                title: activityTitleElement.textContent.trim(),
+                                duration: parseInt(durationElement.textContent.trim()) || 0,
+                                timeRange: timeRangeElement.textContent.trim(),
+                                order: index
+                            });
+                        }
+                    });
+                    
+                    this.saveActivitiesToLocalStorage(activities);
+                    console.log('Initial static content saved to localStorage for persistence');
+                }
+            }
+
+            // Auto-save any changes - called whenever the DOM changes
+            autoSave() {
+                // Debounce auto-save to avoid excessive saves
+                clearTimeout(this.autoSaveTimeout);
+                this.autoSaveTimeout = setTimeout(() => {
+                    this.saveActivitiesToDatabase();
+                }, 1000); // Wait 1 second after last change
+            }
+
+            async initializeOutlineData() {
+                const staticData = {
+                    id: this.outlineId,
+                    title: 'Week 1 Class Outline',
+                    subtitle: 'Foundation Concepts & Project Management Introduction',
+                    createdAt: Date.now(),
+                    lastModified: Date.now()
+                };
+
+                try {
+                    await this.courseManager.database.ref(`course/outlines/${this.outlineId}`).set(staticData);
+                    console.log('Outline data initialized in Firebase');
+                } catch (error) {
+                    console.error('Error initializing outline data:', error);
+                }
+            }
+
+            updateOutlineDisplay(outlineData) {
+                if (outlineData.title) {
+                    const titleElement = document.querySelector('.outline-header h1');
+                    if (titleElement) titleElement.textContent = outlineData.title;
+                }
+                if (outlineData.subtitle) {
+                    const subtitleElement = document.querySelector('.outline-header p');
+                    if (subtitleElement) subtitleElement.textContent = outlineData.subtitle;
+                }
+                if (outlineData.activities) {
+                    this.updateActivitiesDisplay(outlineData.activities);
+                }
+            }
+
+            updateActivitiesDisplay(activities) {
+                const tbody = document.querySelector('tbody');
+                if (!tbody) return;
+
+                // Save the total row before clearing
+                const totalRow = tbody.querySelector('.total-row');
+                const totalRowHtml = totalRow ? totalRow.outerHTML : '';
+
+                // Clear existing rows
+                tbody.innerHTML = '';
+
+                // Add activities from data
+                activities.sort((a, b) => a.order - b.order).forEach(activity => {
+                    const row = document.createElement('tr');
+                    const activityTypeClass = this.getActivityTypeClass(activity.type);
+                    row.innerHTML = `
+                        <td>
+                            <span class="activity-type ${activityTypeClass}">${activity.type}</span>
+                            <span class="activity-title">${activity.title}</span>
+                        </td>
+                        <td class="time-duration">${activity.duration}</td>
+                        <td class="time-range">${activity.timeRange}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                // Re-add the total row
+                if (totalRowHtml) {
+                    tbody.insertAdjacentHTML('beforeend', totalRowHtml);
+                }
+
+                // Recalculate times after updating display
+                this.calculateTimesAndTotal();
+
+                // Update summary statistics
+                this.updateSummaryStats();
+
+                // Re-enable drag and drop if in teacher mode
+                if (window.teacherManager && window.teacherManager.isTeacherMode) {
+                    setTimeout(() => this.enableDragAndDrop(), 100);
+                }
+            }
+
+            getActivityTypeClass(type) {
+                switch(type.toLowerCase()) {
+                    case 'lesson': return 'type-lesson';
+                    case 'activity': return 'type-activity';
+                    case 'story': return 'type-story';
+                    case 'admin': return 'type-admin';
+                    case 'intro': return 'type-admin'; // Intro uses admin styling
+                    case 'wrap-up': return 'type-admin'; // Wrap-up uses admin styling
+                    case 'homework': return 'type-homework';
+                    case 'break': return 'type-activity'; // Break uses activity styling
+                    default: return 'type-lesson';
+                }
+            }
+
+            setupAdminEditableElements() {
+                // Wait for teacher manager to be available
+                const checkTeacherManager = () => {
+                    if (window.teacherManager) {
+                        // Add edit buttons if already in teacher mode
+                        if (window.teacherManager.isTeacherMode) {
+                            this.addEditButtons();
+                        }
+                        
+                        // Hook into teacher mode changes
+                        const originalEnableTeacherMode = window.teacherManager.enableTeacherMode.bind(window.teacherManager);
+                        window.teacherManager.enableTeacherMode = () => {
+                            originalEnableTeacherMode();
+                            setTimeout(() => this.addEditButtons(), 100);
+                        };
+
+                        const originalDisableTeacherMode = window.teacherManager.disableTeacherMode.bind(window.teacherManager);
+                        window.teacherManager.disableTeacherMode = () => {
+                            originalDisableTeacherMode();
+                            this.removeEditButtons();
+                        };
+                    } else {
+                        // Try again in 100ms if teacher manager not ready
+                        setTimeout(checkTeacherManager, 100);
+                    }
+                };
+                
+                checkTeacherManager();
+            }
+
+            addEditButtons() {
+                // Add button to add new activity
+                const tableContainer = document.querySelector('.schedule-table-container');
+                if (tableContainer && !tableContainer.querySelector('.add-activity-btn')) {
+                    const addBtn = this.createAddActivityButton();
+                    tableContainer.appendChild(addBtn);
+                }
+
+                // Add bulk edit toggle button
+                if (tableContainer && !tableContainer.querySelector('.bulk-edit-btn')) {
+                    const bulkBtn = this.createBulkEditButton();
+                    tableContainer.appendChild(bulkBtn);
+                }
+
+                // Add reset button for debugging/testing
+                if (tableContainer && !tableContainer.querySelector('.reset-data-btn')) {
+                    const resetBtn = this.createResetButton();
+                    tableContainer.appendChild(resetBtn);
+                }
+
+                // Enable drag and drop for activities
+                this.enableDragAndDrop();
+            }
+
+            createResetButton() {
+                const button = document.createElement('button');
+                button.className = 'reset-data-btn';
+                button.innerHTML = '🔄 Reset to Original';
+                button.style.cssText = `
+                    display: block;
+                    margin: 10px auto;
+                    background: #dc3545;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    padding: 10px 20px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    transition: all 0.3s ease;
+                `;
+                
+                button.addEventListener('click', () => this.resetToOriginal());
+                button.addEventListener('mouseover', () => {
+                    button.style.background = '#c82333';
+                    button.style.transform = 'translateY(-2px)';
+                });
+                button.addEventListener('mouseout', () => {
+                    button.style.background = '#dc3545';
+                    button.style.transform = 'translateY(0)';
+                });
+                
+                return button;
+            }
+
+            resetToOriginal() {
+                if (confirm('This will reset all activities to the original static content. Are you sure?')) {
+                    // Clear localStorage
+                    localStorage.removeItem(`outline-${this.outlineId}`);
+                    
+                    // Show success message
+                    this.showSaveIndicator('Reset to original - please refresh page');
+                    
+                    // Reload page after short delay
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                }
+            }
+
+            removeEditButtons() {
+                document.querySelectorAll('.add-activity-btn').forEach(btn => btn.remove());
+                document.querySelectorAll('.bulk-edit-btn').forEach(btn => btn.remove());
+                document.querySelectorAll('.reset-data-btn').forEach(btn => btn.remove());
+                
+                // Disable drag and drop
+                const rows = document.querySelectorAll('tbody tr:not(.total-row)');
+                rows.forEach(row => {
+                    row.draggable = false;
+                    row.style.cursor = '';
+                });
+            }
+
+
+            createAddActivityButton() {
+                const button = document.createElement('button');
+                button.className = 'add-activity-btn';
+                button.innerHTML = '+ Add Activity';
+                button.style.cssText = `
+                    display: block;
+                    margin: 20px auto;
+                    background: var(--color-success);
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    padding: 10px 20px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    transition: all 0.3s ease;
+                `;
+                
+                button.addEventListener('click', () => this.addNewActivity());
+                button.addEventListener('mouseover', () => {
+                    button.style.background = 'var(--color-success-light)';
+                    button.style.transform = 'translateY(-2px)';
+                });
+                button.addEventListener('mouseout', () => {
+                    button.style.background = 'var(--color-success)';
+                    button.style.transform = 'translateY(0)';
+                });
+                
+                return button;
+            }
+
+
+
+            addNewActivity() {
+                // Save current state as initial before first edit
+                this.saveCurrentActivitiesAsInitial();
+                
+                const tbody = document.querySelector('tbody');
+                const totalRow = tbody.querySelector('.total-row');
+                const newRow = document.createElement('tr');
+                
+                newRow.innerHTML = `
+                    <td>
+                        <span class="activity-type type-lesson">Lesson</span>
+                        <span class="activity-title">New Activity</span>
+                    </td>
+                    <td class="time-duration">15</td>
+                    <td class="time-range">TBD</td>
+                `;
+
+                // Insert before total row
+                tbody.insertBefore(newRow, totalRow);
+                this.calculateTimesAndTotal();
+                this.saveActivitiesToDatabase();
+                
+                // Re-enable drag and drop after adding rows
+                this.enableDragAndDrop();
+            }
+
+            calculateTimesAndTotal() {
+                const rows = document.querySelectorAll('tbody tr:not(.total-row)');
+                let currentTime = new Date();
+                currentTime.setHours(18, 0, 0, 0); // Start at 6:00 PM
+                let totalMinutes = 0;
+                
+                rows.forEach((row, index) => {
+                    const durationElement = row.querySelector('.time-duration');
+                    const timeRangeElement = row.querySelector('.time-range');
+                    
+                    if (durationElement && timeRangeElement) {
+                        const duration = parseInt(durationElement.textContent.trim()) || 0;
+                        
+                        // Format current time for display
+                        const timeString = currentTime.toLocaleTimeString('en-US', { 
+                            hour: 'numeric', 
+                            minute: '2-digit',
+                            hour12: true 
+                        });
+                        
+                        if (index === 0) {
+                            timeRangeElement.textContent = `Start: ${timeString}`;
+                        } else {
+                            timeRangeElement.textContent = `Check: ${timeString}`;
+                        }
+                        
+                        // Add duration to current time for next activity
+                        currentTime.setMinutes(currentTime.getMinutes() + duration);
+                        totalMinutes += duration;
+                    }
+                });
+                
+                // Update total row
+                const totalRow = document.querySelector('.total-row');
+                if (totalRow) {
+                    const totalDurationCell = totalRow.querySelector('td:nth-child(2)');
+                    const totalTimeCell = totalRow.querySelector('td:nth-child(3)');
+                    
+                    if (totalDurationCell) totalDurationCell.innerHTML = `<strong>${totalMinutes}</strong>`;
+                    if (totalTimeCell) {
+                        const endTime = new Date();
+                        endTime.setHours(18, 0, 0, 0);
+                        endTime.setMinutes(endTime.getMinutes() + totalMinutes);
+                        const endTimeString = endTime.toLocaleTimeString('en-US', { 
+                            hour: 'numeric', 
+                            minute: '2-digit',
+                            hour12: true 
+                        });
+                        totalTimeCell.innerHTML = `<strong>End: ${endTimeString}</strong>`;
+                    }
+                }
+
+                // Also update summary stats when times are calculated
+                this.updateSummaryStats();
+            }
+
+            updateSummaryStats() {
+                const rows = document.querySelectorAll('tbody tr:not(.total-row)');
+                let lessonMinutes = 0;
+                let activityMinutes = 0;
+                let storyMinutes = 0;
+                
+                rows.forEach(row => {
+                    const typeElement = row.querySelector('.activity-type');
+                    const durationElement = row.querySelector('.time-duration');
+                    
+                    if (typeElement && durationElement) {
+                        const type = typeElement.textContent.trim().toLowerCase();
+                        const duration = parseInt(durationElement.textContent.trim()) || 0;
+                        
+                        switch(type) {
+                            case 'lesson':
+                                lessonMinutes += duration;
+                                break;
+                            case 'activity':
+                                activityMinutes += duration;
+                                break;
+                            case 'story':
+                                storyMinutes += duration;
+                                break;
+                        }
+                    }
+                });
+                
+                // Update the stat items in the breakdown-stats section
+                const statItems = document.querySelectorAll('.stat-item');
+                statItems.forEach(item => {
+                    const label = item.querySelector('.stat-label')?.textContent.toLowerCase();
+                    const numberElement = item.querySelector('.stat-number');
+                    
+                    if (numberElement && label) {
+                        if (label.includes('lesson')) {
+                            numberElement.textContent = lessonMinutes;
+                        } else if (label.includes('activity')) {
+                            numberElement.textContent = activityMinutes;
+                        } else if (label.includes('story')) {
+                            numberElement.textContent = storyMinutes;
+                        }
+                    }
+                });
+            }
+
+            async saveActivitiesToDatabase() {
+                // Recalculate times before saving
+                this.calculateTimesAndTotal();
+                
+                const activities = [];
+                const rows = document.querySelectorAll('tbody tr:not(.total-row)');
+                
+                rows.forEach((row, index) => {
+                    const activityTypeElement = row.querySelector('.activity-type');
+                    const activityTitleElement = row.querySelector('.activity-title');
+                    const durationElement = row.querySelector('.time-duration');
+                    const timeRangeElement = row.querySelector('.time-range');
+
+                    if (activityTypeElement && activityTitleElement && durationElement && timeRangeElement) {
+                        activities.push({
+                            type: activityTypeElement.textContent.trim(),
+                            title: activityTitleElement.textContent.trim(),
+                            duration: parseInt(durationElement.textContent.trim()) || 0,
+                            timeRange: timeRangeElement.textContent.trim(),
+                            order: index
+                        });
+                    }
+                });
+
+                const outlineData = {
+                    id: this.outlineId,
+                    weekNumber: this.weekNumber,
+                    title: document.querySelector('.outline-header h1')?.textContent || `Week ${this.weekNumber} Class Outline`,
+                    subtitle: document.querySelector('.outline-header p')?.textContent || `Managing IT Projects - Week ${this.weekNumber} Topics`,
+                    activities: activities,
+                    lastModified: Date.now(),
+                    version: '1.0'
+                };
+
+                // Always save to localStorage for immediate persistence
+                this.saveActivitiesToLocalStorage(activities);
+                
+                // Try to save to database
+                try {
+                    await this.courseManager.database.ref(`outlines/${this.outlineId}`).set(outlineData);
+                    console.log(`Week ${this.weekNumber} outline saved to database`);
+                    this.showSaveIndicator('Saved to database');
+                } catch (error) {
+                    console.warn('Database save failed:', error.message);
+                    this.showSaveIndicator('Database save failed - using local storage', 'error');
+                }
+            }
+
+            saveActivitiesToLocalStorage(activities) {
+                try {
+                    const outlineData = {
+                        activities: activities,
+                        lastModified: Date.now(),
+                        version: '1.0',
+                        title: document.querySelector('.outline-header h1')?.textContent || 'Week 1 Class Outline',
+                        subtitle: document.querySelector('.outline-header p')?.textContent || 'Managing IT Projects - Introduction to Project Management'
+                    };
+                    localStorage.setItem(`outline-${this.outlineId}`, JSON.stringify(outlineData));
+                    console.log('Activities saved to localStorage with', activities.length, 'activities');
+                    
+                    // Show a subtle save indicator
+                    this.showSaveIndicator('Changes saved');
+                } catch (error) {
+                    console.error('Error saving to localStorage:', error);
+                    this.showSaveIndicator('Save failed', 'error');
+                }
+            }
+
+            showSaveIndicator(message, type = 'success') {
+                // Remove any existing indicator
+                const existing = document.querySelector('.save-indicator');
+                if (existing) existing.remove();
+                
+                const indicator = document.createElement('div');
+                indicator.className = 'save-indicator';
+                indicator.textContent = message;
+                indicator.style.cssText = `
+                    position: fixed;
+                    top: 80px;
+                    right: 20px;
+                    background: ${type === 'error' ? '#dc3545' : '#28a745'};
+                    color: white;
+                    padding: 8px 15px;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    z-index: 10001;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                `;
+                
+                document.body.appendChild(indicator);
+                
+                // Fade in
+                setTimeout(() => indicator.style.opacity = '1', 10);
+                
+                // Fade out and remove
+                setTimeout(() => {
+                    indicator.style.opacity = '0';
+                    setTimeout(() => {
+                        if (indicator.parentNode) {
+                            indicator.parentNode.removeChild(indicator);
+                        }
+                    }, 300);
+                }, 2000);
+            }
+
+            loadActivitiesFromLocalStorage() {
+                try {
+                    const stored = localStorage.getItem(`outline-${this.outlineId}`);
+                    if (stored) {
+                        const outlineData = JSON.parse(stored);
+                        if (outlineData.activities && outlineData.activities.length > 0) {
+                            this.updateActivitiesDisplay(outlineData.activities);
+                            console.log('Activities loaded from localStorage');
+                            return true;
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error loading from localStorage:', error);
+                }
+                return false;
+            }
+
+            // Drag and Drop functionality
+            enableDragAndDrop() {
+                const tbody = document.querySelector('tbody');
+                if (!tbody) return;
+
+                const rows = document.querySelectorAll('tbody tr:not(.total-row)');
+                rows.forEach((row, index) => {
+                    row.draggable = true;
+                    row.style.cursor = 'grab';
+                    
+                    row.addEventListener('dragstart', (e) => {
+                        row.style.opacity = '0.5';
+                        e.dataTransfer.setData('text/plain', index.toString());
+                        e.dataTransfer.effectAllowed = 'move';
+                    });
+
+                    row.addEventListener('dragend', (e) => {
+                        row.style.opacity = '1';
+                        row.style.cursor = 'grab';
+                    });
+
+                    row.addEventListener('dragover', (e) => {
+                        e.preventDefault();
+                        e.dataTransfer.dropEffect = 'move';
+                        row.style.borderTop = '3px solid #2d5d3b';
+                    });
+
+                    row.addEventListener('dragleave', (e) => {
+                        row.style.borderTop = '';
+                    });
+
+                    row.addEventListener('drop', (e) => {
+                        e.preventDefault();
+                        row.style.borderTop = '';
+                        
+                        const draggedIndex = parseInt(e.dataTransfer.getData('text/plain'));
+                        const dropIndex = Array.from(tbody.querySelectorAll('tr:not(.total-row)')).indexOf(row);
+                        
+                        if (draggedIndex !== dropIndex) {
+                            this.reorderRows(draggedIndex, dropIndex);
+                        }
+                    });
+                });
+            }
+
+            reorderRows(fromIndex, toIndex) {
+                // Save current state as initial before first edit
+                this.saveCurrentActivitiesAsInitial();
+                
+                const tbody = document.querySelector('tbody');
+                const rows = Array.from(tbody.querySelectorAll('tr:not(.total-row)'));
+                const draggedRow = rows[fromIndex];
+                
+                // Remove the dragged row
+                draggedRow.remove();
+                
+                // Insert at new position
+                if (toIndex >= rows.length - 1) {
+                    const totalRow = tbody.querySelector('.total-row');
+                    tbody.insertBefore(draggedRow, totalRow);
+                } else if (toIndex === 0) {
+                    tbody.insertBefore(draggedRow, tbody.firstChild);
+                } else {
+                    const targetRow = rows[toIndex];
+                    tbody.insertBefore(draggedRow, targetRow);
+                }
+                
+                // Recalculate times and save
+                this.calculateTimesAndTotal();
+                this.saveActivitiesToDatabase();
+                
+                // Re-enable drag and drop after reordering
+                this.enableDragAndDrop();
+            }
+
+            // Bulk Edit functionality
+            createBulkEditButton() {
+                const button = document.createElement('button');
+                button.className = 'bulk-edit-btn';
+                button.innerHTML = '📝 Bulk Edit Mode';
+                button.style.cssText = `
+                    display: block;
+                    margin: 10px auto;
+                    background: var(--color-warning);
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    padding: 10px 20px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    transition: all 0.3s ease;
+                `;
+                
+                button.addEventListener('click', () => this.toggleBulkEditMode());
+                button.addEventListener('mouseover', () => {
+                    button.style.background = 'var(--color-warning-light)';
+                    button.style.transform = 'translateY(-2px)';
+                });
+                button.addEventListener('mouseout', () => {
+                    button.style.background = 'var(--color-warning)';
+                    button.style.transform = 'translateY(0)';
+                });
+                
+                return button;
+            }
+
+            toggleBulkEditMode() {
+                const bulkBtn = document.querySelector('.bulk-edit-btn');
+                const isBulkMode = document.body.classList.contains('bulk-edit-mode');
+                
+                if (isBulkMode) {
+                    this.exitBulkEditMode();
+                    bulkBtn.innerHTML = '📝 Bulk Edit Mode';
+                    bulkBtn.style.background = 'var(--color-warning)';
+                } else {
+                    this.enterBulkEditMode();
+                    bulkBtn.innerHTML = '💾 Save All Changes';
+                    bulkBtn.style.background = 'var(--color-success)';
+                }
+            }
+
+            enterBulkEditMode() {
+                document.body.classList.add('bulk-edit-mode');
+                
+                // Make all activity cells editable
+                const rows = document.querySelectorAll('tbody tr:not(.total-row)');
+                rows.forEach(row => {
+                    const typeElement = row.querySelector('.activity-type');
+                    const titleElement = row.querySelector('.activity-title');
+                    const durationCell = row.querySelector('.time-duration');
+                    
+                    // Make type editable with select
+                    if (typeElement) {
+                        const currentType = typeElement.textContent.trim();
+                        const select = document.createElement('select');
+                        select.style.cssText = 'padding: 4px; border: 1px solid #ddd; border-radius: 3px; font-size: 11px;';
+                        select.innerHTML = `
+                            <option value="Admin" ${currentType === 'Admin' ? 'selected' : ''}>Admin</option>
+                            <option value="Intro" ${currentType === 'Intro' ? 'selected' : ''}>Intro</option>
+                            <option value="Lesson" ${currentType === 'Lesson' ? 'selected' : ''}>Lesson</option>
+                            <option value="Activity" ${currentType === 'Activity' ? 'selected' : ''}>Activity</option>
+                            <option value="Story" ${currentType === 'Story' ? 'selected' : ''}>Story</option>
+                            <option value="Break" ${currentType === 'Break' ? 'selected' : ''}>Break</option>
+                            <option value="Wrap-up" ${currentType === 'Wrap-up' ? 'selected' : ''}>Wrap-up</option>
+                        `;
+                        typeElement.replaceWith(select);
+                        select.setAttribute('data-original-element', 'activity-type');
+                    }
+                    
+                    // Make title editable
+                    if (titleElement) {
+                        const currentTitle = titleElement.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentTitle;
+                        input.style.cssText = 'width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 3px; font-size: 14px;';
+                        titleElement.replaceWith(input);
+                        input.setAttribute('data-original-element', 'activity-title');
+                    }
+                    
+                    // Make duration editable - replace TD content with input
+                    if (durationCell) {
+                        const currentDuration = durationCell.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'number';
+                        input.value = currentDuration;
+                        input.min = '1';
+                        input.style.cssText = 'width: 60px; padding: 4px; border: 1px solid #ddd; border-radius: 3px; font-size: 14px; text-align: center;';
+                        input.setAttribute('data-original-element', 'time-duration');
+                        
+                        // Clear the cell and add the input
+                        durationCell.innerHTML = '';
+                        durationCell.appendChild(input);
+                    }
+                });
+            }
+
+            exitBulkEditMode() {
+                // Save current state as initial before first edit
+                this.saveCurrentActivitiesAsInitial();
+                
+                document.body.classList.remove('bulk-edit-mode');
+                
+                // Convert all inputs back to display elements
+                const rows = document.querySelectorAll('tbody tr:not(.total-row)');
+                rows.forEach(row => {
+                    // Handle type selects
+                    const typeSelect = row.querySelector('select[data-original-element="activity-type"]');
+                    if (typeSelect) {
+                        const span = document.createElement('span');
+                        span.className = `activity-type type-${typeSelect.value.toLowerCase()}`;
+                        span.textContent = typeSelect.value;
+                        typeSelect.replaceWith(span);
+                    }
+                    
+                    // Handle title inputs  
+                    const titleInput = row.querySelector('input[data-original-element="activity-title"]');
+                    if (titleInput) {
+                        const span = document.createElement('span');
+                        span.className = 'activity-title';
+                        span.textContent = titleInput.value;
+                        titleInput.replaceWith(span);
+                    }
+                    
+                    // Handle duration inputs - just replace the text content of the TD
+                    const durationInput = row.querySelector('input[data-original-element="time-duration"]');
+                    if (durationInput) {
+                        const durationCell = durationInput.closest('td');
+                        durationCell.innerHTML = '';  // Clear the cell
+                        durationCell.textContent = durationInput.value;  // Set the text
+                        durationCell.className = 'time-duration';  // Ensure correct class
+                    }
+                });
+                
+                // Recalculate times and save all changes
+                this.calculateTimesAndTotal();
+                this.saveActivitiesToDatabase();
+                
+                // Re-enable drag and drop
+                this.enableDragAndDrop();
+            }
+        }
+
+        // Initialize teacher mode functionality immediately
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Teacher Manager (without courseManager for lesson pages)
+            if (!window.teacherManager) {
+                window.teacherManager = new TeacherManager(null);
+            }
+            
+            // Initialize the outline manager when DOM is loaded
+            setTimeout(() => {
+                new OutlineManager();
+            }, 1000);
+        });
+    </script>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div style="text-align: center;">
+            <div class="loading-spinner"></div>
+            <div class="loading-text" id="loading-text">Loading...</div>
         </div>
     </div>
 </body>

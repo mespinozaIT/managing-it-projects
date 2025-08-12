@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PMI & PMBOK Guide - Managing IT Projects</title>
     <meta name="description" content="Learn about the Project Management Institute (PMI), PMBOK Guide structure, 12 PM Principles, and 8 Project Performance Domains for effective IT project management.">
+    <link rel="stylesheet" href="css/design-system.css">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -29,6 +30,32 @@
             padding: 40px;
             text-align: center;
             position: relative;
+        }
+        
+        .back-to-course {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-to-course:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
         }
         
         .header::before {
@@ -350,11 +377,151 @@
                 grid-template-columns: 1fr;
             }
         }
+        
+        /* Assignment Section Styles */
+        .assignment-section {
+            margin: 40px;
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+            border-radius: 15px;
+            padding: 30px;
+            border: 3px solid #4a7c59;
+        }
+
+        .assignment-header {
+            text-align: center;
+            color: #2d5d3b;
+            margin-bottom: 25px;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .assignment-icon {
+            font-size: 28px;
+        }
+
+        .assignment-content {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .assignment-instructions,
+        .assignment-objective,
+        .assignment-expectations {
+            margin-bottom: 25px;
+        }
+
+        .assignment-instructions h3,
+        .assignment-objective h3,
+        .assignment-expectations h3 {
+            color: #2d5d3b;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .assignment-instructions h4 {
+            color: #2d5d3b;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .assignment-instructions ul,
+        .assignment-expectations ul {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+
+        .assignment-instructions li,
+        .assignment-expectations li {
+            margin-bottom: 8px;
+        }
+
+        .assignment-instructions a {
+            color: #4a7c59;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .assignment-instructions a:hover {
+            color: #2d5d3b;
+        }
+
+        .assignment-requirements {
+            background: #f8f9fa;
+            border-left: 4px solid #4a7c59;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        .assignment-submit {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .assignment-button {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
+            color: white;
+            text-decoration: none;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(45, 93, 59, 0.3);
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .assignment-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(45, 93, 59, 0.4);
+        }
+
+        .assignment-button-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .assignment-button-subtitle {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .assignment-section {
+                margin: 20px;
+                padding: 20px;
+            }
+            
+            .assignment-button {
+                padding: 15px 30px;
+            }
+        }
     </style>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/print.css">
 </head>
 <body>
+    
+    <script src="js/search-system.js"></script>
+    <script src="js/dark-mode.js"></script>
+    
+    <script src="js/progressive-loading.js"></script>
+    <script src="js/performance-optimizer.js"></script>
     <div class="container">
         <div class="header">
+            <a href="index.html" class="back-to-course">
+                <span aria-hidden="true">←</span>
+                Back to Course
+            </a>
             <h1>PMI & PMBOK Guide</h1>
             <p>Project Management Institute Standards & Framework</p>
         </div>
@@ -395,12 +562,13 @@
                 <p><strong>A Guide to the Project Management Body of Knowledge</strong> and <strong>The Standard for Project Management</strong></p>
                 
                 <div style="text-align: center; margin: 20px 0;">
-                    <a href="https://www.pmi.org/standards/pmbok" target="_blank" style="display: inline-block; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAEsAQwDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD1+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACs74gWd7feB9as7Qxrc3WmzQRNKcIOYXjLFjwBlRknjAzgYNbNFAHmP7N1heWfwRsYbmKO3e50y1nZYjvQMJ5ySjYAwfUcjvzwOt8OePPDfifxJ4m8E2upPFr+izTQz2s8LRrIyKW+Vic5Xj3r0Ouba6gvbe4hkEsE6JLG6nKuhGQfpQBRn8TaJaWMl9d63p1vZxnDzzXMaRqfTJYAVNpmtadrVlFf6Zqllf2knMdzbzpKhxzhirEGqknhbw7JWRA4O6oT4V8O27PJZ6FZQSSO0jSRWyBmZjlmY7ck9zk0AaFebWfxJ8T6/wCLdJl8Kax4c8Pi5tZZrjVJVuUkSaJgAAVZQ+/BUqByOCa7p/h9oEbQ3FtHdWF4mRI9hdRNGa7aNV2rwobGKAPOtb+I1/qnhq6vb7VL/SLqK9s7e10mS1aVXaSReWycjCDO0BulVfCPin4lWOjx+LvD9ppOrWZsLnQ547y+uLHyrm5mjgWVoQNzJlT3O3GQoyu4+m3vgzw7qmnT6Xc2E8to+WZy8Z68BHEY3KOxGQeh4pabof8AwjLpLpOIlmxJ5TICJApwG4AySM4z3oA5r4X+I/E/jSPU9Q8TaXp9n9oEUNulosiM3ylpGcttOfuhfm4wSO52enVDp+l2emQ+XZoyrwrFifkX0AqagnNe4rGsQO44PpTbmCG7toZ4J3iuYmDJJGcMrDqCD3rG0nTLPSNTFhYrtt4jIcKST+8JJMk2efmYKFycAA4Ayelaq38qvGHAUlJoZC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" 
-                             alt="PMBOK Guide Seventh Edition book cover" 
+                    <a href="https://www.pmi.org/standards/pmbok" target="_blank" style="display: inline-block; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onfocus="this.style.transform='scale(1.05)'" onblur="this.style.transform='scale(1)'"
+                        <img src="images/pmbok.png" alt="PMBOK Guide Seventh Edition book cover - A Guide to the Project Management Body of Knowledge" loading="lazy"
                              style="width: 200px; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer;"
                              onmouseover="this.style.boxShadow='0 6px 16px rgba(0,0,0,0.3)'"
                              onmouseout="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'"
+                             onfocus="this.style.boxShadow='0 6px 16px rgba(0,0,0,0.3)'"
+                             onblur="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'"
                              tabindex="0"
                              role="button"
                              aria-label="PMBOK Guide book cover - click to visit PMI standards page">
@@ -546,6 +714,64 @@
                 <div class="domain-card" tabindex="0">
                     <div class="domain-title">Uncertainty</div>
                     <div class="domain-description">Identifying things that could go wrong and planning how to deal with them. It's about being prepared for surprises and finding ways to turn challenges into opportunities.</div>
+                </div>
+            </div>
+            
+            <!-- Assignment Section -->
+            <div class="assignment-section">
+                <h2 class="assignment-header">
+                    <span class="assignment-icon">📝</span>
+                    Week 2 | Activity 1 | Visit PMI Website
+                </h2>
+                
+                <div class="assignment-content">
+                    <div class="assignment-instructions">
+                        <h3>📌 Instructions</h3>
+                        <p>Visit the PMI website: <a href="https://www.pmi.org" target="_blank" rel="noopener noreferrer">www.pmi.org</a></p>
+                        
+                        <p>Spend time exploring the site. Focus on areas such as:</p>
+                        <ul>
+                            <li>Certifications (CAPM, PMP)</li>
+                            <li>Career resources or blogs</li>
+                            <li>Events, webinars, or learning tools</li>
+                        </ul>
+                        
+                        <h4>Write 3 personal observations:</h4>
+                        <p>In complete sentences, describe three things you found interesting or helpful on the website. These could include:</p>
+                        <ul>
+                            <li>A specific certification or membership benefit that stood out to you</li>
+                            <li>A project management principle you think is important</li>
+                            <li>A resource you might want to use in the future</li>
+                            <li>Something surprising or new you didn't expect to find</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="assignment-objective">
+                        <h3>🎯 Objective</h3>
+                        <p>Now that you've been introduced to the Project Management Institute (PMI)—the world's leading professional association for project management—it's time to explore the organization's resources for yourself. This activity will help you discover real tools, principles, and opportunities that support professional growth in the field of project management.</p>
+                    </div>
+                    
+                    <div class="assignment-expectations">
+                        <h3>📋 Expectations</h3>
+                        <p>Each observation is worth <strong>5 points</strong>, for a total of <strong>15 points</strong>.</p>
+                        
+                        <div class="assignment-requirements">
+                            <p><strong>To earn full credit, each observation must:</strong></p>
+                            <ul>
+                                <li>Be clearly written in complete sentences</li>
+                                <li>Show an understanding of PMI's tools, principles, or offerings (e.g., certifications, resources, professional standards)</li>
+                                <li>Include a personal reflection on why the observation matters to you or how it connects to your learning, career goals, or interests in project management</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="assignment-submit">
+                        <a href="https://calstatela.instructure.com/courses/116684/assignments/2255258" class="assignment-button" target="_blank" rel="noopener noreferrer">
+                            <span class="assignment-button-icon">📤</span>
+                            Submit Assignment on Canvas
+                            <span class="assignment-button-subtitle">Worth 15 points total</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

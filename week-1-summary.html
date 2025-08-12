@@ -1,91 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 1 Summary - Managing IT Projects</title>
+    <link rel="stylesheet" href="css/design-system.css">
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: #F5F1EB;
-            line-height: 1.6;
-            color: #333;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .back-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 8px;
-            padding: 10px 15px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .back-button:hover {
-            background: rgba(255,255,255,0.3);
-            border-color: rgba(255,255,255,0.5);
-            transform: translateY(-2px);
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #2F5233, #4A7C59);
-            color: white;
-            padding: 40px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .header h1 {
-            margin: 0 0 10px 0;
-            font-size: 36px;
-            font-weight: bold;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .header p {
-            margin: 0;
-            font-size: 18px;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-        }
+        /* Week 1 Summary - minimal custom styles, using design system */
         
         .content {
             padding: 40px;
         }
         
+        /* Custom section styling - keeping unique layout */
         .concept-section {
             margin-bottom: 40px;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-sm);
         }
         
         .section-header {
-            background: linear-gradient(135deg, #544677, #6b5b95);
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-secondary-dark));
             color: white;
             padding: 20px 30px;
             margin: 0;
@@ -98,275 +34,23 @@
         }
         
         .section-content {
-            background: white;
+            background: var(--color-surface-primary);
             padding: 30px;
-            border: 2px solid #e9ecef;
+            border: 2px solid var(--color-border-primary);
             border-top: none;
         }
         
-        .definition-box {
-            background: #f8f9fa;
-            border: 2px solid #544677;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 25px;
-            text-align: center;
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 1.6;
-        }
+        /* definition-box, four-pillars -> using design system .grid .grid--4col and .card classes */
+        /* pillar-card -> using design system .card classes */
+        /* quick-points -> using design system .grid .grid--2col */
+        /* quick-point -> using design system .card card--accent */
         
-        .four-pillars {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .pillar-card {
-            background: white;
-            border: 2px solid #333;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            transition: all 0.3s ease;
-            min-height: 140px;
-        }
-        
-        .pillar-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-        }
-        
-        .pillar-card.knowledge { border-color: #8e44ad; }
-        .pillar-card.skills { border-color: #e74c3c; }
-        .pillar-card.tools { border-color: #3498db; }
-        .pillar-card.people { border-color: #27ae60; }
-        
-        .pillar-icon {
-            font-size: 30px;
-            margin-bottom: 10px;
-            display: block;
-        }
-        
-        .pillar-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: #333;
-        }
-        
-        .pillar-description {
-            font-size: 12px;
-            color: #666;
-            font-style: italic;
-        }
-        
-        .quick-points {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .quick-point {
-            background: #f8f9fa;
-            border-left: 4px solid #544677;
-            border-radius: 6px;
-            padding: 15px;
-            border: 1px solid #e9ecef;
-        }
-        
-        .quick-point-title {
-            font-size: 14px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
-        }
-        
-        .quick-point-text {
-            font-size: 13px;
-            color: #666;
-        }
-        
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-        
-        .comparison-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            border: 2px solid #e9ecef;
-        }
-        
-        .comparison-card.functional { border-left: 4px solid #e67e22; }
-        .comparison-card.project { border-left: 4px solid #3498db; }
-        
-        .comparison-title {
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        
-        .comparison-subtitle {
-            font-style: italic;
-            color: #666;
-            margin-bottom: 10px;
-            font-size: 13px;
-        }
-        
-        .comparison-focus {
-            background: #e8f5e8;
-            border-radius: 6px;
-            padding: 10px;
-            margin-top: 10px;
-        }
-        
-        .comparison-focus strong {
-            color: #2d5d3b;
-            font-size: 12px;
-        }
-        
-        .comparison-focus span {
-            color: #666;
-            font-size: 12px;
-        }
-        
-        .team-roles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-        
-        .team-role {
-            background: #f8f9fa;
-            border-left: 4px solid #9b59b6;
-            border-radius: 6px;
-            padding: 12px;
-            border: 1px solid #e9ecef;
-        }
-        
-        .team-role-title {
-            font-size: 13px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
-        }
-        
-        .team-role-description {
-            font-size: 11px;
-            color: #666;
-            line-height: 1.3;
-        }
-        
-        .pmo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .pmo-function {
-            background: #f8f9fa;
-            border-left: 4px solid #f39c12;
-            border-radius: 6px;
-            padding: 15px;
-            border: 1px solid #e9ecef;
-            text-align: center;
-        }
-        
-        .pmo-function-title {
-            font-size: 15px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 8px;
-        }
-        
-        .pmo-function-text {
-            font-size: 12px;
-            color: #666;
-        }
-        
-        .matrix-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .matrix-type {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 15px;
-            border: 2px solid #e9ecef;
-            text-align: center;
-        }
-        
-        .matrix-type.weak { border-top: 4px solid #e74c3c; }
-        .matrix-type.balanced { border-top: 4px solid #f39c12; }
-        .matrix-type.strong { border-top: 4px solid #27ae60; }
-        
-        .matrix-title {
-            font-size: 14px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        
-        .matrix-visual {
-            margin: 10px 0;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        
-        .matrix-description {
-            font-size: 11px;
-            color: #666;
-            line-height: 1.3;
-        }
-        
-        .footer-return {
-            background: #544677;
-            color: white;
-            text-align: center;
-            padding: 25px;
-            margin-top: 30px;
-        }
-        
-        .return-button {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            color: white;
-            text-decoration: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-        
-        .return-button:hover {
-            background: rgba(255,255,255,0.3);
-            border-color: rgba(255,255,255,0.5);
-            transform: translateY(-2px);
-        }
+        /* All remaining styles removed - using design system .grid, .card, .matrix-card, .footer-section, .btn classes */
         
         @media (max-width: 768px) {
-            body { padding: 10px; }
-            .header { padding: 30px 20px; }
-            .header h1 { font-size: 28px; }
-            .content { padding: 20px; }
-            .four-pillars { grid-template-columns: 1fr; }
-            .comparison-grid { grid-template-columns: 1fr; }
-            .matrix-grid { grid-template-columns: 1fr; }
-            .back-button { position: static; margin: 10px; }
+            .content { 
+                padding: 20px; 
+            }
         }
     </style>
 </head>
@@ -377,9 +61,9 @@
             Back to Course
         </a>
         
-        <header class="header">
-            <h1>Week 1 Summary</h1>
-            <p>Foundation Concepts Overview</p>
+        <header class="page-header">
+            <h1 class="page-title">Week 1 Summary</h1>
+            <p class="page-subtitle">Foundation Concepts Overview</p>
         </header>
         
         <main class="content">
@@ -393,49 +77,49 @@
                         <strong>Project management is the application of knowledge, skills, tools, and the ability to work with people to deliver value by completing projects on time, within scope, and within budget.</strong>
                     </div>
                     
-                    <div class="four-pillars">
-                        <div class="pillar-card knowledge">
-                            <span class="pillar-icon">🧠</span>
-                            <div class="pillar-title">Knowledge</div>
-                            <div class="pillar-description">What you know from formal learning and experience</div>
+                    <div class="grid grid--4col">
+                        <div class="card card--warning" style="text-align: center;">
+                            <span class="element-icon">🧠</span>
+                            <div class="element-title">Knowledge</div>
+                            <div class="element-description">What you know from formal learning and experience</div>
                         </div>
                         
-                        <div class="pillar-card skills">
-                            <span class="pillar-icon">⚙️</span>
-                            <div class="pillar-title">Skills</div>
-                            <div class="pillar-description">What you can do—your applied abilities</div>
+                        <div class="card card--error" style="text-align: center;">
+                            <span class="element-icon">⚙️</span>
+                            <div class="element-title">Skills</div>
+                            <div class="element-description">What you can do—your applied abilities</div>
                         </div>
                         
-                        <div class="pillar-card tools">
-                            <span class="pillar-icon">🔧</span>
-                            <div class="pillar-title">Tools</div>
-                            <div class="pillar-description">What you use to plan, track, and report</div>
+                        <div class="card card--info" style="text-align: center;">
+                            <span class="element-icon">🔧</span>
+                            <div class="element-title">Tools</div>
+                            <div class="element-description">What you use to plan, track, and report</div>
                         </div>
                         
-                        <div class="pillar-card people">
-                            <span class="pillar-icon">🤝</span>
-                            <div class="pillar-title">Working with People</div>
-                            <div class="pillar-description">How you collaborate, lead, and communicate</div>
+                        <div class="card card--success" style="text-align: center;">
+                            <span class="element-icon">🤝</span>
+                            <div class="element-title">Working with People</div>
+                            <div class="element-description">How you collaborate, lead, and communicate</div>
                         </div>
                     </div>
                     
                     <h3>Key PM Principles</h3>
-                    <div class="quick-points">
-                        <div class="quick-point">
-                            <div class="quick-point-title">Balance Constraints</div>
-                            <div class="quick-point-text">Manage scope, time, and budget trade-offs</div>
+                    <div class="grid grid--2col">
+                        <div class="card card--accent">
+                            <h4>Balance Constraints</h4>
+                            <p>Manage scope, time, and budget trade-offs</p>
                         </div>
-                        <div class="quick-point">
-                            <div class="quick-point-title">Technical + Soft Skills</div>
-                            <div class="quick-point-text">Tools matter, but so do empathy and leadership</div>
+                        <div class="card card--accent">
+                            <h4>Technical + Soft Skills</h4>
+                            <p>Tools matter, but so do empathy and leadership</p>
                         </div>
-                        <div class="quick-point">
-                            <div class="quick-point-title">Flexibility</div>
-                            <div class="quick-point-text">Adapt when requirements and teams change</div>
+                        <div class="card card--accent">
+                            <h4>Flexibility</h4>
+                            <p>Adapt when requirements and teams change</p>
                         </div>
-                        <div class="quick-point">
-                            <div class="quick-point-title">Tailored Approach</div>
-                            <div class="quick-point-text">Choose the right methodology for your project</div>
+                        <div class="card card--accent">
+                            <h4>Tailored Approach</h4>
+                            <p>Choose the right methodology for your project</p>
                         </div>
                     </div>
                 </div>
@@ -595,5 +279,17 @@
             <a href="index.html" class="return-button" aria-label="Return to course concepts homepage">Back to Course Concepts</a>
         </footer>
     </div>
+    <script src="js/search-system.js"></script>
+    <script src="js/dark-mode.js"></script>
+    <script src="js/teacher-manager.js"></script>
+    <script>
+        // Initialize teacher mode functionality immediately
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Teacher Manager (without courseManager for lesson pages)
+            if (!window.teacherManager) {
+                window.teacherManager = new TeacherManager(null);
+            }
+        });
+    </script>
 </body>
 </html>

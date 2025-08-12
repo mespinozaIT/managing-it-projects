@@ -263,9 +263,18 @@
             margin-top: 5px;
         }
         
+        .photo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
         @media (max-width: 768px) {
             body {
                 padding: 10px;
+            }
+            
+            .photo-gallery div[style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
             }
             
             .content {
@@ -290,8 +299,16 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/print.css">
 </head>
 <body>
+    
+    <script src="js/search-system.js"></script>
+    <script src="js/dark-mode.js"></script>
+    
+    <script src="js/progressive-loading.js"></script>
+    <script src="js/performance-optimizer.js"></script>
     <div class="container">
         <div class="header">
             <h1>Professional Experience</h1>
@@ -313,6 +330,34 @@
                     
                     <div class="job-summary">
                         Transformed IT's role at Trader Joe's by shifting from system-first to user-first solutions, ensuring technology aligned with real-world workflows while maintaining the company's strong culture of putting crew members and customers at the heart of every decision. This significantly improved trust between IT and business units, making IT a strategic partner rather than an enforcer of rigid systems.
+                    </div>
+                    
+                    <!-- TJ Photos Gallery -->
+                    <div class="photo-gallery" style="margin: 30px 0;">
+                        <h4 style="color: #2d5d3b; margin-bottom: 20px; text-align: center; font-size: 18px;">Project Highlights & Team Impact</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                            <div class="photo-card" style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+                                <img src="images/TJ_01.jpg" alt="Annual Meeting Project Showcase" style="width: 100%; height: 200px; object-fit: cover;" loading="lazy">
+                                <div style="padding: 15px;">
+                                    <h5 style="margin: 0 0 8px 0; color: #2d5d3b; font-size: 16px;">Annual Meeting Projects</h5>
+                                    <p style="margin: 0; color: #666; font-size: 14px; line-height: 1.5;">Presenting key IT initiatives and achievements to company leadership at the annual corporate meeting.</p>
+                                </div>
+                            </div>
+                            <div class="photo-card" style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+                                <img src="images/TJ_02.jpg" alt="Team Collaboration Session" style="width: 100%; height: 200px; object-fit: cover;" loading="lazy">
+                                <div style="padding: 15px;">
+                                    <h5 style="margin: 0 0 8px 0; color: #2d5d3b; font-size: 16px;">Strategic Planning</h5>
+                                    <p style="margin: 0; color: #666; font-size: 14px; line-height: 1.5;">Cross-functional collaboration sessions developing technology roadmaps aligned with business objectives.</p>
+                                </div>
+                            </div>
+                            <div class="photo-card" style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+                                <img src="images/TJ_03.jpg" alt="Former Students at TJ" style="width: 100%; height: 200px; object-fit: cover;" loading="lazy">
+                                <div style="padding: 15px;">
+                                    <h5 style="margin: 0 0 8px 0; color: #2d5d3b; font-size: 16px;">Alumni Success</h5>
+                                    <p style="margin: 0; color: #666; font-size: 14px; line-height: 1.5;">Former students now working in IT roles at Trader Joe's, demonstrating real-world application of project management principles.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="metrics-highlight">

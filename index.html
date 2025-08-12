@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Managing IT Projects - Course Concepts</title>
+    <link rel="stylesheet" href="css/design-system.css">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -109,7 +110,7 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(135deg, #2F5233, #C8A96E);
+            background: linear-gradient(135deg, #2F5233, #8b7355);
             transform: scaleX(0);
             transition: transform 0.3s ease;
         }
@@ -243,10 +244,11 @@
         }
         
         .footer {
-            background: #2C3E50;
-            color: white;
+            background: var(--color-surface-secondary);
+            color: var(--color-text-primary);
             padding: 40px 30px 20px 30px;
             margin-top: 30px;
+            border-top: 1px solid var(--color-border-primary);
         }
         
         .footer-content {
@@ -256,7 +258,7 @@
         
         .footer-section h3 {
             margin: 0 0 20px 0;
-            color: #C8A96E;
+            color: var(--color-primary);
             font-size: 20px;
         }
         
@@ -278,22 +280,22 @@
             align-items: center;
             gap: 15px;
             padding: 15px;
-            background: rgba(255,255,255,0.1);
+            background: var(--color-surface-primary);
             border-radius: 8px;
             text-decoration: none;
-            color: white;
+            color: var(--color-text-primary);
             transition: all 0.3s ease;
-            border: 2px solid transparent;
+            border: 2px solid var(--color-border-primary);
         }
         
         .footer-link:hover {
-            background: rgba(255,255,255,0.15);
+            background: var(--color-surface-hover);
             transform: translateY(-2px);
-            border-color: #C8A96E;
+            border-color: var(--color-primary);
         }
         
         .footer-link:focus {
-            outline: 3px solid #ffd700;
+            outline: 3px solid var(--color-warning);
             outline-offset: 2px;
         }
         
@@ -319,7 +321,7 @@
         }
         
         .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.2);
+            border-top: 1px solid var(--color-border-primary);
             margin-top: 30px;
             padding: 20px 0;
             text-align: center;
@@ -332,7 +334,7 @@
         }
         
         .course-info-banner {
-            background: linear-gradient(135deg, #C8A96E, #B8956A);
+            background: linear-gradient(135deg, #8b7355, #6d5a3d);
             border-radius: 12px;
             padding: 25px;
             margin-bottom: 40px;
@@ -433,12 +435,103 @@
                 padding: 12px;
             }
             
+            .sr-only {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0,0,0,0);
+                white-space: nowrap;
+                border: 0;
+            }
+            
             .link-icon {
                 font-size: 20px;
             }
         }
+        
+        /* Teacher-only content styling */
+        .teacher-only-content {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        body.teacher-mode .teacher-only-content {
+            display: block;
+        }
+        
+        .teacher-outline-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            background: var(--color-surface-warning);
+            color: var(--color-text-primary);
+            text-decoration: none;
+            border-radius: 10px;
+            border: 2px solid var(--color-warning);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .teacher-outline-link:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-warning-dark);
+        }
+        
+        .teacher-link-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .teacher-link-text {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .teacher-link-desc {
+            font-size: 14px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        
+        /* Instructor tile styling */
+        .instructor-tile {
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        
+        body.teacher-mode .instructor-tile {
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        body.teacher-mode .instructor-tile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            border-color: var(--color-success);
+            background: var(--color-surface-hover);
+        }
+        
+        body.teacher-mode .instructor-tile .info-value {
+            color: var(--color-success);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .teacher-outline-link {
+                flex-direction: column;
+                text-align: center;
+                gap: 8px;
+            }
+        }
     </style>
     <link rel="stylesheet" href="css/shared-styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/print.css">
     <!-- Firebase CDN -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -447,14 +540,20 @@
 <body>
     <script src="firebase-config.js"></script>
     <script src="js/course-manager.js"></script>
-    <script src="js/admin-manager.js"></script>
+    <script src="js/teacher-manager.js"></script>
+    
+    <script src="js/search-system.js"></script>
+    <script src="js/dark-mode.js"></script>
+    <script src="js/progressive-loading.js"></script>
+    <script src="js/performance-optimizer.js"></script>
+    
     <script>
         // Remove the module import since we're using global scripts now
         
         class CourseApp {
             constructor() {
                 this.courseManager = new CourseManager();
-                this.adminManager = new AdminManager(this.courseManager);
+                this.teacherManager = new TeacherManager(this.courseManager);
                 this.init();
             }
 
@@ -596,7 +695,7 @@
 
                 // Filter out hidden content unless in admin mode
                 const filteredContent = content.filter(item => 
-                    item.status !== 'hidden' || (this.adminManager && this.adminManager.isAdminMode)
+                    item.status !== 'hidden' || (this.teacherManager && this.teacherManager.isTeacherMode)
                 );
 
                 conceptsGrid.innerHTML = filteredContent.map(item => {
@@ -636,9 +735,9 @@
                     });
                 });
                 
-                // Add gear icons if in admin mode
-                if (this.adminManager && this.adminManager.isAdminMode) {
-                    this.adminManager.addGearIcons();
+                // Add gear icons if in teacher mode
+                if (this.teacherManager && this.teacherManager.isTeacherMode) {
+                    this.teacherManager.addGearIcons();
                 }
             }
 
@@ -648,6 +747,46 @@
                     week: 1,
                     timestamp: new Date().toISOString()
                 });
+            }
+        }
+
+        // Handle instructor tile click
+        function handleInstructorClick() {
+            console.log('Instructor tile clicked');
+            
+            // Wait for TeacherManager to be ready, then check teacher mode
+            const checkTeacherModeAndNavigate = () => {
+                const isTeacherMode = document.body.classList.contains('teacher-mode') || 
+                                     (window.teacherManager && window.teacherManager.isTeacherMode) ||
+                                     sessionStorage.getItem('teacherMode') === 'true';
+                
+                console.log('Teacher mode detected:', isTeacherMode);
+                console.log('Body classes:', document.body.className);
+                console.log('TeacherManager exists:', !!window.teacherManager);
+                console.log('TeacherManager.isTeacherMode:', window.teacherManager?.isTeacherMode);
+                console.log('SessionStorage teacherMode:', sessionStorage.getItem('teacherMode'));
+                
+                if (isTeacherMode) {
+                    console.log('Navigating to instructor profile...');
+                    window.location.href = 'instructor-profile.html';
+                } else {
+                    console.log('Not in teacher mode - click ignored');
+                }
+            };
+
+            // If TeacherManager exists, check immediately
+            if (window.teacherManager) {
+                checkTeacherModeAndNavigate();
+            } else {
+                // Wait for TeacherManager to be initialized
+                const waitForTeacherManager = (attempts = 0) => {
+                    if (window.teacherManager || attempts > 50) { // Max 5 seconds wait
+                        checkTeacherModeAndNavigate();
+                    } else {
+                        setTimeout(() => waitForTeacherManager(attempts + 1), 100);
+                    }
+                };
+                waitForTeacherManager();
             }
         }
 
@@ -669,12 +808,12 @@
     <div class="container">
 
         
-        <div class="header">
+        <header class="header" role="banner">
             <h1>Managing IT Projects</h1>
             <p>Interactive Concept Library for Project Management Success</p>
-        </div>
+        </header>
         
-        <div class="content">
+        <main class="content" role="main" aria-label="Course concepts and lessons">
             <div class="course-info-banner">
                 <div class="course-info">
                     <div class="info-item">
@@ -687,7 +826,7 @@
                         <div class="info-value">Fall 2025</div>
                     </div>
                     
-                    <div class="info-item">
+                    <div class="info-item instructor-tile" onclick="handleInstructorClick()">
                         <div class="info-label">Instructor</div>
                         <div class="info-value">Maria Espinoza</div>
                     </div>
@@ -697,14 +836,24 @@
             <div class="intro">
                 <h2>Week 1: Foundation Concepts</h2>
                 <p>Master the fundamental concepts of IT project management. This week covers the essential definitions, roles, and frameworks that form the foundation of successful project management practice.</p>
+                
+                <!-- Teacher-only link to course outline manager -->
+                <div class="teacher-only-content">
+                    <a href="course-outline-manager.html?week=1" class="teacher-outline-link">
+                        <span class="teacher-link-icon">📋</span>
+                        <span class="teacher-link-text">Course Outline Manager</span>
+                        <span class="teacher-link-desc">Complete course planning with all weeks</span>
+                    </a>
+                </div>
             </div>
             
-            <div class="concepts-grid">
-                <a href="project-management-definition.html" class="concept-card available" data-content-id="week1_pm_definition">
-                    <span class="concept-icon">🎯</span>
-                    <div class="concept-title">Project Management Definition</div>
-                    <div class="concept-description">Core definition plus the "Musts" of PM and common misconceptions. Foundation concept covering what PM is and is NOT.</div>
-                    <span class="concept-status status-available">Available Now</span>
+            <section class="concepts-grid" aria-labelledby="concepts-heading">
+                <h2 id="concepts-heading" class="sr-only">Course Concepts and Lessons</h2>
+                <a href="project-management-definition.html" class="concept-card available" data-content-id="week1_pm_definition" aria-labelledby="pm-def-title" aria-describedby="pm-def-desc pm-def-status">
+                    <span class="concept-icon" aria-hidden="true">🎯</span>
+                    <div class="concept-title" id="pm-def-title">Project Management Definition</div>
+                    <div class="concept-description" id="pm-def-desc">Core definition plus the "Musts" of PM and common misconceptions. Foundation concept covering what PM is and is NOT.</div>
+                    <span class="concept-status status-available" id="pm-def-status">Available Now</span>
                 </a>
                 
                 <a href="project-definition.html" class="concept-card available" data-content-id="week1_project_definition">
@@ -743,9 +892,11 @@
                 </a>
             </div>
             
-            <div style="margin-top: 40px; padding: 20px; background: #F8F9FA; border-radius: 10px; text-align: center;">
-                <h3 style="color: #2F5233; margin-bottom: 10px;">Coming in Future Weeks</h3>
-                <p style="color: #666; margin: 0;">Business Value & Strategic Alignment • Project Scope Management • Time, Cost & Quality Management • Stakeholder Management • Team Leadership & Conflict Management • Change & Risk Management • Agile Principles • And More!</p>
+            <div class="info-box info-box--info" style="margin-top: 40px; text-align: center;">
+                <h3 class="info-box__title">🚀 Coming in Future Weeks</h3>
+                <div class="info-box__content">
+                    <p>Business Value & Strategic Alignment • Project Scope Management • Time, Cost & Quality Management • Stakeholder Management • Team Leadership & Conflict Management • Change & Risk Management • Agile Principles • And More!</p>
+                </div>
             </div>
         </div>
         

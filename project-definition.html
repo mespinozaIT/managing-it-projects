@@ -7,6 +7,33 @@
     <link rel="stylesheet" href="css/shared-styles.css">
     <style>
         .header {
+            position: relative;
+        }
+        
+        .back-to-course {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-to-course:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
         }
         
         .header::before {
@@ -105,6 +132,12 @@
             gap: 25px;
         }
         
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
         .example-card {
             background: white;
             border: 2px solid #f6ad55;
@@ -120,6 +153,24 @@
         }
         
         .example-card.personal {
+            border-color: #38b2ac;
+        }
+        
+        .project-card {
+            background: white;
+            border: 2px solid #f6ad55;
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .project-card.personal {
             border-color: #38b2ac;
         }
         
@@ -233,25 +284,540 @@
                 gap: 10px;
             }
         }
+
+        /* Story Time Section Styles */
+        .story-time-section {
+            margin: 20px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff3cd 100%);
+            border-radius: 15px;
+            padding: 10px 40px;
+            border: 3px solid #ffc107;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-time-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 193, 7, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .story-time-header {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .story-icon {
+            font-size: 32px;
+            margin-right: 15px;
+            display: inline-block;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+        }
+
+        .story-subtitle {
+            display: block;
+            font-size: 16px;
+            color: #856404;
+            font-weight: 400;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .story-student-view {
+            position: relative;
+            z-index: 1;
+        }
+
+        .story-intro {
+            font-size: 18px;
+            text-align: center;
+            color: #495057;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .story-preview-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #ffc107;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .story-preview-icon {
+            font-size: 40px;
+            flex-shrink: 0;
+        }
+
+        .story-preview-content h4 {
+            margin: 0 0 15px 0;
+            color: #2d5d3b;
+            font-size: 18px;
+        }
+
+        .story-highlights {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .story-highlights li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .story-highlights li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            top: 8px;
+        }
+
+        .story-unlock-message {
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px dashed #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .story-unlock-message p {
+            margin: 0;
+            color: #856404;
+            font-size: 16px;
+        }
+
+        /* Teacher View Styles */
+        .story-teacher-view {
+            position: relative;
+            z-index: 1;
+        }
+
+        .story-introduction {
+            font-size: 18px;
+            color: #495057;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .story-button-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .story-button {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
+            color: white;
+            text-decoration: none;
+            padding: 25px 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(45, 93, 59, 0.3);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            min-width: 300px;
+            z-index: 20;
+            position: relative;
+        }
+
+        .story-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(45, 93, 59, 0.4);
+            color: white;
+        }
+
+        .story-button-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .story-button-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .story-quick-preview {
+            margin-top: 30px;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .story-project-summary strong {
+            color: #2d5d3b;
+            font-size: 16px;
+        }
+
+        .story-projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .story-mini-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            font-size: 14px;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        /* Teacher Mode Visibility */
+        .story-teacher-view {
+            display: none !important;
+        }
+
+        .story-student-view {
+            display: block;
+        }
+
+        /* When teacher-mode class is applied to body */
+        body.teacher-mode .story-student-view {
+            display: none !important;
+        }
+
+        body.teacher-mode .story-teacher-view {
+            display: block !important;
+        }
+
+        /* Teacher mode indicator */
+        body.teacher-mode .story-time-section {
+            border-color: #28a745 !important;
+        }
+
+        /* Lesson Metadata Styles */
+        .lesson-metadata {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .lesson-metadata span {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
+
+        /* Quick Navigation */
+        .lesson-navigation {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ffc107;
+        }
+
+        .lesson-navigation h3 {
+            margin: 0 0 15px 0;
+            color: #2F5233;
+            font-size: 18px;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .nav-links li a {
+            display: block;
+            padding: 10px 15px;
+            background: white;
+            color: #2F5233;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            font-weight: 500;
+        }
+
+        .nav-links li a:hover {
+            background: #2F5233;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(47, 82, 51, 0.2);
+        }
+
+
+        /* Assignment Section Styles */
+        .assignment-section {
+            margin: 30px 0;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f1f8e9 100%);
+            border-radius: 15px;
+            padding: 10px 40px;
+            border: 3px solid #2196f3;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .assignment-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(33, 150, 243, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .assignment-header {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+            color: #1976d2;
+        }
+
+        .assignment-icon {
+            font-size: 32px;
+            margin-right: 15px;
+            display: inline-block;
+        }
+
+        .assignment-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .assignment-instructions,
+        .assignment-objective,
+        .assignment-expectations {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #2196f3;
+        }
+
+        .assignment-instructions h3,
+        .assignment-objective h3,
+        .assignment-expectations h3 {
+            color: #1976d2;
+            margin: 0 0 15px 0;
+            font-size: 18px;
+        }
+
+        .assignment-instructions ul,
+        .assignment-expectations ul {
+            color: #495057;
+            line-height: 1.6;
+        }
+
+        .assignment-instructions li,
+        .assignment-expectations li {
+            margin-bottom: 8px;
+        }
+
+        .assignment-requirements {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+            border-left: 4px solid #28a745;
+        }
+
+        .assignment-requirements p {
+            margin: 0 0 10px 0;
+            font-weight: 600;
+            color: #2d5d3b;
+        }
+
+        .assignment-submit {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .assignment-button {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(135deg, #2196f3, #1976d2);
+            color: white;
+            text-decoration: none;
+            padding: 25px 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.3);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            min-width: 300px;
+            z-index: 20;
+            position: relative;
+        }
+
+        .assignment-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(33, 150, 243, 0.4);
+            color: white;
+        }
+
+        .assignment-button-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .assignment-button-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .story-time-section {
+                padding: 25px 20px;
+            }
+
+            .assignment-section {
+                padding: 25px 20px;
+            }
+
+            .assignment-instructions,
+            .assignment-objective,
+            .assignment-expectations {
+                padding: 20px;
+            }
+
+            .assignment-button {
+                min-width: auto;
+                width: 100%;
+                padding: 20px 25px;
+            }
+
+            .story-preview-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .story-projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .story-button {
+                min-width: auto;
+                width: 100%;
+                padding: 20px 25px;
+            }
+        }
     </style>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/print.css">
 </head>
 <body>
+    
+    <script src="js/search-system.js"></script>
+    <script src="js/dark-mode.js"></script>
+    <script src="js/progressive-loading.js"></script>
+    <script src="js/performance-optimizer.js"></script>
+    <script src="js/teacher-manager.js"></script>
+    <script>
+        // Initialize teacher mode functionality immediately
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Initializing Teacher Manager...');
+            
+            // Check session storage first
+            const teacherModeSession = sessionStorage.getItem('teacherMode');
+            console.log('Session storage teacherMode:', teacherModeSession);
+            
+            // Initialize Teacher Manager (without courseManager for lesson pages)
+            if (!window.teacherManager) {
+                window.teacherManager = new TeacherManager(null);
+            }
+            
+            // Give a moment for teacher mode to be applied from persistence
+            setTimeout(() => {
+                const hasTeacherClass = document.body.classList.contains('teacher-mode');
+                console.log('Body has teacher-mode class:', hasTeacherClass);
+                
+                if (hasTeacherClass) {
+                    console.log('✅ Teacher Mode is active');
+                } else {
+                    console.log('👨‍🎓 Student Mode is active');
+                }
+            }, 100);
+        });
+
+        // Lesson-specific functionality
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+    </script>
     <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">Course Home</a>
-            <span class="breadcrumb-separator">›</span>
-            <a href="index.html#week-1">Week 1</a>
-            <span class="breadcrumb-separator">›</span>
-            <span>Project Definition</span>
-        </div>
-        
         <div class="header">
+            <a href="index.html" class="back-to-course">
+                <span aria-hidden="true">←</span>
+                Back to Course
+            </a>
             <h1>Project Definition</h1>
             <p>What Makes Something a Project?</p>
+            <div class="lesson-metadata">
+                <span class="lesson-duration">⏱️ 15 min read</span>
+                <span class="lesson-difficulty">📈 Beginner</span>
+                <span class="lesson-type">📖 Foundation Concept</span>
+            </div>
         </div>
         
         <div class="content">
-            <h2>Four Key Characteristics of Projects</h2>
+
+            <!-- Quick Navigation -->
+            <div class="lesson-navigation">
+                <h3>📍 On This Page</h3>
+                <ul class="nav-links">
+                    <li><a href="#characteristics" onclick="scrollToSection('characteristics')">Four Key Characteristics</a></li>
+                    <li><a href="#professional-examples" onclick="scrollToSection('professional-examples')">Professional IT Examples</a></li>
+                    <li><a href="#personal-examples" onclick="scrollToSection('personal-examples')">Personal Examples</a></li>
+                    <li><a href="#story-time" onclick="scrollToSection('story-time')">Story Time</a></li>
+                    <li><a href="#assignment" onclick="scrollToSection('assignment')">Week 1 Assignment</a></li>
+                </ul>
+            </div>
+
+            <h2 id="characteristics">Four Key Characteristics of Projects</h2>
             
             <div class="characteristics-grid">
                 <div class="characteristic-card" data-number="01">
@@ -275,11 +841,11 @@
                 </div>
             </div>
 
-            <h2>Professional IT Project Examples</h2>
+            <h2 id="professional-examples">Professional IT Project Examples</h2>
             
             <div class="examples-section">
-                <div class="examples-grid">
-                    <div class="example-card">
+                <div class="cards-grid">
+                    <div class="project-card">
                         <div class="example-header">
                             <div class="example-scenario">Launching a company website redesign</div>
                             <div class="example-why"></div>
@@ -290,7 +856,7 @@
                         </div>
                     </div>
                     
-                    <div class="example-card">
+                    <div class="project-card">
                         <div class="example-header">
                             <div class="example-scenario">Rolling out a new HR software system</div>
                             <div class="example-why"></div>
@@ -301,7 +867,7 @@
                         </div>
                     </div>
                     
-                    <div class="example-card">
+                    <div class="project-card">
                         <div class="example-header">
                             <div class="example-scenario">Organizing a student research conference</div>
                             <div class="example-why"></div>
@@ -325,11 +891,11 @@
                 </div>
             </div>
 
-            <h2>Personal Project Examples</h2>
+            <h2 id="personal-examples">Personal Project Examples</h2>
             
             <div class="examples-section">
-                <div class="examples-grid">
-                    <div class="example-card personal">
+                <div class="cards-grid">
+                    <div class="project-card personal">
                         <div class="example-header">
                             <div class="example-scenario">Planning a graduation trip</div>
                             <div class="example-why">Temporary, goal-driven, has a budget and timeline</div>
@@ -340,7 +906,7 @@
                         </div>
                     </div>
                     
-                    <div class="example-card personal">
+                    <div class="project-card personal">
                         <div class="example-header">
                             <div class="example-scenario">Applying to grad school</div>
                             <div class="example-why">Multi-step, deadline-based, outcome-focused</div>
@@ -351,7 +917,7 @@
                         </div>
                     </div>
                     
-                    <div class="example-card personal">
+                    <div class="project-card personal">
                         <div class="example-header">
                             <div class="example-scenario">Launching a personal website or portfolio</div>
                             <div class="example-why">Requires planning, content creation, and tools</div>
@@ -396,6 +962,107 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Story Time Section -->
+            <div class="story-time-section" id="story-time">
+                <h2 class="story-time-header">
+                    <span class="story-icon">⭐</span>
+                    Story Time: Professor's Projects
+                    <span class="story-subtitle">Real-world project management in action</span>
+                </h2>
+                
+                <!-- Student View (Default) -->
+                <div class="story-student-view">
+                    <div class="story-teaser">
+                        <p class="story-intro">Want to see how these project management concepts play out in the real world? Professor Espinoza has led numerous IT projects that showcase these principles in action.</p>
+                        
+                        <div class="story-unlock-message">
+                            <p><em>💡 These detailed project stories will be discussed in class.</em></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Teacher View (Hidden by default, shown in Teacher Mode) -->
+                <div class="story-teacher-view" style="display: none;">
+                    <div class="story-detailed-content">
+                        <p class="story-introduction">Here are some real projects I've led that demonstrate project management principles:</p>
+                        
+                        <div class="story-button-container">
+                            <a href="professors-projects-stories.html" class="story-button">
+                                <span class="story-button-icon">📖</span>
+                                View Detailed Project Stories
+                                <span class="story-button-subtitle">Complete case studies with PM concepts highlighted</span>
+                            </a>
+                        </div>
+                        
+                        <div class="story-quick-preview">
+                            <div class="story-project-summary">
+                                <strong>Featured Projects:</strong>
+                                <div class="story-projects-grid">
+                                    <div class="story-mini-card">Digital Ordering System - Eliminated 10M printed pages annually</div>
+                                    <div class="story-mini-card">RFID Receiving Program - Saved 535K labor hours/year</div>
+                                    <div class="story-mini-card">Website Replatform - Increased accessibility from 81% to 95%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 1 Assignment -->
+            <div class="assignment-section" id="assignment">
+                <h2 class="assignment-header">
+                    <span class="assignment-icon">📝</span>
+                    Week 1 | Activity 1 | Examples of Projects
+                </h2>
+                
+                <div class="assignment-content">
+                    <div class="assignment-instructions">
+                        <h3>📌 Instructions</h3>
+                        <p>Search online and find one real-world IT project that has been documented in a news article, blog post, press release, case study, or video. The project can be from any industry—such as healthcare, education, e-commerce, government, or transportation—as long as it is technology-related.</p>
+                        
+                        <p><strong>For the project you choose, provide the following:</strong></p>
+                        <ul>
+                            <li>Project Title</li>
+                            <li>URL (Link to the article, blog, or video)</li>
+                            <li>Brief Summary (2–4 sentences summarizing what the project is about)</li>
+                            <li>Why It Qualifies as a Project</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="assignment-objective">
+                        <h3>🎯 Objective</h3>
+                        <p>This assignment will help you apply what you've learned about what defines a project by exploring a real-world example from the IT field. You'll analyze the project using the key characteristics of project management, helping you develop a practical understanding of what sets a project apart from operations or general work.</p>
+                    </div>
+                    
+                    <div class="assignment-expectations">
+                        <h3>📋 Expectations</h3>
+                        <ul>
+                            <li>You will earn <strong>1 point</strong> for providing the project title and link.</li>
+                            <li>You will earn <strong>5 points</strong> for writing a clear, accurate summary in your own words.</li>
+                            <li>The remaining <strong>9 points</strong> are based on how well you explain why the project qualifies as a project using the four key characteristics.</li>
+                        </ul>
+                        
+                        <div class="assignment-requirements">
+                            <p><strong>To receive full credit:</strong></p>
+                            <ul>
+                                <li>The project must be real and clearly technology-related.</li>
+                                <li>Your summary must be written in your own words and demonstrate understanding of the project.</li>
+                                <li>Your explanation must address all four characteristics: <strong>temporary, goal-driven, collaborative, and unique</strong>—with thoughtful and relevant reasoning.</li>
+                                <li>Use complete sentences and submit your work in a clean, organized format.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="assignment-submit">
+                        <a href="https://calstatela.instructure.com/courses/116684/assignments/2255178" class="assignment-button" target="_blank" rel="noopener noreferrer">
+                            <span class="assignment-button-icon">📤</span>
+                            Submit Assignment on Canvas
+                            <span class="assignment-button-subtitle">Worth 15 points total</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <div class="footer">
@@ -404,5 +1071,6 @@
             <a href="index.html" class="back-link">Back to Course Concepts</a>
         </div>
     </div>
+
 </body>
 </html>
