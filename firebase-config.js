@@ -12,7 +12,16 @@ const firebaseConfig = {
 // Initialize Firebase using CDN globals
 const app = firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
-const analytics = firebase.analytics();
+
+// Initialize analytics only if available
+let analytics = null;
+try {
+    if (firebase.analytics) {
+        analytics = firebase.analytics();
+    }
+} catch (error) {
+    console.log('Analytics not available, continuing without it');
+}
 
 window.firebaseApp = app;
 window.firebaseDatabase = database;

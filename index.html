@@ -133,6 +133,13 @@
             opacity: 0.7;
             cursor: default;
             pointer-events: none;
+            border: 2px dashed #ffc107;
+        }
+        
+        .status-coming-soon {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffc107;
         }
         
         /* In admin mode, coming-soon cards should be interactive */
@@ -168,6 +175,114 @@
         .concept-card.quiz-card .concept-status {
             background: #667eea;
             color: white;
+        }
+        
+        /* Thinking Card Styling */
+        .concept-card.thinking-card {
+            background: linear-gradient(135deg, #fff9e6, #fff3cd);
+            border-color: #ffc107;
+        }
+        
+        .concept-card.thinking-card:hover {
+            border-color: #e0a800;
+            box-shadow: 0 10px 25px rgba(255, 193, 7, 0.2);
+        }
+        
+        .concept-card.thinking-card .concept-status {
+            background: #ffc107;
+            color: #212529;
+            font-weight: 600;
+        }
+        
+        /* Homework Card Styling */
+        .concept-card.homework-card {
+            background: linear-gradient(135deg, #e8f5e8, #d1ecf1);
+            border-color: #28a745;
+        }
+        
+        .concept-card.homework-card:hover {
+            border-color: #1e7e34;
+            box-shadow: 0 10px 25px rgba(40, 167, 69, 0.2);
+        }
+        
+        .concept-card.homework-card .concept-status {
+            background: #28a745;
+            color: white;
+            font-weight: 600;
+        }
+        
+        /* Summary Card Styling */
+        .concept-card.summary-card {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-color: #9c27b0;
+        }
+        
+        .concept-card.summary-card:hover {
+            border-color: #7b1fa2;
+            box-shadow: 0 10px 25px rgba(156, 39, 176, 0.2);
+        }
+        
+        .concept-card.summary-card .concept-status {
+            background: #9c27b0;
+            color: white;
+            font-weight: 600;
+        }
+        
+        /* Wrap-up Card Styling - Full Width */
+        .concept-card.wrap-up-card {
+            grid-column: 1 / -1; /* Span all columns */
+            background: linear-gradient(135deg, #fafafa, #f5f5f5);
+            border: 2px solid #e0e0e0;
+            text-align: center;
+            padding: 25px;
+            margin-top: 15px;
+        }
+        
+        .concept-card.wrap-up-card:hover {
+            border-color: #bdbdbd;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .concept-card.wrap-up-card .concept-icon {
+            display: none;
+        }
+        
+        .concept-card.wrap-up-card .concept-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #424242;
+        }
+        
+        .concept-card.wrap-up-card .concept-description {
+            font-size: 16px;
+            max-width: 500px;
+            margin: 0 auto 15px auto;
+            color: #616161;
+        }
+        
+        .concept-card.wrap-up-card .concept-status {
+            background: #9e9e9e;
+            color: white;
+            font-weight: 500;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+        
+        /* Additional Status Types */
+        .status-reflection {
+            background: #ffc107 !important;
+            color: #212529 !important;
+        }
+        
+        .status-homework {
+            background: #28a745 !important;
+            color: white !important;
+        }
+        
+        .status-summary {
+            background: #9c27b0 !important;
+            color: white !important;
         }
         
         .concept-icon {
@@ -462,6 +577,183 @@
             display: block;
         }
         
+        /* Admin Navigation Panel */
+        .admin-nav-panel {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 2px solid var(--color-success);
+            padding: 20px;
+            z-index: 9999;
+            min-width: 250px;
+            display: none;
+        }
+        
+        body.teacher-mode .admin-nav-panel {
+            display: block;
+        }
+        
+        .admin-nav-panel h3 {
+            margin: 0 0 15px 0;
+            color: var(--color-success);
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .admin-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .admin-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: var(--color-surface-success);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--color-text-primary);
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .admin-nav-link:hover {
+            background: var(--color-success);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .admin-nav-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .admin-nav-text {
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        /* Previous Weeks Section */
+        .previous-weeks {
+            margin-top: 50px;
+            border-top: 2px solid #e0e0e0;
+            padding-top: 30px;
+        }
+        
+        .previous-weeks h3 {
+            text-align: center;
+            color: #666;
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .week-section {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .week-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+        
+        .week-header:hover {
+            background: #e9ecef;
+        }
+        
+        .week-info h4 {
+            margin: 0 0 5px 0;
+            color: #2F5233;
+            font-size: 18px;
+        }
+        
+        .week-summary {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .toggle-icon {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .week-section.collapsed .toggle-icon {
+            transform: rotate(0deg);
+        }
+        
+        .week-section.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .week-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .week-section.expanded .week-content {
+            max-height: 1000px;
+        }
+        
+        .week-content-inner {
+            padding: 20px;
+        }
+        
+        /* Smaller tiles for previous weeks */
+        .previous-week .concepts-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        
+        .previous-week .concept-card {
+            padding: 18px;
+        }
+        
+        .previous-week .concept-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .previous-week .concept-title {
+            font-size: 18px;
+        }
+        
+        .previous-week .concept-description {
+            font-size: 14px;
+        }
+        
+        /* Loading States */
+        .loading-content {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-state h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        
         .teacher-outline-link {
             display: flex;
             align-items: center;
@@ -502,11 +794,31 @@
         .instructor-tile {
             transition: all 0.3s ease;
             cursor: default;
+            opacity: 0.7;
+            position: relative;
+        }
+        
+        /* Add inactive visual indicator for students */
+        .instructor-tile::after {
+            content: '(View Only)';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 11px;
+            color: var(--color-text-secondary);
+            font-style: italic;
         }
         
         body.teacher-mode .instructor-tile {
             cursor: pointer;
             border: 2px solid transparent;
+            opacity: 1;
+        }
+        
+        body.teacher-mode .instructor-tile::after {
+            content: '(Click to View)';
+            color: var(--color-success);
         }
         
         body.teacher-mode .instructor-tile:hover {
@@ -540,261 +852,272 @@
 <body>
     <script src="firebase-config.js"></script>
     <script src="js/course-manager.js"></script>
+    
     <script src="js/teacher-manager.js"></script>
     
-    <script src="js/search-system.js"></script>
-    <script src="js/dark-mode.js"></script>
-    <script src="js/progressive-loading.js"></script>
-    <script src="js/performance-optimizer.js"></script>
-    
     <script>
-        // Remove the module import since we're using global scripts now
+        console.log('Index page loaded - loading dynamic content from database');
         
-        class CourseApp {
+        class DynamicCoursePage {
             constructor() {
                 this.courseManager = new CourseManager();
                 this.teacherManager = new TeacherManager(this.courseManager);
+                this.currentWeek = 1;
+                this.weekData = new Map();
                 this.init();
             }
-
+            
             async init() {
                 try {
-                    // Check if Firebase has any data, if not, initialize with sample data
-                    const hasData = await this.checkForExistingData();
-                    if (!hasData) {
-                        console.log('No data found in Firebase, initializing sample data...');
-                        await this.initializeSampleData();
-                    }
-                    
-                    await this.loadDynamicContent();
-                    this.setupProgressTracking();
-                    this.logPageView();
+                    await this.loadCurrentWeek();
+                    await this.loadAllWeeksData();
+                    this.renderCurrentWeek();
+                    this.renderPreviousWeeks();
+                    this.hideLoadingOverlay();
                 } catch (error) {
-                    console.warn('Firebase not configured yet. Using static content.', error);
+                    console.error('Error loading dynamic content:', error);
+                    this.showError('Failed to load course content');
+                    this.hideLoadingOverlay();
                 }
             }
-
-            async checkForExistingData() {
+            
+            async loadCurrentWeek() {
+                try {
+                    const snapshot = await this.courseManager.database.ref('course/settings/currentWeek').once('value');
+                    if (snapshot.exists()) {
+                        this.currentWeek = snapshot.val();
+                        console.log(`Current week set to: ${this.currentWeek}`);
+                    }
+                } catch (error) {
+                    console.warn('Could not load current week setting, defaulting to 1');
+                    this.currentWeek = 1;
+                }
+            }
+            
+            async loadAllWeeksData() {
                 try {
                     const snapshot = await this.courseManager.database.ref('course/content').once('value');
-                    return snapshot.exists() && snapshot.numChildren() > 0;
+                    
+                    if (!snapshot.exists()) {
+                        console.log('No content found in database');
+                        return;
+                    }
+                    
+                    const allContent = snapshot.val();
+                    
+                    // Organize content by week
+                    Object.entries(allContent).forEach(([id, data]) => {
+                        const week = data.week;
+                        if (!this.weekData.has(week)) {
+                            this.weekData.set(week, []);
+                        }
+                        this.weekData.get(week).push({ id, ...data });
+                    });
+                    
+                    // Sort each week's content by sortOrder
+                    this.weekData.forEach((tiles, week) => {
+                        tiles.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+                    });
+                    
+                    console.log(`Loaded content for ${this.weekData.size} weeks`);
                 } catch (error) {
-                    console.error('Error checking for existing data:', error);
-                    return false;
+                    console.error('Error loading weeks data:', error);
                 }
             }
-
-            async initializeSampleData() {
-                const sampleData = {
-                    "week1_pm_definition": {
-                        "id": "week1_pm_definition",
-                        "title": "Project Management Definition",
-                        "description": "Core definition plus the \"Musts\" of PM and common misconceptions. Foundation concept covering what PM is and is NOT.",
-                        "icon": "🎯",
-                        "url": "project-management-definition.html",
-                        "week": 1,
-                        "type": "concept",
-                        "status": "available",
-                        "statusText": "Available Now",
-                        "sortOrder": 1,
-                        "createdAt": Date.now(),
-                        "lastModified": Date.now()
-                    },
-                    "week1_project_definition": {
-                        "id": "week1_project_definition", 
-                        "title": "Project Definition",
-                        "description": "What makes something a project? Includes characteristics and real examples from both professional IT and personal contexts.",
-                        "icon": "📋",
-                        "url": "project-definition.html",
-                        "week": 1,
-                        "type": "concept", 
-                        "status": "available",
-                        "statusText": "Available Now",
-                        "sortOrder": 2,
-                        "createdAt": Date.now(),
-                        "lastModified": Date.now()
-                    },
-                    "week1_pm_role": {
-                        "id": "week1_pm_role",
-                        "title": "Project Manager Definition", 
-                        "description": "Role definition, essential skills, PM vs Functional Manager differences, and key people in project teams.",
-                        "icon": "👤",
-                        "url": "project-manager-role.html",
-                        "week": 1,
-                        "type": "concept",
-                        "status": "available",
-                        "statusText": "Available Now",
-                        "sortOrder": 3,
-                        "createdAt": Date.now(),
-                        "lastModified": Date.now()
-                    },
-                    "week1_pmo": {
-                        "id": "week1_pmo",
-                        "title": "PMO Definition",
-                        "description": "What is a Project Management Office and the different types of PMOs in organizations.",
-                        "icon": "🏢", 
-                        "url": "project-management-office-definition.html",
-                        "week": 1,
-                        "type": "concept",
-                        "status": "available",
-                        "statusText": "Available Now",
-                        "sortOrder": 4,
-                        "createdAt": Date.now(),
-                        "lastModified": Date.now()
-                    },
-                    "week1_pmi": {
-                        "id": "week1_pmi",
-                        "title": "PMI & PMBOK Guide",
-                        "description": "Project Management Institute overview, PMBOK Guide structure, PM Principles, and Performance Domains.",
-                        "icon": "📚",
-                        "url": "PMI.html", 
-                        "week": 1,
-                        "type": "concept",
-                        "status": "available",
-                        "statusText": "Available Now",
-                        "sortOrder": 5,
-                        "createdAt": Date.now(),
-                        "lastModified": Date.now()
-                    },
-                    "week1_quiz": {
-                        "id": "week1_quiz",
-                        "title": "Week 1 Quiz Challenge",
-                        "description": "Test your knowledge with interactive quizzes! Choose between Concepts or Scenarios - both with immediate feedback and explanations.",
-                        "icon": "🎮",
-                        "url": "week-1-quiz.html",
-                        "week": 1,
-                        "type": "quiz",
-                        "status": "available", 
-                        "statusText": "Test Yourself",
-                        "sortOrder": 6,
-                        "createdAt": Date.now(),
-                        "lastModified": Date.now()
-                    }
+            
+            getWeekTitle(week) {
+                const weekTitles = {
+                    1: 'Introduction to Project Management',
+                    2: 'Business Value and Strategic Alignment',
+                    3: 'Project Scope Management',
+                    4: 'Project Methodologies and Framework Selection',
+                    5: 'Time, Cost, and Quality Management',
+                    6: 'Stakeholder Management',
+                    7: 'Team Leadership and Conflict Management',
+                    8: 'Growth Mindset and Project Charter',
+                    9: 'Change Management and Risk Management',
+                    10: 'Resource Management and Procurement',
+                    11: 'Agile Principles',
+                    12: 'Holiday - Veterans Day',
+                    13: 'Project Closure and Lessons Learned',
+                    14: 'Final Presentations - Round 1',
+                    15: 'Fall Recess',
+                    16: 'Final Presentations - Round 2'
                 };
-
-                try {
-                    for (const [contentId, contentData] of Object.entries(sampleData)) {
-                        await this.courseManager.updateCourseContent(contentId, contentData);
-                    }
-                    console.log('Sample data initialized successfully');
-                } catch (error) {
-                    console.error('Error initializing sample data:', error);
-                }
+                return weekTitles[week] || `Week ${week} Content`;
             }
-
-            async loadDynamicContent() {
-                const weekContent = await this.courseManager.getCourseContent(1);
-                if (weekContent.length > 0) {
-                    this.renderDynamicContent(weekContent);
-                }
+            
+            getWeekDescription(week) {
+                const descriptions = {
+                    1: 'Master the fundamental concepts of IT project management. This week covers the essential definitions, roles, and frameworks that form the foundation of successful project management practice.',
+                    2: 'Learn how to align projects with business objectives and create strategic value through effective project management practices.',
+                    3: 'Define and manage project scope effectively, including deliverables, work breakdown structures, and scope control techniques.',
+                    4: 'Explore different project management methodologies and learn how to select the right framework for your project needs.',
+                    5: 'Master the triple constraint of project management: managing time, cost, and quality to deliver successful projects.',
+                    6: 'Learn to identify, engage, and manage stakeholders effectively throughout the project lifecycle.',
+                    7: 'Develop leadership skills and learn conflict resolution techniques for effective project team management.',
+                    8: 'Understand the importance of growth mindset in project management and master project charter development.',
+                    9: 'Learn to manage project changes and identify, assess, and mitigate project risks effectively.',
+                    10: 'Master resource allocation, team management, and procurement processes in project management.',
+                    11: 'Explore agile methodologies and learn how to apply agile principles in modern project management.',
+                    12: 'No classes scheduled. Use this time to work on your project deliverables and catch up on coursework.',
+                    13: 'Learn proper project closure procedures and how to capture and document lessons learned for future projects.',
+                    14: 'Present your project work and demonstrate the skills and knowledge gained throughout the course.',
+                    15: 'Fall break - no classes scheduled. Prepare for final presentations and complete remaining deliverables.',
+                    16: 'Complete your final project presentations and demonstrate mastery of project management concepts.'
+                };
+                return descriptions[week] || `Content and lessons for Week ${week} of the course.`;
             }
-
-            renderDynamicContent(content) {
+            
+            renderCurrentWeek() {
+                const introSection = document.querySelector('.intro');
+                if (introSection) {
+                    introSection.innerHTML = `
+                        <h2>Week ${this.currentWeek}: ${this.getWeekTitle(this.currentWeek)}</h2>
+                        <p>${this.getWeekDescription(this.currentWeek)}</p>
+                        
+                        <!-- Teacher-only link to course outline manager -->
+                        <div class="teacher-only-content">
+                            <a href="course-outline-manager.html?week=${this.currentWeek}" class="teacher-outline-link">
+                                <span>📋</span>
+                                <span>Edit Week ${this.currentWeek} Content</span>
+                            </a>
+                        </div>
+                    `;
+                }
+                
                 const conceptsGrid = document.querySelector('.concepts-grid');
                 if (!conceptsGrid) return;
-
-                // Filter out hidden content unless in admin mode
-                const filteredContent = content.filter(item => 
-                    item.status !== 'hidden' || (this.teacherManager && this.teacherManager.isTeacherMode)
-                );
-
-                conceptsGrid.innerHTML = filteredContent.map(item => {
-                    const statusClass = item.status === 'available' ? 'status-available' : 
-                                      item.status === 'hidden' ? 'status-hidden' : 'status-coming-soon';
-                    
-                    return `
-                        <a href="${item.url || '#'}" class="concept-card ${item.status} ${item.type === 'quiz' ? 'quiz-card' : ''}" data-content-id="${item.id}">
-                            <span class="concept-icon">${item.icon || '📖'}</span>
-                            <div class="concept-title">${item.title}</div>
-                            <div class="concept-description">${item.description}</div>
-                            <span class="concept-status ${statusClass}">${item.statusText}</span>
-                        </a>
-                    `;
-                }).join('');
-            }
-
-            setupProgressTracking() {
-                document.querySelectorAll('.concept-card').forEach(card => {
-                    card.addEventListener('click', (e) => {
-                        // Don't track clicks on admin gears
-                        if (e.target.classList.contains('admin-gear')) {
-                            return;
-                        }
-                        
-                        // In admin mode, allow normal navigation when clicking tiles
-                        // Only prevent navigation if clicking the gear icon specifically
-                        
-                        const contentId = card.getAttribute('data-content-id');
-                        if (contentId) {
-                            this.courseManager.logAnalytics('content_click', {
-                                contentId: contentId,
-                                title: card.querySelector('.concept-title').textContent,
-                                week: 1
-                            });
-                        }
-                    });
-                });
+                
+                const currentWeekTiles = this.weekData.get(this.currentWeek) || [];
+                const visibleTiles = currentWeekTiles.filter(tile => tile.status !== 'hidden');
+                
+                if (visibleTiles.length === 0) {
+                    conceptsGrid.innerHTML = this.renderEmptyState();
+                    return;
+                }
+                
+                conceptsGrid.innerHTML = visibleTiles.map(tile => this.renderTile(tile)).join('');
                 
                 // Add gear icons if in teacher mode
                 if (this.teacherManager && this.teacherManager.isTeacherMode) {
-                    this.teacherManager.addGearIcons();
+                    setTimeout(() => this.teacherManager.addGearIcons(), 100);
                 }
             }
-
-            logPageView() {
-                this.courseManager.logAnalytics('page_view', {
-                    page: 'index',
-                    week: 1,
-                    timestamp: new Date().toISOString()
-                });
+            
+            renderPreviousWeeks() {
+                const previousWeeksContainer = document.querySelector('.previous-weeks');
+                if (!previousWeeksContainer) return;
+                
+                let previousWeeksHTML = '<h3>📚 Previous Weeks</h3>';
+                
+                for (let week = 1; week < this.currentWeek; week++) {
+                    const weekTiles = this.weekData.get(week) || [];
+                    const visibleTiles = weekTiles.filter(tile => tile.status !== 'hidden');
+                    
+                    if (visibleTiles.length > 0) {
+                        previousWeeksHTML += `
+                            <div class="week-section collapsed previous-week" id="week${week}">
+                                <div class="week-header" onclick="toggleWeek('week${week}')">
+                                    <div class="week-info">
+                                        <h4>📖 Week ${week}: ${this.getWeekTitle(week)} ✓</h4>
+                                        <p class="week-summary">${visibleTiles.length} lesson${visibleTiles.length !== 1 ? 's' : ''} • Completed</p>
+                                    </div>
+                                    <span class="toggle-icon">▼</span>
+                                </div>
+                                <div class="week-content">
+                                    <div class="week-content-inner">
+                                        <div class="concepts-grid">
+                                            ${visibleTiles.map(tile => this.renderTile(tile)).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+                
+                previousWeeksContainer.innerHTML = previousWeeksHTML;
+                
+                // Add gear icons if in teacher mode
+                if (this.teacherManager && this.teacherManager.isTeacherMode) {
+                    setTimeout(() => this.teacherManager.addGearIcons(), 100);
+                }
+            }
+            
+            renderTile(tile) {
+                const statusClass = tile.status === 'coming-soon' ? 'status-coming-soon' : 'status-available';
+                const isClickable = tile.url && tile.url !== '#' && tile.status === 'available';
+                const tagName = isClickable ? 'a' : 'div';
+                const href = isClickable ? `href="${tile.url}"` : '';
+                
+                return `
+                    <${tagName} ${href} class="concept-card ${tile.status}" data-content-id="${tile.id}">
+                        <span class="concept-icon">${tile.icon || '📖'}</span>
+                        <div class="concept-title">${tile.title}</div>
+                        <div class="concept-description">${tile.description || 'No description available'}</div>
+                        <span class="concept-status ${statusClass}">${tile.statusText || 'Available Now'}</span>
+                    </${tagName}>
+                `;
+            }
+            
+            renderEmptyState() {
+                return `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <div style="font-size: 48px; margin-bottom: 20px;">📚</div>
+                        <h3>Week ${this.currentWeek} Content Coming Soon</h3>
+                        <p style="margin: 0; font-size: 16px;">Your instructor is preparing the materials for this week. Please check back later.</p>
+                    </div>
+                `;
+            }
+            
+            showError(message) {
+                const conceptsGrid = document.querySelector('.concepts-grid');
+                if (!conceptsGrid) return;
+                
+                conceptsGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #dc3545;">
+                        <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
+                        <h3 style="margin: 0 0 10px 0;">Error Loading Content</h3>
+                        <p style="margin: 0; font-size: 16px;">${message}</p>
+                    </div>
+                `;
+            }
+            
+            hideLoadingOverlay() {
+                const loadingOverlay = document.getElementById('loading-overlay');
+                if (loadingOverlay) {
+                    setTimeout(() => {
+                        loadingOverlay.style.display = 'none';
+                    }, 500);
+                }
             }
         }
-
+        
+        // Toggle week sections
+        function toggleWeek(weekId) {
+            const weekSection = document.getElementById(weekId);
+            if (weekSection.classList.contains('collapsed')) {
+                weekSection.classList.remove('collapsed');
+                weekSection.classList.add('expanded');
+            } else {
+                weekSection.classList.remove('expanded');
+                weekSection.classList.add('collapsed');
+            }
+        }
+        
         // Handle instructor tile click
         function handleInstructorClick() {
-            console.log('Instructor tile clicked');
-            
-            // Wait for TeacherManager to be ready, then check teacher mode
-            const checkTeacherModeAndNavigate = () => {
-                const isTeacherMode = document.body.classList.contains('teacher-mode') || 
-                                     (window.teacherManager && window.teacherManager.isTeacherMode) ||
-                                     sessionStorage.getItem('teacherMode') === 'true';
-                
-                console.log('Teacher mode detected:', isTeacherMode);
-                console.log('Body classes:', document.body.className);
-                console.log('TeacherManager exists:', !!window.teacherManager);
-                console.log('TeacherManager.isTeacherMode:', window.teacherManager?.isTeacherMode);
-                console.log('SessionStorage teacherMode:', sessionStorage.getItem('teacherMode'));
-                
-                if (isTeacherMode) {
-                    console.log('Navigating to instructor profile...');
-                    window.location.href = 'instructor-profile.html';
-                } else {
-                    console.log('Not in teacher mode - click ignored');
-                }
-            };
-
-            // If TeacherManager exists, check immediately
-            if (window.teacherManager) {
-                checkTeacherModeAndNavigate();
-            } else {
-                // Wait for TeacherManager to be initialized
-                const waitForTeacherManager = (attempts = 0) => {
-                    if (window.teacherManager || attempts > 50) { // Max 5 seconds wait
-                        checkTeacherModeAndNavigate();
-                    } else {
-                        setTimeout(() => waitForTeacherManager(attempts + 1), 100);
-                    }
-                };
-                waitForTeacherManager();
+            // Only allow click in teacher mode
+            if (document.body.classList.contains('teacher-mode')) {
+                console.log('Instructor tile clicked - redirecting to instructor profile');
+                window.location.href = 'instructor-profile.html';
             }
         }
-
+        
+        // Initialize when DOM is ready
         window.addEventListener('DOMContentLoaded', () => {
-            // Wait for Firebase to be loaded
-            setTimeout(() => {
-                new CourseApp();
-            }, 1000);
+            new DynamicCoursePage();
         });
     </script>
     <!-- Loading Overlay -->
@@ -805,9 +1128,22 @@
         </div>
     </div>
 
-    <div class="container">
+    <!-- Admin Navigation Panel -->
+    <div class="admin-nav-panel">
+        <h3>📚 Course Admin</h3>
+        <div class="admin-nav-links">
+            <a href="weekly-schedule.html" class="admin-nav-link">
+                <span class="admin-nav-icon">📅</span>
+                <span class="admin-nav-text">Weekly Schedule</span>
+            </a>
+            <a href="course-outline-manager.html" class="admin-nav-link">
+                <span class="admin-nav-icon">📝</span>
+                <span class="admin-nav-text">Content Editor</span>
+            </a>
+        </div>
+    </div>
 
-        
+    <div class="container">
         <header class="header" role="banner">
             <h1>Managing IT Projects</h1>
             <p>Interactive Concept Library for Project Management Success</p>
@@ -834,8 +1170,8 @@
             </div>
             
             <div class="intro">
-                <h2>Week 1: Foundation Concepts</h2>
-                <p>Master the fundamental concepts of IT project management. This week covers the essential definitions, roles, and frameworks that form the foundation of successful project management practice.</p>
+                <h2 id="week-title">Week 1: Foundation Concepts</h2>
+                <p id="week-description">Master the fundamental concepts of IT project management. This week covers the essential definitions, roles, and frameworks that form the foundation of successful project management practice.</p>
                 
                 <!-- Teacher-only link to course outline manager -->
                 <div class="teacher-only-content">
@@ -884,13 +1220,12 @@
                     <span class="concept-status status-available">Available Now</span>
                 </a>
                 
-                <a href="week-1-quiz.html" class="concept-card available quiz-card" data-content-id="week1_quiz">
-                    <span class="concept-icon">🎮</span>
-                    <div class="concept-title">Week 1 Quiz Challenge</div>
-                    <div class="concept-description">Test your knowledge with interactive quizzes! Choose between Concepts or Scenarios - both with immediate feedback and explanations.</div>
-                    <span class="concept-status status-available">Test Yourself</span>
-                </a>
-            </div>
+            </section>
+            
+            <!-- Previous Weeks Section -->
+            <section class="previous-weeks">
+                <!-- Previous weeks will be populated by JavaScript -->
+            </section>
             
             <div class="info-box info-box--info" style="margin-top: 40px; text-align: center;">
                 <h3 class="info-box__title">🚀 Coming in Future Weeks</h3>
@@ -898,7 +1233,7 @@
                     <p>Business Value & Strategic Alignment • Project Scope Management • Time, Cost & Quality Management • Stakeholder Management • Team Leadership & Conflict Management • Change & Risk Management • Agile Principles • And More!</p>
                 </div>
             </div>
-        </div>
+        </main>
         
         <div class="footer">
             <div class="footer-content">
@@ -933,5 +1268,6 @@
             </div>
         </div>
     </div>
+
 </body>
 </html>

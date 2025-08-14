@@ -51,50 +51,24 @@ class TeacherManager {
                         <div id="teacher-content-editor" class="teacher-section" style="display: none;">
                             <form id="content-form">
                                 <input type="hidden" id="edit-content-id" />
-                                <div class="form-group">
-                                    <label>Title:</label>
-                                    <input type="text" id="edit-title" required />
+                                <div class="tile-info" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                                    <div style="font-weight: bold; margin-bottom: 5px;" id="display-title">Tile Title</div>
+                                    <div style="color: #666; font-size: 14px;" id="display-description">Tile description</div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Description:</label>
-                                    <textarea id="edit-description" required></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label>Icon:</label>
-                                    <input type="text" id="edit-icon" placeholder="🎯" />
-                                </div>
-                                <div class="form-group">
-                                    <label>URL:</label>
-                                    <input type="text" id="edit-url" required />
-                                </div>
-                                <div class="form-group">
-                                    <label>Week:</label>
-                                    <input type="number" id="edit-week" min="1" required />
-                                </div>
-                                <div class="form-group">
-                                    <label>Sort Order:</label>
-                                    <input type="number" id="edit-sort-order" min="1" step="1" placeholder="1, 2, 3..." />
-                                    <small style="color: #666; font-size: 12px;">Lower numbers appear first</small>
-                                </div>
-                                <div class="form-group">
-                                    <label>Type:</label>
-                                    <select id="edit-type">
-                                        <option value="concept">Concept</option>
-                                        <option value="quiz">Quiz</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Status:</label>
+                                    <label>Visibility Status:</label>
                                     <select id="edit-status">
-                                        <option value="available">Available</option>
-                                        <option value="coming-soon">Coming Soon</option>
-                                        <option value="hidden">Hidden</option>
+                                        <option value="available">👁️ Available (visible to students)</option>
+                                        <option value="coming-soon">⏳ Coming Soon (visible but not clickable)</option>
+                                        <option value="hidden">🚫 Hidden (not visible to students)</option>
                                     </select>
+                                    <small style="color: #666; font-size: 12px; display: block; margin-top: 5px;">
+                                        Use the Course Outline Manager to edit other tile properties
+                                    </small>
                                 </div>
                                 <div class="form-buttons">
-                                    <button type="submit">Save Changes</button>
+                                    <button type="submit">Save Status</button>
                                     <button type="button" id="cancel-edit">Cancel</button>
-                                    <button type="button" id="delete-content" style="background: #dc3545;">Delete</button>
                                 </div>
                             </form>
                         </div>
@@ -344,10 +318,6 @@ class TeacherManager {
             this.hideTeacherModal();
         });
 
-        // Delete content
-        document.getElementById('delete-content').addEventListener('click', () => {
-            this.deleteContent();
-        });
 
         // Click outside modal to close
         window.addEventListener('click', (e) => {
@@ -383,24 +353,23 @@ class TeacherManager {
     showContentEditor(contentData = null) {
         console.log('showContentEditor called with:', contentData);
         
-        document.getElementById('modal-title').textContent = contentData ? 'Edit Content' : 'Add New Content';
+        document.getElementById('modal-title').textContent = 'Edit Tile Visibility';
         document.getElementById('teacher-login').style.display = 'none';
         document.getElementById('teacher-content-editor').style.display = 'block';
 
         if (contentData && contentData.id && contentData.id !== 'new') {
             console.log('Loading existing content data:', contentData);
             document.getElementById('edit-content-id').value = contentData.id;
-            document.getElementById('edit-title').value = contentData.title || '';
-            document.getElementById('edit-description').value = contentData.description || '';
-            document.getElementById('edit-icon').value = contentData.icon || '';
-            document.getElementById('edit-url').value = contentData.url || '';
-            document.getElementById('edit-week').value = contentData.week || 1;
-            document.getElementById('edit-sort-order').value = contentData.sortOrder || 1;
-            document.getElementById('edit-type').value = contentData.type || 'concept';
+            
+            // Show tile info (read-only)
+            document.getElementById('display-title').textContent = contentData.title || 'Untitled';
+            document.getElementById('display-description').textContent = contentData.description || 'No description';
+            
+            // Only allow editing the status
             document.getElementById('edit-status').value = contentData.status || 'available';
         } else {
-            console.log('No valid content data, showing new content form');
-            this.clearForm();
+            // This shouldn't happen anymore since we only edit existing tiles
+            this.hideTeacherModal();
         }
     }
 
@@ -414,7 +383,8 @@ class TeacherManager {
             'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad', // "abc"
             '2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae', // "hello"
             '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', // "password"
-            '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'  // "admin123"
+            '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', // "admin123"
+            'bc64edd4f49dd70c421ab6c04bbae5fc21816c5de97f0f488d1c32f28353b91e'  // "TeachMode2024!"
         ];
         
         if (validHashes.includes(hash)) {
@@ -441,6 +411,7 @@ class TeacherManager {
         document.body.classList.add('teacher-mode');
         document.getElementById('teacher-toggle').innerHTML = '👩‍🏫 Teacher Mode (ON)';
         this.addGearIcons();
+        this.setupContentObserver();
     }
 
     disableTeacherMode() {
@@ -449,9 +420,12 @@ class TeacherManager {
         document.getElementById('teacher-toggle').innerHTML = '👩‍🏫 Teacher Mode';
         this.removeGearIcons();
         this.clearPersistedTeacherMode();
+        this.disconnectContentObserver();
     }
 
     addGearIcons() {
+        if (!this.isTeacherMode) return;
+        
         document.querySelectorAll('.concept-card').forEach(card => {
             if (!card.querySelector('.teacher-gear')) {
                 const gear = document.createElement('button');
@@ -528,65 +502,126 @@ class TeacherManager {
     }
 
     async saveContent() {
-        const contentData = {
-            id: document.getElementById('edit-content-id').value,
-            title: document.getElementById('edit-title').value,
-            description: document.getElementById('edit-description').value,
-            icon: document.getElementById('edit-icon').value,
-            url: document.getElementById('edit-url').value,
-            week: parseInt(document.getElementById('edit-week').value),
-            sortOrder: parseInt(document.getElementById('edit-sort-order').value) || 1,
-            type: document.getElementById('edit-type').value,
-            status: document.getElementById('edit-status').value,
-            statusText: this.getStatusText(document.getElementById('edit-status').value)
-        };
+        const contentId = document.getElementById('edit-content-id').value;
+        const newStatus = document.getElementById('edit-status').value;
+        
+        if (!contentId || contentId === 'new') {
+            this.showError('Invalid content ID');
+            return;
+        }
 
-        console.log('Saving content data:', contentData);
+        console.log('Updating visibility status for ID:', contentId, 'to:', newStatus);
 
         // Show loading state
-        this.showLoading('Saving content...');
+        this.showLoading('Updating visibility...');
         
         try {
-            if (contentData.id === 'new' || !contentData.id) {
-                console.log('Adding new content');
-                const newId = await this.courseManager.addCourseContent(contentData);
-                console.log('New content added with ID:', newId);
-            } else {
-                console.log('Updating existing content with ID:', contentData.id);
-                const result = await this.courseManager.updateCourseContent(contentData.id, contentData);
-                console.log('Update result:', result);
+            // Get existing content to preserve all properties
+            const existingContent = await this.getContentById(contentId);
+            if (!existingContent) {
+                throw new Error('Content not found');
             }
             
-            this.showSuccess('Content saved successfully!');
+            // Only update status and statusText, preserve everything else
+            const updatedData = {
+                ...existingContent,
+                status: newStatus,
+                statusText: this.getStatusText(newStatus),
+                lastModified: Date.now()
+            };
+            
+            console.log('Updating with preserved data:', updatedData);
+            const result = await this.courseManager.updateCourseContent(contentId, updatedData);
+            console.log('Update result:', result);
+            
+            // Also update the outline to keep it in sync
+            await this.syncVisibilityToOutline(contentId, newStatus);
+            
+            this.showSuccess('Tile visibility updated successfully!');
             this.hideTeacherModal();
             
-            // Wait a moment then reload to ensure Firebase sync
+            // Reload page to show changes
             setTimeout(() => {
                 this.hideLoading();
                 window.location.reload();
-            }, 1000);
+            }, 500);
         } catch (error) {
-            console.error('Error saving content:', error);
+            console.error('Error updating visibility:', error);
             this.hideLoading();
-            this.showError('Error saving content: ' + error.message);
+            this.showError('Error updating visibility: ' + error.message);
         }
     }
-
-    async deleteContent() {
-        const contentId = document.getElementById('edit-content-id').value;
-        if (contentId && contentId !== 'new') {
-            if (confirm('Are you sure you want to delete this content?')) {
-                try {
-                    await this.courseManager.database.ref(`course/content/${contentId}`).remove();
-                    this.showSuccess('Content deleted successfully!');
-                    this.hideTeacherModal();
-                    window.location.reload();
-                } catch (error) {
-                    console.error('Error deleting content:', error);
-                    this.showError('Error deleting content: ' + error.message);
+    
+    async syncVisibilityToOutline(contentId, newStatus) {
+        try {
+            // Extract week number from content ID (e.g., "week1_project_management_definition")
+            const weekMatch = contentId.match(/week(\d+)_/);
+            if (!weekMatch) {
+                console.log('Could not extract week from content ID:', contentId);
+                return;
+            }
+            
+            const weekNumber = parseInt(weekMatch[1]);
+            const outlineId = `week-${weekNumber}-outline`;
+            
+            // Get the outline data
+            const snapshot = await this.courseManager.database.ref(`outlines/${outlineId}`).once('value');
+            if (!snapshot.exists()) {
+                console.log('No outline found for week:', weekNumber);
+                return;
+            }
+            
+            const outlineData = snapshot.val();
+            if (!outlineData.activities) return;
+            
+            // Find and update the matching activity
+            let updated = false;
+            for (const activity of outlineData.activities) {
+                if (activity.type === 'Lesson') {
+                    // Generate the tile ID for this activity using the same mapping as outline manager
+                    const activityTileId = this.getTileIdFromActivity(activity, weekNumber);
+                    
+                    if (activityTileId === contentId) {
+                        console.log(`📝 Syncing visibility to outline for "${activity.title}": ${activity.tileVisibility} → ${newStatus}`);
+                        activity.tileVisibility = newStatus;
+                        updated = true;
+                        break;
+                    }
                 }
             }
+            
+            if (updated) {
+                // Save the updated outline
+                await this.courseManager.database.ref(`outlines/${outlineId}`).set(outlineData);
+                console.log('✅ Outline synced successfully');
+            }
+        } catch (error) {
+            console.error('Error syncing to outline:', error);
         }
+    }
+    
+    getTileIdFromActivity(activity, week) {
+        const title = activity.title.toLowerCase();
+        
+        // Map lesson titles to the static tile IDs used in index.html
+        if (title.includes('project management') && !title.includes('pmo') && !title.includes('pmi')) {
+            return `week${week}_pm_definition`;
+        }
+        if (title.includes('project definition') && !title.includes('management')) {
+            return `week${week}_project_definition`;
+        }
+        if (title.includes('project manager') && !title.includes('pmo')) {
+            return `week${week}_pm_role`;
+        }
+        if (title.includes('pmo') || title.includes('project management office')) {
+            return `week${week}_pmo`;
+        }
+        if (title.includes('pmi') || title.includes('pmbok')) {
+            return `week${week}_pmi`;
+        }
+        
+        // Fallback: generate ID from title (for future lessons)
+        return `week${week}_${title.replace(/[^a-z0-9]/g, '_')}`;
     }
 
     getStatusText(status) {
@@ -598,18 +633,6 @@ class TeacherManager {
         }
     }
 
-    clearForm() {
-        console.log('clearForm called - setting up new content form');
-        document.getElementById('edit-content-id').value = 'new';
-        document.getElementById('edit-title').value = '';
-        document.getElementById('edit-description').value = '';
-        document.getElementById('edit-icon').value = '📖';
-        document.getElementById('edit-url').value = '';
-        document.getElementById('edit-week').value = '1';
-        document.getElementById('edit-sort-order').value = '1';
-        document.getElementById('edit-type').value = 'concept';
-        document.getElementById('edit-status').value = 'available';
-    }
     
     // Method to handle clicking on tiles (not gears)
     handleTileClick(card) {
@@ -622,24 +645,97 @@ class TeacherManager {
     // Session persistence methods
     checkPersistedTeacherMode() {
         const teacherModeSession = sessionStorage.getItem('teacherMode');
+        const sessionTimestamp = sessionStorage.getItem('teacherModeTimestamp');
+        
         if (teacherModeSession === 'true') {
-            console.log('Restoring teacher mode from session');
-            this.isTeacherMode = true;
-            this.enableTeacherMode();
-            // Add a small delay to ensure DOM is ready for gear icons
+            // Check if session is still valid (within 8 hours)
+            const now = Date.now();
+            const sessionTime = parseInt(sessionTimestamp) || 0;
+            const eightHours = 8 * 60 * 60 * 1000;
+            
+            if (now - sessionTime < eightHours) {
+                console.log('Restoring teacher mode from session');
+                this.isTeacherMode = true;
+                this.enableTeacherMode();
+                
+                // Use multiple attempts to ensure gear icons are added when content loads
+                this.addGearIconsWithRetry();
+            } else {
+                console.log('Teacher mode session expired, clearing...');
+                this.clearPersistedTeacherMode();
+            }
+        }
+    }
+
+    addGearIconsWithRetry(attempts = 0, maxAttempts = 10) {
+        const cards = document.querySelectorAll('.concept-card');
+        
+        if (cards.length > 0) {
+            console.log(`Adding gear icons to ${cards.length} cards (attempt ${attempts + 1})`);
+            this.addGearIcons();
+        } else if (attempts < maxAttempts) {
+            // Retry after a short delay if no cards found yet
             setTimeout(() => {
-                this.addGearIcons();
-            }, 500);
+                this.addGearIconsWithRetry(attempts + 1, maxAttempts);
+            }, 200);
+        }
+    }
+
+    setupContentObserver() {
+        if (this.contentObserver) {
+            this.contentObserver.disconnect();
+        }
+        
+        this.contentObserver = new MutationObserver((mutations) => {
+            let needsGearIcons = false;
+            
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'childList') {
+                    // Check if any new concept-card elements were added
+                    mutation.addedNodes.forEach((node) => {
+                        if (node.nodeType === Node.ELEMENT_NODE) {
+                            if (node.classList && node.classList.contains('concept-card')) {
+                                needsGearIcons = true;
+                            } else if (node.querySelector && node.querySelector('.concept-card')) {
+                                needsGearIcons = true;
+                            }
+                        }
+                    });
+                }
+            });
+            
+            if (needsGearIcons && this.isTeacherMode) {
+                console.log('New concept cards detected, adding gear icons...');
+                setTimeout(() => this.addGearIcons(), 50);
+            }
+        });
+        
+        // Observe the entire document for changes
+        this.contentObserver.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+        
+        console.log('Content observer setup for automatic gear icon management');
+    }
+
+    disconnectContentObserver() {
+        if (this.contentObserver) {
+            this.contentObserver.disconnect();
+            this.contentObserver = null;
+            console.log('Content observer disconnected');
         }
     }
 
     persistTeacherMode() {
         sessionStorage.setItem('teacherMode', 'true');
-        console.log('Teacher mode persisted to session');
+        sessionStorage.setItem('teacherModeTimestamp', Date.now().toString());
+        console.log('Teacher mode persisted to session with timestamp');
     }
 
     clearPersistedTeacherMode() {
         sessionStorage.removeItem('teacherMode');
+        sessionStorage.removeItem('teacherModeTimestamp');
         console.log('Teacher mode cleared from session');
     }
 

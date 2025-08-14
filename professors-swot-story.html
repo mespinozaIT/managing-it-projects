@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor's SWOT Story - Managing IT Projects</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2F5233, #4A7C59);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .back-to-course {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-to-course:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="80" r="2.5" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="60" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+        }
+        
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 36px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header p {
+            margin: 0;
+            font-size: 18px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #fff3cd 0%, #f8f9fa 100%);
+            border-left: 5px solid #ffc107;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .intro-section h2 {
+            color: #2F5233;
+            margin-top: 0;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .intro-section p {
+            color: var(--color-text-secondary);
+            font-size: 16px;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .professor-story {
+            background: linear-gradient(135deg, #3498db, #5dade2);
+            color: white;
+            padding: 35px;
+            border-radius: 15px;
+            margin: 40px 0;
+            position: relative;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .professor-story::before {
+            content: "👨‍🏫";
+            font-size: 48px;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+        }
+        
+        .professor-story h3 {
+            margin-top: 0;
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+        
+        .professor-story p {
+            font-size: 16px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .skills-assessment {
+            background: rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .skill-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .skill-name {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .skill-level {
+            font-size: 16px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: bold;
+        }
+        
+        .skill-low {
+            background: rgba(231, 76, 60, 0.8);
+        }
+        
+        .skill-medium {
+            background: rgba(243, 156, 18, 0.8);
+        }
+        
+        .skill-high {
+            background: rgba(39, 174, 96, 0.8);
+        }
+        
+        .insights-box {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .insights-box h4 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .takeaways-section {
+            background: linear-gradient(135deg, #e3f2fd, #f8f9fa);
+            border: 2px solid #2196f3;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .takeaways-section h3 {
+            color: #1976d2;
+            margin-top: 0;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .takeaway-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #2196f3;
+        }
+
+        .takeaway-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .takeaway-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2F5233;
+            margin-bottom: 8px;
+        }
+
+        .takeaway-text {
+            font-size: 14px;
+            color: #495057;
+            line-height: 1.6;
+        }
+
+        .practical-application {
+            background: linear-gradient(135deg, #f4f3ff 0%, #fff3cd 100%);
+            border: 2px solid #6f42c1;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .practical-application h3 {
+            color: #6f42c1;
+            margin-top: 0;
+            font-size: 22px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .application-text {
+            color: #495057;
+            font-size: 16px;
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        .back-to-lesson {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #2F5233;
+            color: white;
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 40px;
+        }
+
+        .back-to-lesson:hover {
+            background: #4A7C59;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(45, 93, 59, 0.3);
+            color: white;
+        }
+
+        /* Dark mode support */
+        [data-theme="dark"] .professor-story {
+            background: linear-gradient(135deg, #2980b9, #3498db);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .content {
+                padding: 25px 20px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .takeaways-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .professor-story::before {
+                display: none;
+            }
+
+            .back-to-course {
+                position: static;
+                margin-bottom: 20px;
+                display: inline-flex;
+            }
+        }
+    </style>
+    <!-- Immediate blocking for non-teacher mode -->
+    <script>
+        // IMMEDIATE BLOCKING - Default is to block everything
+        document.write('<style id="blockContent">body { display: none !important; }</style>');
+    </script>
+</head>
+<body>
+    
+    <script src="js/teacher-manager.js"></script>
+    <script src="js/dark-mode.js"></script>
+    
+    <script>
+        // Immediate protection check
+        function checkTeacherMode() {
+            // Default state is blocked - only unblock if verified through proper teacher mode
+            const isTeacherMode = sessionStorage.getItem('teacherMode') === 'true';
+            
+            if (!isTeacherMode) {
+                // Not in teacher mode, show restricted message
+                console.log('Access denied - not in teacher mode');
+                // Remove the blocking style to show restricted message
+                document.getElementById('blockContent').remove();
+                showRestrictedAccess();
+                return;
+            }
+            
+            // Teacher mode verified, show the content
+            console.log('Teacher mode verified - showing content');
+            // Remove the blocking style
+            document.getElementById('blockContent').remove();
+            document.body.style.display = 'block';
+            
+            // Ensure teacher mode class is added
+            document.body.classList.add('teacher-mode');
+        }
+        
+        // Check immediately
+        checkTeacherMode();
+        
+        function showRestrictedAccess() {
+            // Replace entire body content with restricted access message
+            document.body.innerHTML = `
+                <div style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    min-height: 100vh;
+                    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    padding: 20px;
+                ">
+                    <div style="
+                        max-width: 600px;
+                        background: white;
+                        border-radius: 15px;
+                        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                        padding: 40px;
+                        text-align: center;
+                    ">
+                        <div style="
+                            font-size: 60px;
+                            margin-bottom: 20px;
+                        ">🔒</div>
+                        <h1 style="
+                            color: #2F5233;
+                            font-size: 28px;
+                            margin-bottom: 20px;
+                        ">Restricted Content</h1>
+                        <p style="
+                            color: #666;
+                            font-size: 18px;
+                            line-height: 1.6;
+                            margin-bottom: 30px;
+                        ">
+                            This content is meant to supplement class and is only accessible during instructor-led sessions.
+                        </p>
+                        <p style="
+                            color: #999;
+                            font-size: 16px;
+                            margin-bottom: 30px;
+                        ">
+                            Please return to class to view this material with your instructor.
+                        </p>
+                        <a href="swot-analysis.html" style="
+                            display: inline-block;
+                            background: #2F5233;
+                            color: white;
+                            text-decoration: none;
+                            padding: 12px 30px;
+                            border-radius: 8px;
+                            font-size: 16px;
+                            font-weight: 600;
+                            transition: all 0.3s ease;
+                            margin-right: 15px;
+                        " onmouseover="this.style.background='#4A7C59'" onmouseout="this.style.background='#2F5233'">
+                            Back to SWOT Lesson
+                        </a>
+                        <a href="index.html" style="
+                            display: inline-block;
+                            background: #6c757d;
+                            color: white;
+                            text-decoration: none;
+                            padding: 12px 30px;
+                            border-radius: 8px;
+                            font-size: 16px;
+                            font-weight: 600;
+                            transition: all 0.3s ease;
+                        " onmouseover="this.style.background='#5a6268'" onmouseout="this.style.background='#6c757d'">
+                            Course Home
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+    
+    <div class="container">
+        <div class="header">
+            <a href="swot-analysis.html" class="back-to-course">
+                <span aria-hidden="true">←</span>
+                Back to SWOT Lesson
+            </a>
+            <h1>📖 Professor's SWOT Story</h1>
+            <p>Strategic self-assessment in action</p>
+        </div>
+        
+        <div class="content">
+            <div class="intro-section">
+                <h2>⭐ Authentic Professional Development</h2>
+                <p>This is an actual SWOT analysis combining CliftonStrengths assessment results with honest IT skill evaluation. It demonstrates how to use multiple data sources for comprehensive self-assessment.</p>
+            </div>
+
+            <div class="professor-story">
+                <h3>A Personal Example: My Professional SWOT</h3>
+                <p>To show you how this works authentically, let me share my honest assessment combining my CliftonStrengths results with my IT capabilities. This demonstrates how you can use multiple data sources to create a comprehensive SWOT analysis.</p>
+                
+                <div class="skills-assessment">
+                    <h4 style="margin-top: 0; margin-bottom: 15px;">My Top 4 CliftonStrengths:</h4>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <div class="skill-name">1. Significance</div>
+                            <div class="skill-level skill-high">INFLUENCING</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">2. Futuristic</div>
+                            <div class="skill-level skill-medium">STRATEGIC THINKING</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">3. Individualization</div>
+                            <div class="skill-level skill-low">RELATIONSHIP BUILDING</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">4. Focus</div>
+                            <div class="skill-level skill-high">EXECUTING</div>
+                        </div>
+                    </div>
+                    
+                    <h4 style="margin: 20px 0 15px 0;">My IT Skills Assessment:</h4>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <div class="skill-name">Infrastructure Management</div>
+                            <div class="skill-level skill-low">LOW</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">Software Development</div>
+                            <div class="skill-level skill-medium">MEDIUM</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">Development Lifecycle</div>
+                            <div class="skill-level skill-high">HIGH</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">Project Management</div>
+                            <div class="skill-level skill-high">HIGH</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">Data Analysis</div>
+                            <div class="skill-level skill-medium">MEDIUM</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">Cybersecurity</div>
+                            <div class="skill-level skill-low">LOW</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="insights-box">
+                    <h4>Strategic Insights from My Combined SWOT:</h4>
+                    <p style="font-size: 14px; margin: 0; line-height: 1.5;">
+                        <strong>Strengths:</strong> My Significance + Focus strengths align perfectly with my high PM and development lifecycle skills. I naturally want to do important work and can execute with discipline.<br><br>
+                        <strong>Weaknesses:</strong> Low infrastructure and cybersecurity skills, plus I can be rigid when plans change (low adaptability from my bottom strengths).<br><br>
+                        <strong>Opportunities:</strong> My Futuristic strength helps me stay ahead of IT trends, while my PM expertise lets me teach others effectively.<br><br>
+                        <strong>Threats:</strong> Fast-changing security landscape requires partnerships, and my focus on significance might make me impatient with "routine" tasks.
+                    </p>
+                </div>
+                
+                <p style="margin-bottom: 0; font-style: italic; font-size: 15px;">
+                    This combined assessment shows how personality strengths align with technical skills - and where they don't! My natural desire for significant work (Significance) matches my strongest technical areas (PM, development lifecycle), but I need to partner with others for infrastructure and security expertise.
+                </p>
+            </div>
+
+            <div class="takeaways-section">
+                <h3>💡 Key Takeaways for Students</h3>
+                <div class="takeaways-grid">
+                    <div class="takeaway-item">
+                        <div class="takeaway-number">1</div>
+                        <div class="takeaway-title">Use Multiple Data Sources</div>
+                        <div class="takeaway-text">Combine personality assessments, skill evaluations, and honest self-reflection.</div>
+                    </div>
+                    <div class="takeaway-item">
+                        <div class="takeaway-number">2</div>
+                        <div class="takeaway-title">Be Brutally Honest</div>
+                        <div class="takeaway-text">Real weaknesses are more valuable than fake strengths for strategic planning.</div>
+                    </div>
+                    <div class="takeaway-item">
+                        <div class="takeaway-number">3</div>
+                        <div class="takeaway-title">Look for Patterns</div>
+                        <div class="takeaway-text">Notice where your natural talents align (or conflict) with your technical skills.</div>
+                    </div>
+                    <div class="takeaway-item">
+                        <div class="takeaway-number">4</div>
+                        <div class="takeaway-title">Plan Partnerships</div>
+                        <div class="takeaway-text">Identify where you need to collaborate with others who complement your weaknesses.</div>
+                    </div>
+                    <div class="takeaway-item">
+                        <div class="takeaway-number">5</div>
+                        <div class="takeaway-title">Strategic Focus</div>
+                        <div class="takeaway-text">This analysis directly informs career decisions, project choices, and professional development priorities.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practical-application">
+                <h3>🎯 Practical Application</h3>
+                <div class="application-text">
+                    <p><strong>This SWOT analysis directly influenced my career choices:</strong> I focus on PM and development lifecycle roles where my strengths shine, while partnering with infrastructure and security experts for areas where I'm weak. My "Significance" strength drives me toward high-impact projects, while my "Focus" ensures I complete them effectively.</p>
+                    <p><em>This is exactly the kind of strategic insight your SWOT analysis should provide - actionable direction for your career and project choices.</em></p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="swot-analysis.html" class="back-to-lesson">
+                    <span>←</span>
+                    Back to SWOT Analysis Lesson
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

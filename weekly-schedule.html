@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Schedule & Deliverables - Managing IT Projects</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .schedule-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .schedule-header {
+            background: linear-gradient(135deg, #2F5233, #4A7C59);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .schedule-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 36px;
+            font-weight: bold;
+        }
+        
+        .schedule-header p {
+            margin: 0;
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .current-week-banner {
+            background: var(--color-surface-success);
+            border-left: 5px solid var(--color-success);
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .current-week-info {
+            flex: 1;
+        }
+        
+        .current-week-info h3 {
+            margin: 0 0 5px 0;
+            color: var(--color-success);
+            font-size: 20px;
+        }
+        
+        .current-week-info p {
+            margin: 0;
+            color: var(--color-text-secondary);
+            font-size: 14px;
+        }
+        
+        .current-week-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .teacher-only-content {
+            display: none;
+        }
+        
+        body.teacher-mode .teacher-only-content {
+            display: block;
+        }
+        
+        .schedule-content {
+            padding: 30px;
+        }
+        
+        /* Schedule Grid Layout */
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: auto 1fr 1fr 1fr 1fr;
+            gap: 1px;
+            background: #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .grid-header {
+            background: linear-gradient(135deg, #2F5233, #4A7C59);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .grid-row {
+            display: contents;
+        }
+        
+        .week-cell {
+            background: white;
+            padding: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 14px;
+        }
+        
+        .week-cell:hover {
+            background: var(--color-surface-success);
+        }
+        
+        .week-cell.current {
+            background: var(--color-success);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .week-cell.past {
+            background: #f8f9fa;
+            opacity: 0.8;
+        }
+        
+        .week-cell.holiday {
+            background: #e9ecef;
+            color: #6c757d;
+            cursor: default;
+            font-style: italic;
+        }
+        
+        .week-cell.holiday:hover {
+            background: #e9ecef;
+        }
+        
+        .week-title-cell {
+            text-align: left;
+            padding: 15px;
+            font-weight: 500;
+        }
+        
+        .week-deliverable-cell {
+            text-align: left;
+            padding: 15px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        .week-actions-cell {
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .grid-action-btn {
+            padding: 6px 12px;
+            margin: 2px;
+            border: none;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .grid-btn-view {
+            background: var(--color-success);
+            color: white;
+        }
+        
+        .grid-btn-edit {
+            background: var(--color-warning);
+            color: white;
+            display: none;
+        }
+        
+        body.teacher-mode .grid-btn-edit {
+            display: inline-block;
+        }
+        
+        .grid-btn-current {
+            background: var(--color-surface-secondary);
+            color: var(--color-text-primary);
+            border: 1px solid var(--color-border-primary);
+            display: none;
+        }
+        
+        body.teacher-mode .grid-btn-current {
+            display: inline-block;
+        }
+        
+        .grid-btn-current:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* Admin Navigation Panel */
+        .admin-nav-panel {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 2px solid var(--color-success);
+            padding: 20px;
+            z-index: 9999;
+            min-width: 250px;
+            display: none;
+        }
+        
+        body.teacher-mode .admin-nav-panel {
+            display: block;
+        }
+        
+        .admin-nav-panel h3 {
+            margin: 0 0 15px 0;
+            color: var(--color-success);
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .admin-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .admin-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: var(--color-surface-success);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--color-text-primary);
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .admin-nav-link:hover {
+            background: var(--color-success);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .admin-nav-link.current {
+            background: var(--color-success);
+            color: white;
+        }
+        
+        .admin-nav-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .admin-nav-text {
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .week-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .week-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: var(--color-success);
+        }
+        
+        .week-card.holiday {
+            cursor: default;
+        }
+        
+        .week-card.holiday:hover {
+            transform: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-color: #dee2e6;
+        }
+        
+        .week-card.current {
+            border-color: var(--color-success);
+            background: var(--color-surface-success);
+        }
+        
+        .week-card.past {
+            opacity: 0.8;
+            border-color: #ccc;
+        }
+        
+        .week-card.holiday {
+            background: #f8f9fa;
+            border-color: #dee2e6;
+            opacity: 0.7;
+        }
+        
+        .week-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .week-card.current .week-header {
+            background: linear-gradient(135deg, var(--color-success), #4a7c59);
+            color: white;
+        }
+        
+        .week-card.holiday .week-header {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            color: white;
+        }
+        
+        .week-number {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            opacity: 0.8;
+        }
+        
+        .week-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+            line-height: 1.3;
+        }
+        
+        .week-content {
+            padding: 20px;
+        }
+        
+        .week-deliverable {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .deliverable-label {
+            font-weight: 600;
+            color: var(--color-text-primary);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .deliverable-text {
+            color: var(--color-text-secondary);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .week-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-current {
+            background: var(--color-success);
+            color: white;
+        }
+        
+        .status-completed {
+            background: var(--color-surface-secondary);
+            color: var(--color-text-secondary);
+        }
+        
+        .status-upcoming {
+            background: var(--color-surface-warning);
+            color: var(--color-warning);
+        }
+        
+        .status-holiday {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .week-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .btn-view {
+            background: var(--color-success);
+            color: white;
+        }
+        
+        .btn-view:hover {
+            background: #1e5531;
+            transform: translateY(-1px);
+        }
+        
+        .btn-edit {
+            background: var(--color-warning);
+            color: white;
+            display: none;
+        }
+        
+        body.teacher-mode .btn-edit {
+            display: inline-block;
+        }
+        
+        .btn-edit:hover {
+            background: #d39e00;
+            transform: translateY(-1px);
+        }
+        
+        .btn-set-current {
+            background: var(--color-surface-secondary);
+            color: var(--color-text-primary);
+            border: 1px solid var(--color-border-primary);
+            display: none;
+        }
+        
+        body.teacher-mode .btn-set-current {
+            display: inline-block;
+        }
+        
+        .btn-set-current:hover {
+            background: var(--color-surface-hover);
+            border-color: var(--color-success);
+        }
+        
+        .controls-panel {
+            background: var(--color-surface-secondary);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            display: none;
+        }
+        
+        body.teacher-mode .controls-panel {
+            display: block;
+        }
+        
+        .controls-panel h3 {
+            margin: 0 0 20px 0;
+            color: var(--color-text-primary);
+        }
+        
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .control-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        
+        @media (max-width: 1024px) {
+            .schedule-grid {
+                grid-template-columns: auto 1fr auto auto auto;
+            }
+            
+            .week-deliverable-cell {
+                font-size: 12px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .schedule-content {
+                padding: 20px;
+            }
+            
+            .schedule-grid {
+                grid-template-columns: auto 1fr auto;
+                font-size: 12px;
+            }
+            
+            /* Hide deliverable and status columns on mobile */
+            .schedule-grid .grid-header:nth-child(3),
+            .schedule-grid .grid-header:nth-child(4),
+            .week-deliverable-cell,
+            .week-cell:not(.week-actions-cell) {
+                display: none;
+            }
+            
+            .week-deliverable-cell,
+            .schedule-grid > div:nth-child(5n+3),
+            .schedule-grid > div:nth-child(5n+4) {
+                display: none;
+            }
+            
+            .controls-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .current-week-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .current-week-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .grid-action-btn {
+                padding: 4px 8px;
+                font-size: 10px;
+                margin: 1px;
+            }
+            
+            .admin-nav-panel {
+                position: static;
+                margin-bottom: 20px;
+                min-width: auto;
+            }
+        }
+    </style>
+    <!-- Firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+</head>
+<body>
+    <script src="firebase-config.js"></script>
+    <script src="js/course-manager.js"></script>
+    <script src="js/teacher-manager.js"></script>
+    
+    <!-- Admin Navigation Panel -->
+    <div class="admin-nav-panel">
+        <h3>📚 Course Admin</h3>
+        <div class="admin-nav-links">
+            <a href="weekly-schedule.html" class="admin-nav-link current">
+                <span class="admin-nav-icon">📅</span>
+                <span class="admin-nav-text">Weekly Schedule</span>
+            </a>
+            <a href="course-outline-manager.html" class="admin-nav-link">
+                <span class="admin-nav-icon">📝</span>
+                <span class="admin-nav-text">Content Editor</span>
+            </a>
+            <a href="index.html" class="admin-nav-link">
+                <span class="admin-nav-icon">🏠</span>
+                <span class="admin-nav-text">Student View</span>
+            </a>
+        </div>
+    </div>
+    
+    <div class="schedule-container">
+        <header class="schedule-header">
+            <a href="index.html" style="position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; border: 2px solid rgba(255,255,255,0.3); font-weight: 500; transition: all 0.3s ease; backdrop-filter: blur(10px);" onmouseover="this.style.background='rgba(255,255,255,0.3)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(0)';">
+                ← Back to Course
+            </a>
+            <h1>Weekly Schedule & Deliverables</h1>
+            <p>Course Overview • Fall 2025 • CIS 4860 Managing IT Projects</p>
+        </header>
+        
+        <main class="schedule-content">
+            <!-- Current Week Banner -->
+            <div class="current-week-banner">
+                <div class="current-week-info">
+                    <h3 id="current-week-title">Loading current week...</h3>
+                    <p id="current-week-description">Students are currently viewing this week's content</p>
+                </div>
+                <div class="current-week-controls">
+                    <div class="week-status status-current">Current Week</div>
+                </div>
+            </div>
+            
+            <!-- Instructions Panel -->
+            <section class="controls-panel">
+                <h3>📚 How to Use</h3>
+                <p style="margin-bottom: 20px; color: var(--color-text-secondary); font-size: 14px;">
+                    • <strong>Click Week/Topic:</strong> View student content for that week<br>
+                    • <strong>Set Current:</strong> Change which week students see as current<br>
+                    • <strong>Edit:</strong> Modify lesson content for that week<br>
+                    • <strong>View:</strong> Preview exactly what students see
+                </p>
+            </section>
+            
+            <!-- Schedule Grid -->
+            <section class="schedule-grid" id="schedule-grid">
+                <!-- Grid header -->
+                <div class="grid-header">Week</div>
+                <div class="grid-header">Topic</div>
+                <div class="grid-header">Deliverable</div>
+                <div class="grid-header">Status</div>
+                <div class="grid-header">Actions</div>
+                
+                <!-- Rows will be generated here -->
+            </section>
+        </main>
+    </div>
+    
+    
+    <script>
+        class WeeklySchedule {
+            constructor() {
+                this.currentWeek = 1;
+                this.totalWeeks = 16;
+                this.selectedWeek = null; // For modal selection
+                this.initWhenReady();
+            }
+            
+            async initWhenReady() {
+                // Wait for Firebase to be initialized
+                let attempts = 0;
+                while (!window.firebaseDatabase && attempts < 50) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    attempts++;
+                }
+                
+                if (!window.firebaseDatabase) {
+                    console.error('Firebase database not available after waiting');
+                    return;
+                }
+                
+                this.courseManager = new CourseManager();
+                this.teacherManager = new TeacherManager(this.courseManager);
+                this.init();
+            }
+            
+            async init() {
+                try {
+                    await this.loadCurrentWeek();
+                    this.renderWeeksGrid();
+                    this.updateCurrentWeekBanner();
+                    console.log('Weekly schedule initialized successfully');
+                } catch (error) {
+                    console.error('Error initializing weekly schedule:', error);
+                }
+            }
+            
+            async loadCurrentWeek() {
+                try {
+                    const snapshot = await this.courseManager.database.ref('course/settings/currentWeek').once('value');
+                    if (snapshot.exists()) {
+                        this.currentWeek = snapshot.val();
+                    } else {
+                        this.currentWeek = 1;
+                    }
+                } catch (error) {
+                    console.error('Error loading current week:', error);
+                    this.currentWeek = 1;
+                }
+            }
+            
+            updateCurrentWeekBanner() {
+                const titleElement = document.getElementById('current-week-title');
+                const descElement = document.getElementById('current-week-description');
+                
+                if (titleElement) {
+                    const weekData = this.getWeekData(this.currentWeek);
+                    titleElement.textContent = `Week ${this.currentWeek}: ${weekData.title}`;
+                }
+                
+                if (descElement) {
+                    descElement.textContent = `Students are currently viewing this week's content and can see Week 1-${this.currentWeek - 1} in the collapsible previous weeks section`;
+                }
+            }
+            
+            getWeekData(week) {
+                const weekData = {
+                    1: { title: 'Introduction to Project Management', deliverable: '—' },
+                    2: { title: 'Business Value and Strategic Alignment', deliverable: 'Project Objective, Mission & Vision Statement, SWOT Analysis, Start Project Charter' },
+                    3: { title: 'Project Scope Management', deliverable: 'In-Scope/Out-of-Scope Statement, Deliverables & Definition of Done, Work Breakdown Structure' },
+                    4: { title: 'Project Methodologies and Framework Selection', deliverable: 'Framework Justification, Initial Timeline, Status Report Template' },
+                    5: { title: 'Time, Cost, and Quality Management', deliverable: 'Initial Timeline/Release Plan, Budget, Project Management Tool Setup' },
+                    6: { title: 'Stakeholder Management', deliverable: 'Stakeholder Register, Communication Plan' },
+                    7: { title: 'Team Leadership and Conflict Management', deliverable: 'Team Charter, Roles & Responsibilities Matrix' },
+                    8: { title: 'Growth Mindset and Project Charter', deliverable: 'Midterm Exam' },
+                    9: { title: 'Change Management and Risk Management', deliverable: 'Change Request Sample, Risk Register' },
+                    10: { title: 'Resource Management and Procurement', deliverable: 'Project Management Principles | Week 1' },
+                    11: { title: 'Agile Principles', deliverable: 'Project Management Principles | Week 2' },
+                    12: { title: 'Holiday - Veterans Day', deliverable: '—' },
+                    13: { title: 'Project Closure and Lessons Learned', deliverable: 'Lessons Learned Log, Project Closeout Checklist' },
+                    14: { title: 'Final Presentations - Round 1', deliverable: 'Project Presentations | Week 1' },
+                    15: { title: 'Fall Recess', deliverable: '—' },
+                    16: { title: 'Final Presentations - Round 2', deliverable: 'Project Presentations | Week 2' }
+                };
+                
+                return weekData[week] || { title: `Week ${week} Content`, deliverable: 'To be announced' };
+            }
+            
+            renderWeeksGrid() {
+                const grid = document.getElementById('schedule-grid');
+                if (!grid) return;
+                
+                // Keep header, remove existing rows
+                const headers = grid.querySelectorAll('.grid-header');
+                grid.innerHTML = '';
+                headers.forEach(header => grid.appendChild(header));
+                
+                for (let week = 1; week <= this.totalWeeks; week++) {
+                    const weekData = this.getWeekData(week);
+                    this.createWeekRow(week, weekData, grid);
+                }
+            }
+            
+            createWeekRow(week, weekData, grid) {
+                const isHoliday = weekData.title.includes('Holiday') || weekData.title.includes('Recess');
+                const isCurrent = week === this.currentWeek;
+                const isPast = week < this.currentWeek;
+                
+                let statusClass = '';
+                let statusText = '';
+                
+                if (isHoliday) {
+                    statusClass = 'holiday';
+                    statusText = 'No Class';
+                } else if (isCurrent) {
+                    statusClass = 'current';
+                    statusText = 'Current Week';
+                } else if (isPast) {
+                    statusClass = 'past';
+                    statusText = 'Completed';
+                } else {
+                    statusText = 'Upcoming';
+                }
+                
+                // Week number cell
+                const weekCell = document.createElement('div');
+                weekCell.className = `week-cell ${statusClass}`;
+                weekCell.textContent = `Week ${week}`;
+                weekCell.addEventListener('click', () => {
+                    if (!isHoliday) {
+                        this.viewWeek(week);
+                    }
+                });
+                
+                // Topic cell
+                const topicCell = document.createElement('div');
+                topicCell.className = `week-title-cell ${statusClass}`;
+                topicCell.textContent = weekData.title;
+                topicCell.addEventListener('click', () => {
+                    if (!isHoliday) {
+                        this.viewWeek(week);
+                    }
+                });
+                
+                // Deliverable cell
+                const deliverableCell = document.createElement('div');
+                deliverableCell.className = `week-deliverable-cell ${statusClass}`;
+                deliverableCell.textContent = weekData.deliverable;
+                
+                // Status cell
+                const statusCell = document.createElement('div');
+                statusCell.className = `week-cell ${statusClass}`;
+                statusCell.textContent = statusText;
+                
+                // Actions cell
+                const actionsCell = document.createElement('div');
+                actionsCell.className = `week-actions-cell ${statusClass}`;
+                actionsCell.innerHTML = `
+                    <a href="course-outline-manager.html?week=${week}" class="grid-action-btn grid-btn-edit">✏️ Edit</a>
+                    <button class="grid-action-btn grid-btn-current" onclick="weeklySchedule.setCurrentWeek(${week})" ${isCurrent ? 'disabled' : ''}>
+                        ${isCurrent ? '✅ Current' : '📅 Set Current'}
+                    </button>
+                `;
+                
+                // Add all cells to grid
+                grid.appendChild(weekCell);
+                grid.appendChild(topicCell);
+                grid.appendChild(deliverableCell);
+                grid.appendChild(statusCell);
+                grid.appendChild(actionsCell);
+            }
+            
+            getWeekUrl(week) {
+                return week === 1 ? 'index.html' : `index.html?week=${week}`;
+            }
+            
+            viewWeek(week) {
+                const url = this.getWeekUrl(week);
+                window.location.href = url;
+            }
+            
+            async setCurrentWeek(week) {
+                if (!this.teacherManager.isTeacherMode) {
+                    alert('Teacher mode required to change current week');
+                    return;
+                }
+                
+                try {
+                    await this.courseManager.database.ref('course/settings/currentWeek').set(week);
+                    this.currentWeek = week;
+                    this.renderWeeksGrid();
+                    this.updateCurrentWeekBanner();
+                    
+                    this.teacherManager.showSuccess(`Current week set to Week ${week}`);
+                } catch (error) {
+                    console.error('Error setting current week:', error);
+                    this.teacherManager.showError('Error updating current week');
+                }
+            }
+            
+            
+        }
+        
+        // Initialize when DOM is ready
+        window.addEventListener('DOMContentLoaded', () => {
+            window.weeklySchedule = new WeeklySchedule();
+        });
+    </script>
+</body>
+</html>

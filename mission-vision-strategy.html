@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission, Vision, Strategy - Managing IT Projects</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .lesson-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--color-surface-primary);
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        
+        .lesson-header {
+            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-button:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .lesson-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 36px;
+            font-weight: bold;
+        }
+        
+        .lesson-header p {
+            margin: 0;
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .lesson-content {
+            padding: 40px;
+        }
+        
+        .intro-section {
+            background: var(--color-surface-secondary);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+            border: 2px solid var(--color-border-primary);
+        }
+        
+        .intro-section h2 {
+            color: var(--color-success);
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        
+        .intro-section p {
+            color: var(--color-text-secondary);
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .lesson-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--color-border-primary);
+            background: var(--color-surface-secondary);
+            border-radius: 12px 12px 0 0;
+            padding: 10px;
+        }
+        
+        .tab-button {
+            background: transparent;
+            border: none;
+            padding: 15px 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            color: var(--color-text-secondary);
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-button.active {
+            color: var(--color-success);
+            background: var(--color-surface-primary);
+            border-bottom-color: var(--color-success);
+        }
+        
+        .tab-button:hover:not(.active) {
+            color: var(--color-text-primary);
+            background: var(--color-surface-hover);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .component-card {
+            background: var(--color-surface-primary);
+            border: 3px solid;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+        
+        .component-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .mission-card { 
+            border-color: #e74c3c; 
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.05), rgba(231, 76, 60, 0.02));
+        }
+        .vision-card { 
+            border-color: #3498db; 
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.05), rgba(52, 152, 219, 0.02));
+        }
+        .strategy-card { 
+            border-color: #27ae60; 
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.05), rgba(39, 174, 96, 0.02));
+        }
+        
+        .component-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .component-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--color-text-primary);
+        }
+        
+        .component-definition {
+            font-size: 18px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--color-surface-secondary);
+            border-radius: 8px;
+            font-style: italic;
+            color: var(--color-text-secondary);
+        }
+        
+        .component-details {
+            text-align: left;
+            margin-top: 20px;
+        }
+        
+        .detail-section {
+            margin-bottom: 20px;
+        }
+        
+        .detail-title {
+            font-weight: bold;
+            color: var(--color-success);
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .detail-content {
+            color: var(--color-text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        .example-box {
+            background: var(--color-surface-warning);
+            border-left: 4px solid var(--color-warning);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .example-box h4 {
+            margin: 0 0 10px 0;
+            color: var(--color-warning);
+        }
+        
+        .integration-section {
+            background: linear-gradient(135deg, var(--color-surface-secondary), var(--color-surface-primary));
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid var(--color-border-primary);
+        }
+        
+        .integration-diagram {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .diagram-element {
+            text-align: center;
+            margin: 10px;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .diagram-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: center;
+            padding: 10px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .mission-circle { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .vision-circle { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .strategy-circle { background: linear-gradient(135deg, #27ae60, #229954); }
+        
+        .arrow {
+            font-size: 24px;
+            color: var(--color-text-secondary);
+            margin: 0 10px;
+        }
+        
+        .real-world-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .company-example {
+            background: var(--color-surface-primary);
+            border: 2px solid var(--color-border-primary);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .company-example:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-success);
+        }
+        
+        .company-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--color-success);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .mvs-item {
+            margin-bottom: 12px;
+        }
+        
+        .mvs-label {
+            font-weight: bold;
+            font-size: 14px;
+            color: var(--color-text-primary);
+            margin-bottom: 4px;
+        }
+        
+        .mvs-text {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            line-height: 1.4;
+        }
+        
+        .lesson-footer {
+            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .lesson-footer h3 {
+            margin: 0 0 15px 0;
+            color: #8dd3a0;
+            font-size: 20px;
+        }
+        
+        .lesson-footer p {
+            margin: 0 0 20px 0;
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .footer-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .footer-link:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        /* Dark mode support */
+        [data-theme="dark"] .component-card {
+            background: var(--color-surface-secondary);
+        }
+        
+        [data-theme="dark"] .mission-card {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05));
+        }
+        
+        [data-theme="dark"] .vision-card {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(52, 152, 219, 0.05));
+        }
+        
+        [data-theme="dark"] .strategy-card {
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05));
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .lesson-content {
+                padding: 20px;
+            }
+            
+            .lesson-tabs {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .tab-button {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 5px;
+            }
+            
+            .integration-diagram {
+                flex-direction: column;
+            }
+            
+            .arrow {
+                transform: rotate(90deg);
+                margin: 10px 0;
+            }
+            
+            .real-world-examples {
+                grid-template-columns: 1fr;
+            }
+            
+            .back-button {
+                position: static;
+                margin-bottom: 20px;
+                display: inline-flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="lesson-container">
+        <div class="lesson-header">
+            <a href="index.html" class="back-button">
+                <span aria-hidden="true">←</span>
+                Back to Course
+            </a>
+            <h1>Mission, Vision & Strategy</h1>
+            <p>Understanding the Foundation of Organizational Direction</p>
+        </div>
+        
+        <div class="lesson-content">
+            <div class="intro-section">
+                <h2>Why These Three Matter in IT Projects</h2>
+                <p>Every successful IT project must align with organizational direction. Mission, Vision, and Strategy provide the framework that guides project decisions, priorities, and success metrics. Understanding how they work together ensures your projects deliver real business value.</p>
+            </div>
+            
+            <div class="lesson-tabs">
+                <button class="tab-button active" onclick="showTab('individual')">Individual Components</button>
+                <button class="tab-button" onclick="showTab('integration')">How They Work Together</button>
+                <button class="tab-button" onclick="showTab('examples')">Real-World Examples</button>
+            </div>
+            
+            <!-- Individual Components Tab -->
+            <div id="individual" class="tab-content active">
+                <div class="component-card mission-card">
+                    <span class="component-icon">🎯</span>
+                    <div class="component-title">Mission</div>
+                    <div class="component-definition">
+                        "Why we exist" - The fundamental purpose and reason for being
+                    </div>
+                    <div class="component-details">
+                        <div class="detail-section">
+                            <div class="detail-title">Key Characteristics:</div>
+                            <div class="detail-content">• Present-focused and enduring<br>• Defines core purpose and values<br>• Answers "What do we do?" and "For whom?"</div>
+                        </div>
+                        <div class="example-box">
+                            <h4>IT Example</h4>
+                            <strong>Netflix Mission:</strong> "To entertain the world through innovative storytelling and technology."
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="component-card vision-card">
+                    <span class="component-icon">🔮</span>
+                    <div class="component-title">Vision</div>
+                    <div class="component-definition">
+                        "Where we want to be" - The aspirational future state we're working toward
+                    </div>
+                    <div class="component-details">
+                        <div class="detail-section">
+                            <div class="detail-title">Key Characteristics:</div>
+                            <div class="detail-content">• Future-focused and inspiring<br>• Provides direction and motivation<br>• Answers "What do we want to become?"</div>
+                        </div>
+                        <div class="example-box">
+                            <h4>IT Example</h4>
+                            <strong>Microsoft Vision:</strong> "To empower every person and every organization on the planet to achieve more."
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="component-card strategy-card">
+                    <span class="component-icon">📋</span>
+                    <div class="component-title">Strategy</div>
+                    <div class="component-definition">
+                        "How we'll get there" - The plan and approach to achieve the vision while fulfilling the mission
+                    </div>
+                    <div class="component-details">
+                        <div class="detail-section">
+                            <div class="detail-title">Key Characteristics:</div>
+                            <div class="detail-content">• Action-oriented and adaptable<br>• Defines competitive advantage<br>• Answers "How will we compete and win?"</div>
+                        </div>
+                        <div class="example-box">
+                            <h4>IT Example</h4>
+                            <strong>Amazon Strategy:</strong> Focus on customer obsession, long-term thinking, and operational excellence through technology innovation.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Integration Tab -->
+            <div id="integration" class="tab-content">
+                <div class="integration-section">
+                    <h2 style="text-align: center; color: var(--color-success); margin-bottom: 30px;">How They Work Together</h2>
+                    
+                    <div class="integration-diagram">
+                        <div class="diagram-element">
+                            <div class="diagram-circle mission-circle">WHY<br>Mission</div>
+                            <div><strong>Foundation</strong><br>Provides purpose</div>
+                        </div>
+                        <div class="arrow">→</div>
+                        <div class="diagram-element">
+                            <div class="diagram-circle vision-circle">WHERE<br>Vision</div>
+                            <div><strong>Direction</strong><br>Sets the destination</div>
+                        </div>
+                        <div class="arrow">→</div>
+                        <div class="diagram-element">
+                            <div class="diagram-circle strategy-circle">HOW<br>Strategy</div>
+                            <div><strong>Path</strong><br>Defines the route</div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: var(--color-surface-primary); padding: 25px; border-radius: 10px; margin-top: 30px; border: 2px solid var(--color-border-primary);">
+                        <h3 style="color: var(--color-success); text-align: center;">For IT Project Managers</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                            <div>
+                                <h4 style="color: #e74c3c;">Mission Alignment</h4>
+                                <p style="color: var(--color-text-secondary);">Ensure your project serves the organization's core purpose. Ask: "Does this project help us fulfill our reason for existing?"</p>
+                            </div>
+                            <div>
+                                <h4 style="color: #3498db;">Vision Support</h4>
+                                <p style="color: var(--color-text-secondary);">Projects should move the organization closer to its desired future state. Ask: "How does this get us where we want to be?"</p>
+                            </div>
+                            <div>
+                                <h4 style="color: #27ae60;">Strategic Implementation</h4>
+                                <p style="color: var(--color-text-secondary);">Your project should execute part of the strategic plan. Ask: "How does this project advance our competitive strategy?"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Examples Tab -->
+            <div id="examples" class="tab-content">
+                <h2 style="text-align: center; color: var(--color-success); margin-bottom: 30px;">Real-World Technology Examples</h2>
+                
+                <div class="real-world-examples">
+                    <div class="company-example">
+                        <div class="company-name">🍎 Apple</div>
+                        <div class="mvs-item">
+                            <div class="mvs-label">Mission:</div>
+                            <div class="mvs-text">To bring the best user experience to customers through innovative hardware, software, and services.</div>
+                        </div>
+                        <div class="mvs-item">
+                            <div class="mvs-label">Vision:</div>
+                            <div class="mvs-text">To make technology accessible and delightful for everyone, everywhere.</div>
+                        </div>
+                        <div class="mvs-item">
+                            <div class="mvs-label">Strategy:</div>
+                            <div class="mvs-text">Premium products, integrated ecosystem, design excellence, and controlled user experience.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="company-example">
+                        <div class="company-name">🔍 Google</div>
+                        <div class="mvs-item">
+                            <div class="mvs-label">Mission:</div>
+                            <div class="mvs-text">To organize the world's information and make it universally accessible and useful.</div>
+                        </div>
+                        <div class="mvs-item">
+                            <div class="mvs-label">Vision:</div>
+                            <div class="mvs-text">To provide access to the world's information in one click.</div>
+                        </div>
+                        <div class="mvs-item">
+                            <div class="mvs-label">Strategy:</div>
+                            <div class="mvs-text">Free services funded by advertising, data-driven insights, and AI/ML innovation.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="company-example">
+                        <div class="company-name">⚡ Tesla</div>
+                        <div class="mvs-item">
+                            <div class="mvs-label">Mission:</div>
+                            <div class="mvs-text">To accelerate the world's transition to sustainable energy.</div>
+                        </div>
+                        <div class="mvs-item">
+                            <div class="mvs-label">Vision:</div>
+                            <div class="mvs-text">To create the most compelling car company of the 21st century.</div>
+                        </div>
+                        <div class="mvs-item">
+                            <div class="mvs-label">Strategy:</div>
+                            <div class="mvs-text">Vertical integration, direct sales, autonomous driving, and energy ecosystem.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="company-example">
+                        <div class="company-name">💼 Salesforce</div>
+                        <div class="mvs-item">
+                            <div class="mvs-label">Mission:</div>
+                            <div class="mvs-text">To help companies connect with their customers in a whole new way.</div>
+                        </div>
+                        <div class="mvs-item">
+                            <div class="mvs-label">Vision:</div>
+                            <div class="mvs-text">To be the customer company that helps businesses grow and succeed.</div>
+                        </div>
+                        <div class="mvs-item">
+                            <div class="mvs-label">Strategy:</div>
+                            <div class="mvs-text">Cloud-first platform, subscription model, ecosystem of partners, and continuous innovation.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: var(--color-surface-secondary); padding: 25px; border-radius: 10px; margin-top: 30px; border: 2px solid var(--color-border-primary);">
+                    <h3 style="color: var(--color-success); text-align: center;">Notice the Pattern</h3>
+                    <p style="text-align: center; color: var(--color-text-secondary); margin: 0;">
+                        Each company's <strong>Mission</strong> defines their core purpose, their <strong>Vision</strong> paints where they want to be, 
+                        and their <strong>Strategy</strong> outlines how they'll compete and win in their market. 
+                        Every IT project should connect to this hierarchy!
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="lesson-footer">
+            <h3>Key Takeaway for IT Project Managers</h3>
+            <p>Before starting any project, ask: "How does this align with our Mission, support our Vision, and execute our Strategy?" 
+            Projects that clearly connect to all three are more likely to get approval, resources, and stakeholder support.</p>
+            <a href="index.html" class="footer-link">← Back to Course Concepts</a>
+        </div>
+    </div>
+    
+    <!-- Load teacher mode and dark mode scripts -->
+    <script src="firebase-config.js"></script>
+    <script src="js/teacher-manager.js"></script>
+    <script src="js/dark-mode.js"></script>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

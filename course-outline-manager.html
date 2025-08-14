@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Outline Manager - Managing IT Projects</title>
+    <title>Course Outline Manager - Managing IT Projects (v2.0)</title>
+    <!-- Cache busting meta tag -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <link rel="stylesheet" href="css/design-system.css">
     <style>
         body {
@@ -207,6 +211,16 @@
             color: var(--color-warning);
         }
         
+        .type-professional {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .type-course-info {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+        
         .type-admin {
             background: var(--color-surface-error);
             color: var(--color-error);
@@ -300,6 +314,105 @@
             color: white;
         }
         
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+        
+        /* Tile Visibility Controls */
+        .tile-visibility-controls {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .tile-visibility-controls.show {
+            display: block;
+        }
+        
+        .tile-controls-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .tile-controls-title {
+            font-weight: 600;
+            color: #2F5233;
+            margin: 0;
+        }
+        
+        .tile-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            background: white;
+        }
+        
+        .tile-info {
+            flex: 1;
+        }
+        
+        .tile-title-input {
+            font-weight: 600;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 4px 8px;
+            margin-bottom: 5px;
+            font-size: 14px;
+            width: 100%;
+        }
+        
+        .tile-description-input {
+            color: #666;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 13px;
+            width: 100%;
+            resize: vertical;
+            min-height: 60px;
+        }
+        
+        .tile-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 15px;
+        }
+        
+        .visibility-toggle {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .visibility-toggle.hidden {
+            background: #dc3545;
+        }
+        
+        .visibility-toggle:hover {
+            transform: translateY(-1px);
+        }
+        
         .action-btn:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-md);
@@ -347,6 +460,113 @@
                 flex-direction: column;
             }
         }
+        
+        /* Edit mode styles - optimized for better performance */
+        .edit-mode .edit-mode-only {
+            display: block !important;
+        }
+        
+        .edit-mode .read-only-value {
+            display: none !important;
+        }
+        
+        .edit-mode .edit-mode-input {
+            display: block !important;
+        }
+        
+        /* Non-edit mode */
+        body:not(.edit-mode) .edit-mode-only {
+            display: none !important;
+        }
+        
+        body:not(.edit-mode) .edit-mode-input {
+            display: none !important;
+        }
+        
+        body:not(.edit-mode) .read-only-value {
+            display: block !important;
+        }
+        
+        /* Loading states */
+        .saving-indicator {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        /* Admin Navigation Panel */
+        .admin-nav-panel {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 2px solid var(--color-success);
+            padding: 20px;
+            z-index: 9999;
+            min-width: 250px;
+            display: none;
+        }
+        
+        body.teacher-mode .admin-nav-panel {
+            display: block;
+        }
+        
+        .admin-nav-panel h3 {
+            margin: 0 0 15px 0;
+            color: var(--color-success);
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .admin-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .admin-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: var(--color-surface-success);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--color-text-primary);
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .admin-nav-link:hover {
+            background: var(--color-success);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .admin-nav-link.current {
+            background: var(--color-success);
+            color: white;
+        }
+        
+        .admin-nav-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .admin-nav-text {
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-nav-panel {
+                position: static;
+                margin-bottom: 20px;
+                min-width: auto;
+            }
+        }
     </style>
     <link rel="stylesheet" href="css/shared-styles.css">
     <link rel="stylesheet" href="css/animations.css">
@@ -355,23 +575,32 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
-    <script>
-        // IMMEDIATE BLOCKING - Default is to block everything
-        document.write('<style id="blockContent">body { display: none !important; }</style>');
-    </script>
 </head>
 <body>
-    <script src="firebase-config.js"></script>
-    <script src="js/course-manager.js"></script>
-    <script src="js/teacher-manager.js"></script>
-    <script src="js/search-system.js"></script>
-    <script src="js/dark-mode.js"></script>
+    <!-- Admin Navigation Panel -->
+    <div class="admin-nav-panel">
+        <h3>📚 Course Admin</h3>
+        <div class="admin-nav-links">
+            <a href="weekly-schedule.html" class="admin-nav-link">
+                <span class="admin-nav-icon">📅</span>
+                <span class="admin-nav-text">Weekly Schedule</span>
+            </a>
+            <a href="course-outline-manager.html" class="admin-nav-link current">
+                <span class="admin-nav-icon">📝</span>
+                <span class="admin-nav-text">Content Editor</span>
+            </a>
+            <a href="index.html" class="admin-nav-link">
+                <span class="admin-nav-icon">🏠</span>
+                <span class="admin-nav-text">Student View</span>
+            </a>
+        </div>
+    </div>
     
     <div class="outline-container">
         <div class="outline-header">
-            <a href="index.html" class="outline-back-button">
+            <a href="weekly-schedule.html" class="outline-back-button">
                 <span aria-hidden="true">←</span>
-                Back to Course
+                Weekly Schedule
             </a>
             <h1>Course Outline Manager</h1>
             <p>Managing IT Projects - Complete Course Planning</p>
@@ -405,6 +634,7 @@
             </div>
             
             <!-- Action Buttons -->
+            <!-- Primary Actions -->
             <div class="action-buttons">
                 <button class="action-btn btn-secondary" onclick="outlineManager.toggleEditMode()">
                     📝 Edit Mode
@@ -420,6 +650,61 @@
                 </button>
             </div>
             
+            <!-- Sync & Management Tools -->
+            <details class="utility-section" style="margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 10px; border: 1px solid #e0e0e0;">
+                <summary style="cursor: pointer; color: #2F5233; font-size: 16px; font-weight: bold; display: flex; align-items: center; gap: 8px; margin-bottom: 15px;">
+                    🔧 Sync & Management Tools
+                    <span style="font-size: 12px; font-weight: normal; color: #666;">Click to expand</span>
+                </summary>
+                <div class="utility-buttons" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 15px;">
+                    <!-- Essential Tools -->
+                    <button class="action-btn btn-success" onclick="outlineManager.syncAllTilesToFirebase()" title="Sync outline activities to index page tiles">
+                        🔄 Sync to Index
+                    </button>
+                    <button class="action-btn btn-info" onclick="outlineManager.compareSources()" title="Compare outline data with index page">
+                        🔍 Compare Data
+                    </button>
+                    <button class="action-btn btn-warning" onclick="outlineManager.diagnoseTileSync()" title="Check Firebase tile database">
+                        🩺 Debug Tiles
+                    </button>
+                    
+                    <!-- Advanced Tools -->
+                    <button class="action-btn btn-danger" onclick="outlineManager.cleanOrphanedTiles()" title="Remove tiles not in outline">
+                        🧹 Clean Orphaned Tiles
+                    </button>
+                    <button class="action-btn btn-info" onclick="outlineManager.syncFirebaseStatusToOutline()" title="Sync tile visibility from index back to outline">
+                        ⬅️ Sync from Index
+                    </button>
+                    <button class="action-btn btn-warning" onclick="outlineManager.quickReset()" title="Reset current week to default template">
+                        🔄 Reset Week
+                    </button>
+                </div>
+                <div style="font-size: 12px; color: #666; padding: 10px; background: #e9ecef; border-radius: 6px;">
+                    <strong>ℹ️ Quick Guide:</strong> Use "Sync to Index" after editing activities. Use "Compare Data" to check for issues.
+                </div>
+            </details>
+            
+            <!-- Student View Preview -->
+            <div class="index-preview-section" style="margin-bottom: 40px; padding: 20px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 10px; border: 1px solid #dee2e6;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                    <h2 style="margin: 0; color: #2F5233; font-size: 18px; display: flex; align-items: center; gap: 8px;">
+                        👁️ Student View Preview
+                        <span style="font-size: 12px; font-weight: normal; color: #666; background: #fff; padding: 2px 6px; border-radius: 3px;">Live</span>
+                    </h2>
+                    <button class="action-btn btn-info" onclick="outlineManager.previewIndexPage()" style="font-size: 12px; padding: 6px 12px;">
+                        🔗 Open Week Index
+                    </button>
+                </div>
+                <div id="index-preview-grid" class="concepts-grid" style="margin-bottom: 15px; max-height: 400px; overflow-y: auto; border: 2px solid #dee2e6; border-radius: 8px; background: white; padding: 15px;">
+                    <div style="padding: 40px; text-align: center; color: #999;">
+                        📚 Loading tile preview...
+                    </div>
+                </div>
+                <div style="text-align: center; font-size: 12px; color: #666; font-style: italic;">
+                    ✨ Preview updates automatically when you make changes
+                </div>
+            </div>
+
             <!-- Week Content Area -->
             <div id="week-content">
                 <div class="loading-content">
@@ -430,6 +715,13 @@
         </div>
     </div>
 
+    <!-- Load required scripts -->
+    <script src="firebase-config.js"></script>
+    <script src="js/course-manager.js"></script>
+    <script src="js/teacher-manager.js"></script>
+    <script src="js/search-system.js"></script>
+    <script src="js/dark-mode.js"></script>
+
     <script>
         class CourseOutlineManager {
             constructor() {
@@ -439,13 +731,38 @@
                 this.totalWeeks = 16;
                 this.weekData = new Map();
                 this.editMode = false;
-                this.init();
+                
+                // Debounced functions for better performance
+                this.saveTimeout = null;
+                this.previewTimeout = null;
+                this.debouncedSave = this.debounce(() => this.saveWeekToDatabase(this.currentWeek), 1000);
+                this.debouncedPreviewUpdate = this.debounce(() => this.generateIndexPreview(), 500);
+                
+                // Check teacher mode before initializing
+                this.checkTeacherAccess();
             }
 
             getInitialWeek() {
                 const urlParams = new URLSearchParams(window.location.search);
                 const week = urlParams.get('week');
                 return week ? parseInt(week) : 1;
+            }
+
+            checkTeacherAccess() {
+                // Use unified TeacherManager authentication
+                if (!this.teacherManager.isTeacherMode) {
+                    // Wait for potential session restoration, then redirect if not authenticated
+                    setTimeout(() => {
+                        if (!this.teacherManager.isTeacherMode) {
+                            this.teacherManager.showError('Teacher access required for Course Outline Manager');
+                            window.location.href = 'index.html';
+                        }
+                    }, 100);
+                    return;
+                }
+                
+                // Teacher mode is active, proceed with initialization
+                this.init();
             }
 
             async init() {
@@ -455,11 +772,153 @@
                 // Load all week data
                 await this.loadAllWeekData();
                 
+                // Firebase operations should work now with updated permissions
+                console.log('Loading course data from Firebase');
+                
                 // Display current week
                 this.displayWeek(this.currentWeek);
                 
                 // Update course statistics
                 this.updateCourseStats();
+                
+                // Generate index page preview
+                this.generateIndexPreview();
+            }
+            
+            
+            async syncWithCurrentIndexContent() {
+                console.log('🔄 Syncing outline with current index page content...');
+                
+                // Define the static index page content (what's actually showing to students)
+                const staticIndexTiles = [
+                    {
+                        id: 'week1_pm_definition',
+                        title: 'Project Management Definition',
+                        description: 'Core definition plus the "Musts" of PM and common misconceptions. Foundation concept covering what PM is and is NOT.',
+                        icon: '🎯',
+                        status: 'available',
+                        url: 'project-management-definition.html'
+                    },
+                    {
+                        id: 'week1_project_definition', 
+                        title: 'Project Definition',
+                        description: 'What makes something a project? Includes characteristics and real examples from both professional IT and personal contexts.',
+                        icon: '📋',
+                        status: 'available',
+                        url: 'project-definition.html'
+                    },
+                    {
+                        id: 'week1_pm_role',
+                        title: 'Project Manager Definition',
+                        description: 'Role definition, essential skills, PM vs Functional Manager differences, and key people in project teams.',
+                        icon: '👤', 
+                        status: 'available',
+                        url: 'project-manager-role.html'
+                    },
+                    {
+                        id: 'week1_pmo',
+                        title: 'PMO Definition',
+                        description: 'What is a Project Management Office and the different types of PMOs in organizations.',
+                        icon: '🏢',
+                        status: 'available',
+                        url: 'project-management-office-definition.html'
+                    },
+                    {
+                        id: 'week1_pmi',
+                        title: 'PMI & PMBOK Guide', 
+                        description: 'Project Management Institute overview, PMBOK Guide structure, PM Principles, and Performance Domains.',
+                        icon: '📚',
+                        status: 'available',
+                        url: 'PMI.html'
+                    }
+                ];
+                
+                // Update Week 1 activities to match the static index content
+                const weekData = this.weekData.get(1);
+                if (weekData && weekData.activities) {
+                    let updated = false;
+                    
+                    for (const activity of weekData.activities) {
+                        if (activity.type === 'Lesson') {
+                            const tileId = this.getTileIdFromActivity(activity, 1);
+                            const matchingStaticTile = staticIndexTiles.find(tile => tile.id === tileId);
+                            
+                            if (matchingStaticTile) {
+                                // Update the activity to match the static tile
+                                if (activity.tileVisibility !== matchingStaticTile.status) {
+                                    activity.tileVisibility = matchingStaticTile.status;
+                                    updated = true;
+                                }
+                                if (activity.tileDescription !== matchingStaticTile.description) {
+                                    activity.tileDescription = matchingStaticTile.description;
+                                    updated = true;
+                                }
+                                if (activity.tileIcon !== matchingStaticTile.icon) {
+                                    activity.tileIcon = matchingStaticTile.icon;
+                                    updated = true;
+                                }
+                                
+                                console.log(`✅ Synced "${activity.title}" with static index content`);
+                            }
+                        }
+                    }
+                    
+                    if (updated) {
+                        weekData.lastModified = Date.now();
+                        this.weekData.set(1, weekData);
+                        await this.courseManager.database.ref(`outlines/week-1-outline`).set(weekData);
+                        console.log('📝 Updated Week 1 outline to match index page');
+                    }
+                }
+            }
+            
+            async syncAllWeeksFromFirebase() {
+                console.log('🔄 Syncing visibility from Firebase tiles...');
+                
+                try {
+                    // Get all Firebase tiles
+                    const snapshot = await this.courseManager.database.ref('course/content').once('value');
+                    if (!snapshot.exists()) return;
+                    
+                    const firebaseTiles = snapshot.val();
+                    let totalUpdated = 0;
+                    
+                    // Sync each week's data
+                    for (let week = 1; week <= this.totalWeeks; week++) {
+                        const weekData = this.weekData.get(week);
+                        if (!weekData || !weekData.activities) continue;
+                        
+                        let weekUpdated = false;
+                        
+                        for (const activity of weekData.activities) {
+                            if (activity.type === 'Lesson') {
+                                // Find matching Firebase tile using the same ID mapping
+                                const tileId = this.getTileIdFromActivity(activity, week);
+                                const firebaseTile = firebaseTiles[tileId];
+                                
+                                if (firebaseTile && firebaseTile.status !== activity.tileVisibility) {
+                                    console.log(`Week ${week} - "${activity.title}": ${activity.tileVisibility} → ${firebaseTile.status}`);
+                                    activity.tileVisibility = firebaseTile.status;
+                                    weekUpdated = true;
+                                    totalUpdated++;
+                                }
+                            }
+                        }
+                        
+                        if (weekUpdated) {
+                            // Save updated week data to outline only
+                            weekData.lastModified = Date.now();
+                            this.weekData.set(week, weekData);
+                            await this.courseManager.database.ref(`outlines/week-${week}-outline`).set(weekData);
+                        }
+                    }
+                    
+                    if (totalUpdated > 0) {
+                        console.log(`✅ Synced ${totalUpdated} tile visibilities from Firebase`);
+                    }
+                } catch (error) {
+                    console.error('Error syncing from Firebase:', error);
+                }
             }
 
             createWeekTabs() {
@@ -500,124 +959,16 @@
             }
 
             createWeekTemplate(weekNumber) {
-                if (weekNumber === 1) {
-                    return {
-                        id: `week-${weekNumber}-outline`,
-                        weekNumber: weekNumber,
-                        title: `Week ${weekNumber} Class Outline`,
-                        subtitle: `Managing IT Projects - Week ${weekNumber} Topics`,
-                        activities: [
-                            {
-                                type: 'Admin',
-                                title: 'Class Introduction | Expectations and Syllabus',
-                                duration: 20,
-                                timeRange: 'Start: 6:00 PM',
-                                pageLink: 'course-syllabus.html',
-                                order: 0
-                            },
-                            {
-                                type: 'Admin',
-                                title: 'Teacher Intro | Journey & Resume',
-                                duration: 15,
-                                timeRange: 'Check: 6:20 PM',
-                                pageLink: 'journey.html',
-                                order: 1
-                            },
-                            {
-                                type: 'Lesson',
-                                title: 'Intro to Project Management : Project Definition',
-                                duration: 10,
-                                timeRange: 'Check: 6:35 PM',
-                                pageLink: 'project-definition.html',
-                                order: 2
-                            },
-                            {
-                                type: 'Activity',
-                                title: 'Week 1 | Activity 1 | Examples of Projects & Short Discussion',
-                                duration: 15,
-                                timeRange: 'Check: 6:45 PM',
-                                pageLink: '',
-                                order: 3
-                            },
-                            {
-                                type: 'Story',
-                                title: 'Intro to Project Management : Project Definition : My Examples',
-                                duration: 10,
-                                timeRange: 'Check: 7:00 PM',
-                                pageLink: 'professors-projects-stories.html',
-                                order: 4
-                            },
-                            {
-                                type: 'Lesson',
-                                title: 'Intro to Project Management : Project Management',
-                                duration: 10,
-                                timeRange: 'Check: 7:10 PM',
-                                pageLink: 'project-management-definition.html',
-                                order: 5
-                            },
-                            {
-                                type: 'Lesson',
-                                title: 'Intro to Project Management : Project Manager',
-                                duration: 10,
-                                timeRange: 'Check: 7:20 PM',
-                                pageLink: 'project-manager-role.html',
-                                order: 6
-                            },
-                            {
-                                type: 'Story',
-                                title: 'Intro to Project Management : Project Manager : Am I?',
-                                duration: 5,
-                                timeRange: 'Check: 7:30 PM',
-                                pageLink: 'professional-experience.html',
-                                order: 7
-                            },
-                            {
-                                type: 'Activity',
-                                title: 'Week 1 | Activity 2 | Project Manager Job Posting',
-                                duration: 15,
-                                timeRange: 'Check: 7:35 PM',
-                                pageLink: '',
-                                order: 8
-                            },
-                            {
-                                type: 'Lesson',
-                                title: 'Intro to Project Management : PMO',
-                                duration: 10,
-                                timeRange: 'Check: 7:50 PM',
-                                pageLink: 'project-management-office-definition.html',
-                                order: 9
-                            },
-                            {
-                                type: 'Lesson',
-                                title: 'Intro to Project Management : PMI & PMBOK',
-                                duration: 10,
-                                timeRange: 'Check: 8:00 PM',
-                                pageLink: 'PMI.html',
-                                order: 10
-                            },
-                            {
-                                type: 'Activity',
-                                title: 'Week 1 | Activity 3 | Browse Website',
-                                duration: 15,
-                                timeRange: 'Check: 8:10 PM',
-                                pageLink: '',
-                                order: 11
-                            }
-                        ],
-                        lastModified: Date.now(),
-                        version: '1.0'
-                    };
-                } else {
-                    return {
-                        id: `week-${weekNumber}-outline`,
-                        weekNumber: weekNumber,
-                        title: `Week ${weekNumber} Class Outline`,
-                        subtitle: `Managing IT Projects - Week ${weekNumber} Topics`,
-                        activities: [],
-                        lastModified: Date.now(),
-                        version: '1.0'
-                    };
-                }
+                // Create completely empty template for all weeks - NO placeholder data
+                return {
+                    id: `week-${weekNumber}-outline`,
+                    weekNumber: weekNumber,
+                    title: `Week ${weekNumber} Class Outline`,
+                    subtitle: `Managing IT Projects - Week ${weekNumber} Topics`,
+                    activities: [], // COMPLETELY EMPTY - NO placeholder activities
+                    lastModified: Date.now(),
+                    version: '1.0'
+                };
             }
 
             switchToWeek(weekNumber) {
@@ -635,6 +986,9 @@
                 
                 // Display week content
                 this.displayWeek(weekNumber);
+                
+                // Update index preview
+                this.generateIndexPreview();
             }
 
             displayWeek(weekNumber) {
@@ -658,6 +1012,9 @@
                                     <th style="width: 80px;">Time</th>
                                     <th style="width: 140px;">Pace Marker</th>
                                     <th style="width: 180px;">Page Link</th>
+                                    <th style="width: 120px;">Index Page Tile</th>
+                                    <th style="width: 60px;">Icon</th>
+                                    <th style="width: 200px;">Tile Description</th>
                                 </tr>
                             </thead>
                             <tbody id="activities-tbody">
@@ -666,7 +1023,7 @@
                                     <td><strong>Total Class Time</strong></td>
                                     <td><strong id="total-duration">0</strong></td>
                                     <td><strong id="end-time">End: 6:00 PM</strong></td>
-                                    <td></td>
+                                    <td colspan="4"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -681,21 +1038,100 @@
             generateActivityRows(activities) {
                 return activities
                     .sort((a, b) => a.order - b.order)
-                    .map(activity => `
-                        <tr draggable="true" data-activity-order="${activity.order}">
+                    .map(activity => {
+                        const isLesson = activity.type.toLowerCase() === 'lesson';
+                        const tileVisibility = activity.tileVisibility || 'available';
+                        const tileIcon = activity.tileIcon || this.inferIconFromTitle(activity.title);
+                        const tileDescription = activity.tileDescription || activity.description || '';
+                        
+                        // Generate different content based on edit mode
+                        const activityCell = this.editMode ? `
+                            <div style="display: flex; flex-direction: column; width: 100%; gap: 4px;">
+                                <input type="text" value="${activity.title || ''}" 
+                                       data-original-element="activity-title"
+                                       style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 3px; font-size: 14px;" 
+                                       placeholder="Activity title">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <button class="delete-row-btn" onclick="outlineManager.deleteActivityRow(this.closest('tr'))" 
+                                            style="background: #dc3545; color: white; border: none; border-radius: 3px; padding: 4px 6px; font-size: 12px; cursor: pointer;">
+                                        🗑️
+                                    </button>
+                                    <select data-original-element="activity-type" 
+                                            style="flex: 1; padding: 4px; border: 1px solid #ddd; border-radius: 3px; font-size: 12px;">
+                                        <option value="Intro" ${activity.type === 'Intro' ? 'selected' : ''}>Intro</option>
+                                        <option value="Lesson" ${activity.type === 'Lesson' ? 'selected' : ''}>Lesson</option>
+                                        <option value="Activity" ${activity.type === 'Activity' ? 'selected' : ''}>Activity</option>
+                                        <option value="Story" ${activity.type === 'Story' ? 'selected' : ''}>Story</option>
+                                        <option value="Break" ${activity.type === 'Break' ? 'selected' : ''}>Break</option>
+                                        <option value="Wrap-up" ${activity.type === 'Wrap-up' ? 'selected' : ''}>Wrap-up</option>
+                                    </select>
+                                </div>
+                            </div>
+                        ` : `
+                            <span class="activity-type ${this.getActivityTypeClass(activity.type)}">${activity.type}</span>
+                            <span class="activity-title">${activity.title}</span>
+                        `;
+                        
+                        const durationCell = this.editMode ? 
+                            `<input type="number" value="${activity.duration || 15}" 
+                                    data-original-element="time-duration"
+                                    style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 3px; font-size: 12px;" 
+                                    min="1" max="180">` : 
+                            `${activity.duration}`;
+                            
+                        const pageLinkCell = this.editMode ? `
+                            <select data-original-element="page-link" 
+                                    style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 4px; font-size: 11px;">
+                                ${this.generatePageLinkOptions(activity.pageLink || '')}
+                            </select>
+                        ` : this.formatPageLink(activity.pageLink || '');
+                        
+                        return `
+                        <tr draggable="true" data-activity-order="${activity.order}" data-activity-id="${activity.id || activity.order}">
                             <td>
-                                <span class="activity-type ${this.getActivityTypeClass(activity.type)}">${activity.type}</span>
-                                <span class="activity-title">${activity.title}</span>
+                                ${activityCell}
                             </td>
-                            <td class="time-duration">${activity.duration}</td>
+                            <td class="time-duration">${durationCell}</td>
                             <td class="time-range">${activity.timeRange}</td>
-                            <td class="page-link">${this.formatPageLink(activity.pageLink || '')}</td>
+                            <td class="page-link">${pageLinkCell}</td>
+                            <td class="tile-visibility">
+                                ${isLesson ? `
+                                    <select class="tile-visibility-select" onchange="outlineManager.updateTileVisibility(this)" 
+                                            style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px;">
+                                        <option value="available" ${tileVisibility === 'available' ? 'selected' : ''}>👁️ Visible</option>
+                                        <option value="hidden" ${tileVisibility === 'hidden' ? 'selected' : ''}>🚫 Hidden</option>
+                                        <option value="coming-soon" ${tileVisibility === 'coming-soon' ? 'selected' : ''}>⏳ Coming Soon</option>
+                                    </select>
+                                ` : '<span style="color: #999; font-style: italic;">—</span>'}
+                            </td>
+                            <td class="tile-icon">
+                                ${isLesson ? `
+                                    <span class="read-only-value" style="text-align: center; font-size: 16px;">${tileIcon}</span>
+                                    <input type="text" class="tile-icon-input edit-mode-input" value="${tileIcon}" 
+                                           onchange="outlineManager.updateTileIcon(this)"
+                                           style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px; text-align: center;" 
+                                           placeholder="📖" maxlength="2">
+                                ` : '<span style="color: #999; font-style: italic;">—</span>'}
+                            </td>
+                            <td class="tile-description">
+                                ${isLesson ? `
+                                    <span class="read-only-value" style="font-size: 12px; line-height: 1.4; max-height: 60px; overflow: hidden; text-overflow: ellipsis;">${tileDescription || 'No description set'}</span>
+                                    <textarea class="tile-description-input edit-mode-input" onchange="outlineManager.updateTileDescription(this)"
+                                              style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; resize: vertical; min-height: 40px;" 
+                                              placeholder="Tile description for students...">${tileDescription}</textarea>
+                                ` : '<span style="color: #999; font-style: italic;">—</span>'}
+                            </td>
                         </tr>
-                    `).join('');
+                    `}).join('');
             }
 
-            formatPageLink(pageLink) {
-                if (!pageLink) {
+            formatPageLink(pageLink, activityTitle, activityType) {
+                if (!pageLink || pageLink.trim() === '') {
+                    if (activityType && activityType.toLowerCase() === 'lesson') {
+                        const inferredUrl = this.inferUrlFromTitle(activityTitle);
+                        return `<span style="color: #999; font-style: italic;">No page assigned</span><br>
+                                <small style="color: #28a745;">Would use: ${inferredUrl}</small>`;
+                    }
                     return '<span style="color: #999; font-style: italic;">No page assigned</span>';
                 }
                 return `<a href="${pageLink}" target="_blank" style="color: #007bff; text-decoration: none;">${pageLink}</a>`;
@@ -704,9 +1140,12 @@
             extractPageLinkFromCell(cell) {
                 const link = cell.querySelector('a');
                 if (link) {
-                    return link.textContent;
+                    // Return the href value, not the text content
+                    return link.getAttribute('href') || link.textContent;
                 }
-                return '';
+                // If no link, return the text content
+                const text = cell.textContent.trim();
+                return text === '—' ? '' : text;
             }
 
             generatePageLinkOptions(selectedPage = '') {
@@ -725,7 +1164,12 @@
                     'PMI.html',
                     'week-1-quiz.html',
                     'week-1-summary.html',
-                    'project-management-definition.html'
+                    'project-management-definition.html',
+                    'mission-vision-strategy.html',
+                    'project-management-artifacts.html',
+                    'swot-analysis.html',
+                    'professors-swot-analysis.html',
+                    'professors-swot-story.html'
                 ];
                 
                 return pages.map(page => {
@@ -740,6 +1184,8 @@
                     case 'lesson': return 'type-lesson';
                     case 'activity': return 'type-activity';
                     case 'story': return 'type-story';
+                    case 'professional': return 'type-professional';
+                    case 'course-info': return 'type-course-info';
                     case 'admin': return 'type-admin';
                     case 'intro': return 'type-admin';
                     case 'wrap-up': return 'type-admin';
@@ -835,29 +1281,39 @@
                 let totalStoryMinutes = 0, totalStoryCount = 0;
                 let totalClassTime = 0;
 
-                this.weekData.forEach(weekData => {
-                    if (weekData.activities) {
-                        weekData.activities.forEach(activity => {
-                            const type = activity.type.toLowerCase();
-                            totalClassTime += activity.duration;
-                            
-                            switch(type) {
-                                case 'lesson':
-                                    totalLessonMinutes += activity.duration;
-                                    totalLessonCount++;
-                                    break;
-                                case 'activity':
-                                    totalActivityMinutes += activity.duration;
-                                    totalActivityCount++;
-                                    break;
-                                case 'story':
-                                    totalStoryMinutes += activity.duration;
-                                    totalStoryCount++;
-                                    break;
-                            }
-                        });
-                    }
-                });
+                // Only calculate stats for the current week
+                const currentWeekData = this.weekData.get(this.currentWeek);
+                if (currentWeekData && currentWeekData.activities) {
+                    currentWeekData.activities.forEach(activity => {
+                        const type = activity.type.toLowerCase();
+                        totalClassTime += activity.duration;
+                        
+                        switch(type) {
+                            case 'lesson':
+                                totalLessonMinutes += activity.duration;
+                                totalLessonCount++;
+                                break;
+                            case 'activity':
+                                totalActivityMinutes += activity.duration;
+                                totalActivityCount++;
+                                break;
+                            case 'story':
+                                totalStoryMinutes += activity.duration;
+                                totalStoryCount++;
+                                break;
+                            case 'professional':
+                                // Count professional skills as lessons for stats
+                                totalLessonMinutes += activity.duration;
+                                totalLessonCount++;
+                                break;
+                            case 'course-info':
+                                // Count course info as activities for stats
+                                totalActivityMinutes += activity.duration;
+                                totalActivityCount++;
+                                break;
+                        }
+                    });
+                }
 
                 document.getElementById('lesson-stats').textContent = `${totalLessonMinutes} min (${totalLessonCount})`;
                 document.getElementById('activity-stats').textContent = `${totalActivityMinutes} min (${totalActivityCount})`;
@@ -868,33 +1324,46 @@
 
             // Activity Management Methods
             addNewActivity() {
-                const weekData = this.weekData.get(this.currentWeek);
-                if (!weekData) return;
+                try {
+                    const weekData = this.weekData.get(this.currentWeek);
+                    if (!weekData) {
+                        this.showSaveIndicator('Error: Week data not found', 'error');
+                        return;
+                    }
 
-                const newActivity = {
-                    type: 'Lesson',
-                    title: '',
-                    duration: 15,
-                    timeRange: 'TBD',
-                    pageLink: '',
-                    order: weekData.activities.length
-                };
+                    const newActivity = {
+                        type: 'Activity',
+                        title: 'New Activity',
+                        duration: 15,
+                        timeRange: 'TBD',
+                        pageLink: '',
+                        order: weekData.activities.length,
+                        tileVisibility: 'available',
+                        tileIcon: '📚',
+                        tileDescription: 'New activity description'
+                    };
 
-                weekData.activities.push(newActivity);
-                this.weekData.set(this.currentWeek, weekData);
-                
-                if (this.editMode) {
-                    // In edit mode, add the new row without exiting edit mode
-                    this.addNewRowInEditMode(newActivity);
-                    this.calculateTimesAndTotal();
-                    this.updateWeekStats(this.currentWeek);
-                } else {
-                    // Regular mode - refresh display
-                    this.displayWeek(this.currentWeek);
+                    weekData.activities.push(newActivity);
+                    this.weekData.set(this.currentWeek, weekData);
+                    
+                    if (this.editMode) {
+                        // In edit mode, add the new row without exiting edit mode
+                        this.addNewRowInEditMode(newActivity);
+                        this.calculateTimesAndTotal();
+                        this.updateWeekStats(this.currentWeek);
+                    } else {
+                        // Regular mode - refresh display
+                        this.displayWeek(this.currentWeek);
+                    }
+                    
+                    // Use debounced save
+                    this.debouncedSave();
+                    this.debouncedPreviewUpdate();
+                    this.showSaveIndicator('✅ New activity added - click to edit title');
+                } catch (error) {
+                    console.error('Error adding new activity:', error);
+                    this.showSaveIndicator('Error adding activity', 'error');
                 }
-                
-                this.saveWeekToDatabase(this.currentWeek);
-                this.showSaveIndicator('Activity added');
             }
 
             addNewRowInEditMode(activity) {
@@ -906,6 +1375,11 @@
                 newRow.draggable = true;
                 newRow.setAttribute('data-activity-order', activity.order);
                 
+                const isLesson = activity.type.toLowerCase() === 'lesson';
+                const tileVisibility = activity.tileVisibility || 'available';
+                const tileIcon = activity.tileIcon || this.inferIconFromTitle(activity.title);
+                const tileDescription = activity.tileDescription || '';
+                
                 newRow.innerHTML = `
                     <td>
                         <span class="activity-type ${this.getActivityTypeClass(activity.type)}">${activity.type}</span>
@@ -914,6 +1388,31 @@
                     <td class="time-duration">${activity.duration}</td>
                     <td class="time-range">${activity.timeRange}</td>
                     <td class="page-link">${this.formatPageLink(activity.pageLink || '')}</td>
+                    <td class="tile-visibility">
+                        ${isLesson ? `
+                            <select class="tile-visibility-select" onchange="outlineManager.updateTileVisibility(this)" 
+                                    style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px;">
+                                <option value="available" ${tileVisibility === 'available' ? 'selected' : ''}>👁️ Visible</option>
+                                <option value="hidden" ${tileVisibility === 'hidden' ? 'selected' : ''}>🚫 Hidden</option>
+                                <option value="coming-soon" ${tileVisibility === 'coming-soon' ? 'selected' : ''}>⏳ Coming Soon</option>
+                            </select>
+                        ` : '<span style="color: #999; font-style: italic;">—</span>'}
+                    </td>
+                    <td class="tile-icon">
+                        ${isLesson ? `
+                            <input type="text" class="tile-icon-input" value="${tileIcon}" 
+                                   onchange="outlineManager.updateTileIcon(this)"
+                                   style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px; text-align: center;" 
+                                   placeholder="📖" maxlength="2">
+                        ` : '<span style="color: #999; font-style: italic;">—</span>'}
+                    </td>
+                    <td class="tile-description">
+                        ${isLesson ? `
+                            <textarea class="tile-description-input" onchange="outlineManager.updateTileDescription(this)"
+                                      style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; resize: vertical; min-height: 40px;" 
+                                      placeholder="Tile description for students...">${tileDescription}</textarea>
+                        ` : '<span style="color: #999; font-style: italic;">—</span>'}
+                    </td>
                 `;
                 
                 // Insert before total row
@@ -984,6 +1483,8 @@
                         <option value="Lesson" ${currentType === 'Lesson' ? 'selected' : ''}>Lesson</option>
                         <option value="Activity" ${currentType === 'Activity' ? 'selected' : ''}>Activity</option>
                         <option value="Story" ${currentType === 'Story' ? 'selected' : ''}>Story</option>
+                        <option value="Professional" ${currentType === 'Professional' ? 'selected' : ''}>Professional Skills</option>
+                        <option value="Course-Info" ${currentType === 'Course-Info' ? 'selected' : ''}>Course Information</option>
                         <option value="Break" ${currentType === 'Break' ? 'selected' : ''}>Break</option>
                         <option value="Wrap-up" ${currentType === 'Wrap-up' ? 'selected' : ''}>Wrap-up</option>
                     `;
@@ -1070,91 +1571,101 @@
                 }
             }
 
-            toggleEditMode() {
+            async toggleEditMode() {
                 this.editMode = !this.editMode;
                 const button = document.querySelector('.action-btn.btn-secondary');
                 const editModeButtons = document.querySelectorAll('.edit-mode-only');
                 
                 if (this.editMode) {
+                    // Create backup before entering edit mode
+                    this.createDataBackup();
+                    
                     this.enterEditMode();
                     button.innerHTML = '💾 Save Changes';
                     button.style.background = 'var(--color-success)';
                     
                     // Show edit mode buttons
                     editModeButtons.forEach(btn => btn.style.display = 'flex');
+                    
+                    // Refresh the display to apply edit mode changes
+                    this.displayWeek(this.currentWeek);
                 } else {
-                    this.exitEditMode();
+                    await this.exitEditMode();
                     button.innerHTML = '📝 Edit Mode';
                     button.style.background = 'var(--color-warning)';
                     
                     // Hide edit mode buttons
                     editModeButtons.forEach(btn => btn.style.display = 'none');
+                    
+                    // Display will be refreshed in exitEditMode
                 }
+            }
+            
+            // Debounce utility function
+            debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+            
+            createDataBackup() {
+                const weekData = this.weekData.get(this.currentWeek);
+                if (weekData) {
+                    this.dataBackup = JSON.parse(JSON.stringify(weekData)); // Deep copy
+                    console.log('📋 Created data backup for Week', this.currentWeek);
+                }
+            }
+            
+            restoreDataFromBackup() {
+                if (this.dataBackup) {
+                    this.weekData.set(this.currentWeek, this.dataBackup);
+                    console.log('🔄 Restored data from backup');
+                    this.displayWeek(this.currentWeek);
+                    this.showSaveIndicator('Data restored from backup');
+                    return true;
+                }
+                return false;
             }
 
             enterEditMode() {
                 document.body.classList.add('edit-mode');
-                
-                // Make all activity cells editable
-                const rows = document.querySelectorAll('#activities-tbody tr:not(.total-row)');
-                rows.forEach(row => {
-                    this.applyEditModeToRow(row);
-                });
-                
                 this.showSaveIndicator('Edit mode enabled');
             }
 
-            exitEditMode() {
+            async exitEditMode() {
                 document.body.classList.remove('edit-mode');
                 
-                // Convert all inputs back to display elements
-                const rows = document.querySelectorAll('#activities-tbody tr:not(.total-row)');
-                rows.forEach(row => {
-                    const firstCell = row.querySelector('td');
-                    if (!firstCell) return;
+                try {
+                    // Update the week data with changes BEFORE regenerating the table
+                    this.updateWeekDataFromDOM();
                     
-                    // Get values from the edit mode inputs
-                    const titleInput = row.querySelector('input[data-original-element="activity-title"]');
-                    const typeSelect = row.querySelector('select[data-original-element="activity-type"]');
-                    const durationInput = row.querySelector('input[data-original-element="time-duration"]');
-                    const pageLinkSelect = row.querySelector('select[data-original-element="page-link"]');
+                    // Recalculate times
+                    this.calculateTimesAndTotal();
                     
-                    const titleValue = titleInput ? titleInput.value : '';
-                    const typeValue = typeSelect ? typeSelect.value : 'Lesson';
-                    const durationValue = durationInput ? durationInput.value : '15';
-                    const pageLinkValue = pageLinkSelect ? pageLinkSelect.value : '';
+                    // Save all changes and sync tiles
+                    await this.saveWeekToDatabase(this.currentWeek);
                     
-                    // Rebuild the cell with normal display format
-                    firstCell.innerHTML = `
-                        <span class="activity-type ${this.getActivityTypeClass(typeValue)}">${typeValue}</span>
-                        <span class="activity-title">${titleValue}</span>
-                    `;
+                    // Update course stats
+                    this.updateCourseStats();
                     
-                    // Handle duration cell
-                    if (durationInput) {
-                        const durationCell = durationInput.closest('td');
-                        durationCell.innerHTML = '';
-                        durationCell.textContent = durationValue;
-                        durationCell.className = 'time-duration';
+                    // Refresh the display to show updated data
+                    this.displayWeek(this.currentWeek);
+                    
+                    this.showSaveIndicator('All changes saved and tiles synced');
+                } catch (error) {
+                    console.error('Error exiting edit mode:', error);
+                    this.showSaveIndicator('Error saving changes', 'error');
+                    // Restore from backup if save failed
+                    if (this.restoreDataFromBackup()) {
+                        this.showSaveIndicator('Changes restored from backup');
                     }
-                    
-                    // Handle page link cell
-                    if (pageLinkSelect) {
-                        const pageLinkCell = pageLinkSelect.closest('td');
-                        pageLinkCell.innerHTML = this.formatPageLink(pageLinkValue);
-                        pageLinkCell.className = 'page-link';
-                    }
-                });
-                
-                // Update the week data with changes
-                this.updateWeekDataFromDOM();
-                
-                // Recalculate times and save all changes
-                this.calculateTimesAndTotal();
-                this.saveWeekToDatabase(this.currentWeek);
-                this.updateCourseStats();
-                
-                this.showSaveIndicator('All changes saved');
+                }
             }
 
             updateWeekDataFromDOM() {
@@ -1165,26 +1676,72 @@
                 const updatedActivities = [];
 
                 rows.forEach((row, index) => {
-                    const typeElement = row.querySelector('.activity-type');
-                    const titleElement = row.querySelector('.activity-title');
-                    const durationElement = row.querySelector('.time-duration');
+                    // Get the activity ID or order to match with existing data
+                    const activityId = row.dataset.activityId;
+                    const activityOrder = row.dataset.activityOrder;
+                    
+                    // Handle both edit mode (inputs) and display mode (spans)
+                    const typeInput = row.querySelector('select[data-original-element="activity-type"]');
+                    const titleInput = row.querySelector('input[data-original-element="activity-title"]');
+                    const durationInput = row.querySelector('input[data-original-element="time-duration"]');
+                    const pageLinkSelect = row.querySelector('select[data-original-element="page-link"]');
+                    
+                    // Also get tile properties
+                    const tileVisibilitySelect = row.querySelector('.tile-visibility-select');
+                    const tileIconInput = row.querySelector('.tile-icon-input');
+                    const tileDescriptionTextarea = row.querySelector('.tile-description-input');
+                    
+                    // Fallback to display elements if inputs not found
+                    const typeElement = typeInput || row.querySelector('.activity-type');
+                    const titleElement = titleInput || row.querySelector('.activity-title');
+                    const durationElement = durationInput || row.querySelector('.time-duration');
                     const timeRangeElement = row.querySelector('.time-range');
-                    const pageLinkElement = row.querySelector('.page-link');
+                    const pageLinkElement = pageLinkSelect || row.querySelector('.page-link');
 
                     if (typeElement && titleElement && durationElement && timeRangeElement) {
-                        const pageLinkValue = pageLinkElement ? this.extractPageLinkFromCell(pageLinkElement) : '';
+                        // Get values based on element type
+                        const typeValue = typeInput ? typeInput.value : typeElement.textContent.trim();
+                        const titleValue = titleInput ? titleInput.value : titleElement.textContent.trim();
+                        const durationValue = durationInput ? parseInt(durationInput.value) || 0 : parseInt(durationElement.textContent.trim()) || 0;
+                        const timeRangeValue = timeRangeElement.textContent.trim();
+                        const pageLinkValue = pageLinkSelect ? pageLinkSelect.value : 
+                                           (pageLinkElement ? this.extractPageLinkFromCell(pageLinkElement) : '');
                         
-                        updatedActivities.push({
-                            type: typeElement.textContent.trim(),
-                            title: titleElement.textContent.trim(),
-                            duration: parseInt(durationElement.textContent.trim()) || 0,
-                            timeRange: timeRangeElement.textContent.trim(),
+                        // Find existing activity to preserve data
+                        const existingActivity = weekData.activities.find(a => 
+                            (a.id && a.id == activityId) || 
+                            a.order == activityOrder || 
+                            weekData.activities[index]
+                        ) || weekData.activities[index] || {};
+                        
+                        // Build updated activity preserving tile properties
+                        const updatedActivity = {
+                            ...existingActivity, // Preserve all existing properties
+                            type: typeValue,
+                            title: titleValue,
+                            duration: durationValue,
+                            timeRange: timeRangeValue,
                             pageLink: pageLinkValue,
-                            order: index
-                        });
+                            order: index,
+                            id: existingActivity.id || activityId || index
+                        };
+                        
+                        // Update tile properties if elements exist
+                        if (tileVisibilitySelect) {
+                            updatedActivity.tileVisibility = tileVisibilitySelect.value;
+                        }
+                        if (tileIconInput) {
+                            updatedActivity.tileIcon = tileIconInput.value;
+                        }
+                        if (tileDescriptionTextarea) {
+                            updatedActivity.tileDescription = tileDescriptionTextarea.value;
+                        }
+                        
+                        updatedActivities.push(updatedActivity);
                     }
                 });
 
+                console.log('Updating week data from DOM:', updatedActivities); // Debug log
                 weekData.activities = updatedActivities;
                 weekData.lastModified = Date.now();
                 this.weekData.set(this.currentWeek, weekData);
@@ -1198,11 +1755,33 @@
                 try {
                     await this.courseManager.database.ref(`outlines/${weekData.id}`).set(weekData);
                     console.log(`Week ${weekNumber} saved to database`);
-                    this.showSaveIndicator(`Week ${weekNumber} saved`);
+                    
+                    // Automatically sync all lesson tiles to Firebase
+                    await this.syncLessonTilesToFirebase(weekNumber);
+                    
+                    this.showSaveIndicator(`Week ${weekNumber} saved and tiles synced`);
                 } catch (error) {
                     console.error(`Failed to save Week ${weekNumber} to database:`, error);
                     this.showSaveIndicator(`Save failed: ${error.message}`, 'error');
                 }
+            }
+            
+            async syncLessonTilesToFirebase(weekNumber) {
+                const weekData = this.weekData.get(weekNumber);
+                if (!weekData || !weekData.activities) return;
+                
+                console.log(`Syncing lesson tiles for Week ${weekNumber}...`);
+                let syncedCount = 0;
+                
+                for (const activity of weekData.activities) {
+                    if (activity.type === 'Lesson') {
+                        await this.updateFirebaseTile(activity, weekNumber);
+                        syncedCount++;
+                    }
+                }
+                
+                console.log(`Synced ${syncedCount} lesson tiles to Firebase`);
+                return syncedCount;
             }
 
             copyFromWeek() {
@@ -1243,24 +1822,993 @@
                 }
             }
 
-            deleteActivityRow(row) {
-                if (confirm('Are you sure you want to delete this activity?')) {
-                    // Add fade-out animation
-                    row.style.transition = 'opacity 0.3s ease';
-                    row.style.opacity = '0';
+            async syncAllTilesToFirebase() {
+                const currentWeekData = this.weekData.get(this.currentWeek);
+                if (!currentWeekData || !currentWeekData.activities) {
+                    alert('No activities found for this week');
+                    return;
+                }
+
+                try {
+                    let updatedCount = 0;
                     
-                    setTimeout(() => {
-                        row.remove();
+                    console.log(`🔄 Starting sync for Week ${this.currentWeek}...`);
+                    console.log('Activities found:', currentWeekData.activities.length);
+                    
+                    for (const activity of currentWeekData.activities) {
+                        console.log(`Processing activity: "${activity.title}" (Type: ${activity.type})`);
                         
-                        // Update the week data immediately after removing the row
-                        this.updateWeekDataFromDOM();
+                        if (activity.type.toLowerCase() === 'lesson') {
+                            console.log(`✅ Syncing lesson: "${activity.title}"`);
+                            const result = await this.updateFirebaseTile(activity);
+                            console.log(`Sync result for "${activity.title}":`, result);
+                            updatedCount++;
+                        } else {
+                            console.log(`⏭️ Skipping non-lesson: "${activity.title}"`);
+                        }
+                    }
+                    
+                    console.log(`✅ Sync complete! ${updatedCount} lessons processed.`);
+                    
+                    if (updatedCount === 0) {
+                        this.showSaveIndicator('⚠️ No lesson activities found to sync. Create a lesson first!', 'warning');
+                    } else {
+                        this.showSaveIndicator(`✅ ${updatedCount} lesson tiles synced to student page!`);
+                    }
+                    
+                    // Also trigger a diagnostic check
+                    await this.diagnoseTileSync();
+                    
+                } catch (error) {
+                    console.error('Error syncing tiles:', error);
+                    this.showSaveIndicator('❌ Error syncing tiles: ' + error.message, 'error');
+                }
+            }
+
+            async fixAllTileUrls() {
+                const currentWeekData = this.weekData.get(this.currentWeek);
+                if (!currentWeekData || !currentWeekData.activities) {
+                    alert('No activities found for this week');
+                    return;
+                }
+
+                try {
+                    let fixedCount = 0;
+                    let verifiedCount = 0;
+                    const issues = [];
+                    
+                    for (const activity of currentWeekData.activities) {
+                        if (activity.type.toLowerCase() === 'lesson') {
+                            let wasFixed = false;
+                            
+                            // Check if pageLink is properly set
+                            if (!activity.pageLink || activity.pageLink.trim() === '') {
+                                const inferredUrl = this.inferUrlFromTitle(activity.title);
+                                if (inferredUrl !== '#') {
+                                    activity.pageLink = inferredUrl;
+                                    console.log(`Fixed pageLink for "${activity.title}": ${inferredUrl}`);
+                                    fixedCount++;
+                                    wasFixed = true;
+                                } else {
+                                    issues.push(`Could not infer URL for: "${activity.title}"`);
+                                }
+                            } else {
+                                verifiedCount++;
+                                console.log(`Verified existing pageLink for "${activity.title}": ${activity.pageLink}`);
+                            }
+                            
+                            // Update the tile with correct URL
+                            await this.updateFirebaseTile(activity);
+                        }
+                    }
+                    
+                    // Save updated activities
+                    this.saveWeekToDatabase(this.currentWeek);
+                    
+                    let message = `✅ URL Fix Complete!\n`;
+                    message += `• Fixed: ${fixedCount} URLs\n`;
+                    message += `• Verified: ${verifiedCount} existing URLs\n`;
+                    message += `• Updated all tiles in Firebase`;
+                    
+                    if (issues.length > 0) {
+                        message += `\n\n⚠️ Issues found:\n${issues.join('\n')}`;
+                        console.warn('URL fixing issues:', issues);
+                    }
+                    
+                    this.showSaveIndicator(message);
+                    
+                    // Refresh the display
+                    this.displayWeek(this.currentWeek);
+                    
+                } catch (error) {
+                    console.error('Error fixing tile URLs:', error);
+                    alert('Error fixing tile URLs. Please try again.');
+                }
+            }
+
+            async syncFirebaseStatusToOutline() {
+                try {
+                    console.log('🔄 Syncing Firebase tile status back to outline...');
+                    
+                    const currentWeekData = this.weekData.get(this.currentWeek);
+                    if (!currentWeekData || !currentWeekData.activities) {
+                        alert('No outline data found for this week');
+                        return;
+                    }
+                    
+                    // Get Firebase tiles
+                    const snapshot = await this.courseManager.database.ref('course/content').once('value');
+                    if (!snapshot.exists()) {
+                        alert('No Firebase tiles found');
+                        return;
+                    }
+                    
+                    const allContent = snapshot.val();
+                    const firebaseTiles = [];
+                    Object.entries(allContent).forEach(([id, data]) => {
+                        if (data.week === this.currentWeek) {
+                            firebaseTiles.push({ id, ...data });
+                        }
+                    });
+                    
+                    let syncedCount = 0;
+                    const issues = [];
+                    
+                    // Update outline activities with Firebase tile status
+                    currentWeekData.activities.forEach(activity => {
+                        if (activity.type.toLowerCase() === 'lesson') {
+                            // Find matching Firebase tile by title
+                            const matchingTile = firebaseTiles.find(tile => 
+                                tile.title === activity.title
+                            );
+                            
+                            if (matchingTile) {
+                                // Update outline with Firebase status
+                                const oldVisibility = activity.tileVisibility || 'available';
+                                activity.tileVisibility = matchingTile.status || 'available';
+                                activity.tileIcon = matchingTile.icon || activity.tileIcon;
+                                activity.tileDescription = matchingTile.description || activity.tileDescription;
+                                
+                                if (oldVisibility !== activity.tileVisibility) {
+                                    console.log(`Updated "${activity.title}" visibility: ${oldVisibility} → ${activity.tileVisibility}`);
+                                    syncedCount++;
+                                }
+                            } else {
+                                issues.push(`No matching Firebase tile found for: "${activity.title}"`);
+                            }
+                        }
+                    });
+                    
+                    // Save updated outline data
+                    this.saveWeekToDatabase(this.currentWeek);
+                    
+                    let message = `✅ Firebase Sync Complete!\n`;
+                    message += `• Updated: ${syncedCount} lesson visibilities\n`;
+                    message += `• Synced from Firebase tiles to outline`;
+                    
+                    if (issues.length > 0) {
+                        message += `\n\n⚠️ Issues:\n${issues.join('\n')}`;
+                    }
+                    
+                    this.showSaveIndicator(message);
+                    
+                    // Refresh display
+                    this.displayWeek(this.currentWeek);
+                    
+                } catch (error) {
+                    console.error('Error syncing Firebase status:', error);
+                    alert('Error syncing Firebase status. Check console for details.');
+                }
+            }
+
+            async compareSources() {
+                try {
+                    console.log('🔍 Comparing outline data vs Firebase tiles...');
+                    
+                    // Get current outline data
+                    const currentWeekData = this.weekData.get(this.currentWeek);
+                    if (!currentWeekData || !currentWeekData.activities) {
+                        alert('No outline data found for this week');
+                        return;
+                    }
+                    
+                    const outlineLessons = currentWeekData.activities.filter(activity => 
+                        activity.type.toLowerCase() === 'lesson'
+                    );
+                    
+                    // Get Firebase tiles
+                    const snapshot = await this.courseManager.database.ref('course/content').once('value');
+                    const firebaseTiles = [];
+                    if (snapshot.exists()) {
+                        const allContent = snapshot.val();
+                        Object.entries(allContent).forEach(([id, data]) => {
+                            if (data.week === this.currentWeek) {
+                                firebaseTiles.push({ id, ...data });
+                            }
+                        });
+                    }
+                    
+                    // Create comparison modal
+                    this.showComparisonModal(outlineLessons, firebaseTiles);
+                    
+                } catch (error) {
+                    console.error('Error comparing sources:', error);
+                    alert('Error comparing sources. Check console for details.');
+                }
+            }
+            
+            showComparisonModal(outlineLessons, firebaseTiles) {
+                // Remove existing modal if any
+                const existingModal = document.getElementById('comparison-modal');
+                if (existingModal) {
+                    existingModal.remove();
+                }
+                
+                // Create modal HTML
+                const modalHTML = `
+                    <div id="comparison-modal" style="
+                        position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                        background: rgba(0,0,0,0.7); z-index: 1000; display: flex; 
+                        align-items: center; justify-content: center;
+                    ">
+                        <div style="
+                            background: white; border-radius: 12px; max-width: 95%; max-height: 90%; 
+                            overflow: auto; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                        ">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                <h2 style="margin: 0; color: #2F5233;">🔍 Outline vs Index Comparison</h2>
+                                <button onclick="document.getElementById('comparison-modal').remove()" 
+                                        style="background: #dc3545; color: white; border: none; border-radius: 4px; padding: 8px 12px; cursor: pointer;">
+                                    ✕ Close
+                                </button>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                <div>
+                                    <h3 style="color: #2F5233; margin-bottom: 15px;">📋 Course Outline (${outlineLessons.length} lessons)</h3>
+                                    <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; background: #f8f9fa; max-height: 400px; overflow-y: auto;">
+                                        ${outlineLessons.map((lesson, index) => `
+                                            <div style="margin-bottom: 10px; padding: 10px; background: white; border-radius: 4px; border-left: 4px solid #2196f3;">
+                                                <div style="font-weight: bold;">${lesson.title || '⚠️ NO TITLE'}</div>
+                                                <div style="font-size: 12px; color: #666;">Type: ${lesson.type} | Order: ${lesson.order || index}</div>
+                                                <div style="font-size: 12px; color: #666;">Page: ${lesson.pageLink || 'None'}</div>
+                                                <div style="font-size: 12px; color: #666;">Icon: ${lesson.tileIcon || 'Default'} | Visibility: ${lesson.tileVisibility || 'available'}</div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 style="color: #2F5233; margin-bottom: 15px;">🎯 Index Page Tiles (${firebaseTiles.length} tiles)</h3>
+                                    <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; background: #f8f9fa; max-height: 400px; overflow-y: auto;">
+                                        ${firebaseTiles.map(tile => `
+                                            <div style="margin-bottom: 10px; padding: 10px; background: white; border-radius: 4px; border-left: 4px solid #28a745;">
+                                                <div style="font-weight: bold;">${tile.title || '⚠️ NO TITLE'}</div>
+                                                <div style="font-size: 12px; color: #666;">ID: ${tile.id}</div>
+                                                <div style="font-size: 12px; color: #666;">URL: ${tile.url || 'None'}</div>
+                                                <div style="font-size: 12px; color: #666;">Icon: ${tile.icon || 'Default'} | Status: ${tile.status || 'unknown'}</div>
+                                                <div style="font-size: 12px; color: #666;">Description: ${(tile.description || 'None').substring(0, 50)}${tile.description && tile.description.length > 50 ? '...' : ''}</div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border-radius: 8px;">
+                                <h4 style="margin: 0 0 10px 0; color: #856404;">📊 Analysis</h4>
+                                <div style="font-size: 14px;">
+                                    <div>Lessons in outline: <strong>${outlineLessons.length}</strong></div>
+                                    <div>Tiles on index: <strong>${firebaseTiles.length}</strong></div>
+                                    <div style="margin-top: 10px;">
+                                        ${outlineLessons.length === firebaseTiles.length ? 
+                                            '✅ Count matches' : 
+                                            `⚠️ Count mismatch: ${Math.abs(outlineLessons.length - firebaseTiles.length)} difference`
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: 20px; text-align: center;">
+                                <button onclick="outlineManager.syncAllTilesToFirebase(); document.getElementById('comparison-modal').remove();" 
+                                        style="background: #28a745; color: white; border: none; border-radius: 6px; padding: 10px 20px; cursor: pointer; margin-right: 10px;">
+                                    🔄 Sync Outline → Index
+                                </button>
+                                <button onclick="window.open('index.html', '_blank')" 
+                                        style="background: #17a2b8; color: white; border: none; border-radius: 6px; padding: 10px 20px; cursor: pointer;">
+                                    👀 View Index Page
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.insertAdjacentHTML('beforeend', modalHTML);
+            }
+
+            inferIconFromTitle(title) {
+                const lowerTitle = title.toLowerCase();
+                if (lowerTitle.includes('project management')) return '🎯';
+                if (lowerTitle.includes('project definition')) return '📋';
+                if (lowerTitle.includes('project manager')) return '👤';
+                if (lowerTitle.includes('pmo')) return '🏢';
+                if (lowerTitle.includes('pmi') || lowerTitle.includes('pmbok')) return '📚';
+                if (lowerTitle.includes('wrap') || lowerTitle.includes('done')) return '🎭';
+                return '📖';
+            }
+
+            inferUrlFromTitle(title, type) {
+                if (type === 'wrap-up') {
+                    return `week-${this.currentWeek}-wrap-up.html`;
+                }
+                
+                const lowerTitle = title.toLowerCase();
+                
+                // More specific matches first - exact patterns
+                if (lowerTitle.includes('project management definition') || 
+                    lowerTitle.includes('intro to project management: project management')) {
+                    return 'project-management-definition.html';
+                }
+                if (lowerTitle.includes('project definition') || 
+                    lowerTitle.includes('intro to project management: project definition')) {
+                    return 'project-definition.html';
+                }
+                if (lowerTitle.includes('project manager') && !lowerTitle.includes('office') || 
+                    lowerTitle.includes('intro to project management: project manager')) {
+                    return 'project-manager-role.html';
+                }
+                if (lowerTitle.includes('pmo') || 
+                    lowerTitle.includes('project management office') ||
+                    lowerTitle.includes('intro to project management: pmo')) {
+                    return 'project-management-office-definition.html';
+                }
+                if (lowerTitle.includes('pmi') || 
+                    lowerTitle.includes('pmbok') ||
+                    lowerTitle.includes('project management institute') ||
+                    lowerTitle.includes('intro to project management: pmi')) {
+                    return 'PMI.html';
+                }
+                
+                // Fallback for common patterns
+                if (lowerTitle.includes('management') && lowerTitle.includes('definition')) {
+                    return 'project-management-definition.html';
+                }
+                
+                console.warn(`No URL mapping found for activity title: "${title}"`);
+                return '#';
+            }
+
+            async updateTileVisibility(selectElement) {
+                const row = selectElement.closest('tr');
+                const activityId = row.dataset.activityId;
+                const activityOrder = row.dataset.activityOrder;
+                const visibility = selectElement.value;
+                
+                try {
+                    // Update local data
+                    const currentWeekData = this.weekData.get(this.currentWeek);
+                    const activity = currentWeekData.activities.find(a => 
+                        (a.id && a.id == activityId) || a.order == activityOrder
+                    );
+                    
+                    if (activity) {
+                        activity.tileVisibility = visibility;
                         
-                        // Recalculate times and totals
-                        this.calculateTimesAndTotal();
-                        this.updateWeekStats(this.currentWeek);
+                        // Update Firebase tile
+                        await this.updateFirebaseTile(activity);
                         
-                        this.showSaveIndicator('Activity deleted');
-                    }, 300);
+                        // Save to local database (debounced)
+                        this.debouncedSave();
+                        this.showSaveIndicator('Tile visibility updated');
+                        
+                        // Update preview (debounced)
+                        this.debouncedPreviewUpdate();
+                    }
+                } catch (error) {
+                    console.error('Error updating tile visibility:', error);
+                    this.showSaveIndicator('Error updating visibility', 'error');
+                }
+            }
+
+            async updateTileIcon(inputElement) {
+                const row = inputElement.closest('tr');
+                const activityId = row.dataset.activityId;
+                const activityOrder = row.dataset.activityOrder;
+                const icon = inputElement.value;
+                
+                try {
+                    // Update local data
+                    const currentWeekData = this.weekData.get(this.currentWeek);
+                    const activity = currentWeekData.activities.find(a => 
+                        (a.id && a.id == activityId) || a.order == activityOrder
+                    );
+                    
+                    if (activity) {
+                        activity.tileIcon = icon;
+                        
+                        // Update Firebase tile with new icon
+                        console.log(`🎨 Updating tile icon for "${activity.title}" to: ${icon}`);
+                        await this.updateFirebaseTile(activity);
+                        
+                        // Save to local database (debounced)
+                        this.debouncedSave();
+                        this.showSaveIndicator(`Tile icon updated: ${icon}`);
+                        
+                        // Update preview (debounced)
+                        this.debouncedPreviewUpdate();
+                    }
+                } catch (error) {
+                    console.error('Error updating tile icon:', error);
+                    this.showSaveIndicator('Error updating icon', 'error');
+                }
+            }
+
+            async updateTileDescription(textareaElement) {
+                const row = textareaElement.closest('tr');
+                const activityId = row.dataset.activityId;
+                const activityOrder = row.dataset.activityOrder;
+                const description = textareaElement.value;
+                
+                try {
+                    // Update local data
+                    const currentWeekData = this.weekData.get(this.currentWeek);
+                    const activity = currentWeekData.activities.find(a => 
+                        (a.id && a.id == activityId) || a.order == activityOrder
+                    );
+                    
+                    if (activity) {
+                        activity.tileDescription = description;
+                        
+                        // Update Firebase tile with new description
+                        console.log(`📝 Updating tile description for "${activity.title}" to: ${description.substring(0, 50)}...`);
+                        await this.updateFirebaseTile(activity);
+                        
+                        // Save to local database (debounced)
+                        this.debouncedSave();
+                        this.showSaveIndicator('Tile description updated');
+                        
+                        // Update preview (debounced)
+                        this.debouncedPreviewUpdate();
+                    }
+                } catch (error) {
+                    console.error('Error updating tile description:', error);
+                    this.showSaveIndicator('Error updating description', 'error');
+                }
+            }
+
+            async updateFirebaseTile(activity, weekNumber = null) {
+                // Use provided weekNumber or fall back to currentWeek
+                const week = weekNumber || this.currentWeek;
+                
+                // Only sync Lesson type activities as tiles
+                if (activity.type.toLowerCase() !== 'lesson') {
+                    console.log(`Skipping non-lesson activity: ${activity.type} - ${activity.title}`);
+                    return;
+                }
+                
+                // Safety check: don't update if activity title is missing or empty
+                if (!activity.title || activity.title.trim() === '') {
+                    console.warn('⚠️ Skipping tile update - activity has no title:', activity);
+                    return;
+                }
+                
+                // Get the correct tile ID that matches the static index page
+                const tileId = this.getTileIdFromActivity(activity, week);
+                if (!tileId) {
+                    console.warn('⚠️ Could not determine tile ID for activity:', activity.title);
+                    return;
+                }
+                
+                const visibility = activity.tileVisibility || 'available';
+                
+                // Determine status text
+                let statusText = '';
+                switch(visibility) {
+                    case 'available':
+                        statusText = 'Available Now';
+                        break;
+                    case 'hidden':
+                        statusText = 'Hidden';
+                        break;
+                    case 'coming-soon':
+                        statusText = 'Coming Soon';
+                        break;
+                }
+                
+                // Determine the correct URL - prioritize pageLink, then smart inference
+                let tileUrl = activity.pageLink;
+                if (!tileUrl || tileUrl.trim() === '') {
+                    tileUrl = this.inferUrlFromTitle(activity.title);
+                }
+                
+                // Debug logging with validation
+                const inferredUrl = this.inferUrlFromTitle(activity.title);
+                console.group(`🔗 Tile URL Mapping: "${activity.title}"`);
+                console.log(`📄 pageLink: "${activity.pageLink || 'empty'}"`);
+                console.log(`🤖 inferred: "${inferredUrl}"`);
+                console.log(`✅ final URL: "${tileUrl}"`);
+                console.log(`🎯 tile ID: "${tileId}"`);
+                console.log(`👁️ visibility: "${visibility}" (${statusText})`);
+                console.groupEnd();
+                
+                const tileData = {
+                    id: tileId,
+                    title: activity.title, // Use activity name as tile name
+                    description: activity.tileDescription || activity.description || 'Core lesson content',
+                    icon: activity.tileIcon || this.inferIconFromTitle(activity.title),
+                    url: tileUrl,
+                    week: week,
+                    type: 'concept',
+                    status: visibility,
+                    statusText: statusText,
+                    sortOrder: activity.order, // Use outline sort order
+                    createdAt: Date.now(),
+                    lastModified: Date.now()
+                };
+                
+                const result = await this.courseManager.updateCourseContent(tileId, tileData);
+                if (result) {
+                    console.log(`✅ Successfully updated Firebase tile: ${tileId}`);
+                } else {
+                    console.error(`❌ Failed to update Firebase tile: ${tileId}`);
+                }
+                return result;
+            }
+            
+            async diagnoseTileSync() {
+                try {
+                    console.group('🔍 Firebase Tile Diagnostics');
+                    
+                    // Check what's in the course/content path
+                    const snapshot = await this.courseManager.database.ref('course/content').once('value');
+                    
+                    if (!snapshot.exists()) {
+                        console.log('❌ No data found at course/content path');
+                        console.log('This is why the index page shows empty state!');
+                    } else {
+                        const allTiles = snapshot.val();
+                        console.log('📄 All tiles in Firebase:', Object.keys(allTiles).length);
+                        
+                        // Check for Week 1 tiles specifically
+                        const week1Tiles = Object.entries(allTiles).filter(([id, data]) => data.week === 1);
+                        console.log(`📅 Week 1 tiles found: ${week1Tiles.length}`);
+                        
+                        week1Tiles.forEach(([id, data]) => {
+                            console.log(`- ${id}: "${data.title}" (${data.status})`);
+                        });
+                        
+                        // Check for current week tiles
+                        const currentWeekTiles = Object.entries(allTiles).filter(([id, data]) => data.week === this.currentWeek);
+                        console.log(`📅 Week ${this.currentWeek} tiles found: ${currentWeekTiles.length}`);
+                        
+                        currentWeekTiles.forEach(([id, data]) => {
+                            console.log(`- ${id}: "${data.title}" (${data.status})`);
+                        });
+                    }
+                    
+                    console.groupEnd();
+                } catch (error) {
+                    console.error('Error in diagnostics:', error);
+                }
+            }
+            
+            async cleanOrphanedTiles() {
+                if (!confirm('This will remove tiles from the index that are not in the current outline.\n\nThis is useful for cleaning up deleted lessons.\n\nContinue?')) {
+                    return;
+                }
+                
+                try {
+                    // Get current outline activities
+                    const currentWeekData = this.weekData.get(this.currentWeek);
+                    if (!currentWeekData || !currentWeekData.activities) {
+                        alert('No activities found in outline for this week');
+                        return;
+                    }
+                    
+                    // Build list of valid tile IDs from outline
+                    const validTileIds = new Set();
+                    currentWeekData.activities.forEach(activity => {
+                        const tileId = this.getTileIdFromActivity(activity, this.currentWeek);
+                        validTileIds.add(tileId);
+                    });
+                    
+                    console.log('Valid tile IDs from outline:', Array.from(validTileIds));
+                    
+                    // Get all tiles from Firebase
+                    const snapshot = await this.courseManager.database.ref('course/content').once('value');
+                    if (!snapshot.exists()) {
+                        alert('No tiles found in Firebase');
+                        return;
+                    }
+                    
+                    const allTiles = snapshot.val();
+                    const currentWeekTiles = Object.entries(allTiles).filter(([id, data]) => data.week === this.currentWeek);
+                    
+                    let deletedCount = 0;
+                    const orphanedTiles = [];
+                    
+                    // Find and delete orphaned tiles
+                    for (const [tileId, tileData] of currentWeekTiles) {
+                        if (!validTileIds.has(tileId)) {
+                            orphanedTiles.push({id: tileId, title: tileData.title});
+                            await this.courseManager.database.ref(`course/content/${tileId}`).remove();
+                            console.log(`🗑️ Deleted orphaned tile: ${tileId} (${tileData.title})`);
+                            deletedCount++;
+                        }
+                    }
+                    
+                    if (deletedCount > 0) {
+                        let message = `✅ Cleaned up ${deletedCount} orphaned tiles:\n\n`;
+                        orphanedTiles.forEach(tile => {
+                            message += `• ${tile.title}\n`;
+                        });
+                        alert(message);
+                        
+                        // Refresh the preview
+                        this.generateIndexPreview();
+                    } else {
+                        alert('✅ No orphaned tiles found. Everything is in sync!');
+                    }
+                    
+                } catch (error) {
+                    console.error('Error cleaning orphaned tiles:', error);
+                    alert('❌ Error cleaning orphaned tiles: ' + error.message);
+                }
+            }
+            
+            getTileIdFromActivity(activity, week) {
+                const title = activity.title.toLowerCase();
+                
+                // Map lesson titles to the static tile IDs used in index.html
+                if (title.includes('project management') && !title.includes('pmo') && !title.includes('pmi')) {
+                    return `week${week}_pm_definition`;
+                }
+                if (title.includes('project definition') && !title.includes('management')) {
+                    return `week${week}_project_definition`;
+                }
+                if (title.includes('project manager') && !title.includes('pmo')) {
+                    return `week${week}_pm_role`;
+                }
+                if (title.includes('pmo') || title.includes('project management office')) {
+                    return `week${week}_pmo`;
+                }
+                if (title.includes('pmi') || title.includes('pmbok')) {
+                    return `week${week}_pmi`;
+                }
+                
+                // Fallback: generate ID from title (for future lessons)
+                return `week${week}_${title.replace(/[^a-z0-9]/g, '_')}`;
+            }
+
+            getLessonIcon(lessonTitle) {
+                const title = lessonTitle.toLowerCase();
+                if (title.includes('project management')) return '🎯';
+                if (title.includes('project definition')) return '📋';
+                if (title.includes('project manager')) return '👤';
+                if (title.includes('pmo')) return '🏢';
+                if (title.includes('pmi') || title.includes('pmbok')) return '📚';
+                return '📖'; // default icon
+            }
+
+            async forceFullSync() {
+                if (!confirm('Force sync all lessons with correct tile IDs? This will update Firebase with the current outline data.')) {
+                    return;
+                }
+                
+                try {
+                    let totalSynced = 0;
+                    
+                    for (let week = 1; week <= this.totalWeeks; week++) {
+                        const weekData = this.weekData.get(week);
+                        if (!weekData || !weekData.activities) continue;
+                        
+                        console.log(`🔄 Force syncing Week ${week}...`);
+                        
+                        for (const activity of weekData.activities) {
+                            if (activity.type === 'Lesson') {
+                                const tileId = this.getTileIdFromActivity(activity, week);
+                                console.log(`Syncing "${activity.title}" → ID: ${tileId}`);
+                                
+                                await this.updateFirebaseTile(activity, week);
+                                totalSynced++;
+                            }
+                        }
+                    }
+                    
+                    this.showSaveIndicator(`✅ Force sync complete! Updated ${totalSynced} tiles`);
+                    
+                    // Refresh index preview
+                    this.generateIndexPreview();
+                    
+                } catch (error) {
+                    console.error('Error during force sync:', error);
+                    this.showSaveIndicator('❌ Force sync failed', 'error');
+                }
+            }
+            
+            generateIndexPreview() {
+                const previewGrid = document.getElementById('index-preview-grid');
+                if (!previewGrid) return;
+                
+                // Generate tiles from current week data
+                const tiles = this.generateTilesFromOutline();
+                
+                if (tiles.length === 0) {
+                    previewGrid.innerHTML = '<div style="padding: 40px; text-align: center; color: #999;">No tiles to display</div>';
+                    return;
+                }
+                
+                previewGrid.innerHTML = tiles.map(tile => this.renderTileHTML(tile)).join('');
+            }
+            
+            generateTilesFromOutline() {
+                const tiles = [];
+                
+                // Get current week data
+                const weekData = this.weekData.get(this.currentWeek);
+                if (!weekData || !weekData.activities) return tiles;
+                
+                // Convert lessons to tiles
+                weekData.activities
+                    .filter(activity => activity.type === 'Lesson')
+                    .sort((a, b) => (a.order || 0) - (b.order || 0))
+                    .forEach(activity => {
+                        const tileId = this.getTileIdFromActivity(activity, this.currentWeek);
+                        const visibility = activity.tileVisibility || 'available';
+                        
+                        // Skip hidden tiles in preview (unless in teacher mode)
+                        if (visibility === 'hidden') return;
+                        
+                        tiles.push({
+                            id: tileId,
+                            title: activity.title.replace(/^Intro to Project Management\s*:\s*/, ''),
+                            description: activity.tileDescription || this.getDefaultDescription(activity.title),
+                            icon: activity.tileIcon || this.inferIconFromTitle(activity.title),
+                            url: activity.pageLink || '#',
+                            status: visibility,
+                            statusText: this.getStatusText(visibility),
+                            sortOrder: activity.order || 0
+                        });
+                    });
+                
+                return tiles;
+            }
+            
+            getDefaultDescription(title) {
+                const lowerTitle = title.toLowerCase();
+                
+                if (lowerTitle.includes('project management')) {
+                    return 'Core definition plus the "Musts" of PM and common misconceptions. Foundation concept covering what PM is and is NOT.';
+                }
+                if (lowerTitle.includes('project definition')) {
+                    return 'What makes something a project? Includes characteristics and real examples from both professional IT and personal contexts.';
+                }
+                if (lowerTitle.includes('project manager')) {
+                    return 'Role definition, essential skills, PM vs Functional Manager differences, and key people in project teams.';
+                }
+                if (lowerTitle.includes('pmo')) {
+                    return 'What is a Project Management Office and the different types of PMOs in organizations.';
+                }
+                if (lowerTitle.includes('pmi') || lowerTitle.includes('pmbok')) {
+                    return 'Project Management Institute overview, PMBOK Guide structure, PM Principles, and Performance Domains.';
+                }
+                
+                return 'Core lesson content for project management fundamentals.';
+            }
+            
+            getStatusText(status) {
+                switch(status) {
+                    case 'available': return 'Available Now';
+                    case 'coming-soon': return 'Coming Soon';
+                    case 'hidden': return 'Hidden';
+                    default: return 'Available Now';
+                }
+            }
+            
+            renderTileHTML(tile) {
+                let statusClass = 'status-available';
+                if (tile.status === 'coming-soon') statusClass = 'status-coming-soon';
+                else if (tile.status === 'hidden') statusClass = 'status-hidden';
+                
+                const isClickable = tile.url && tile.url !== '#';
+                const tagName = isClickable ? 'a' : 'div';
+                const href = isClickable ? `href="${tile.url}"` : '';
+                
+                return `
+                    <${tagName} ${href} class="concept-card ${tile.status}" data-content-id="${tile.id}">
+                        <span class="concept-icon">${tile.icon}</span>
+                        <div class="concept-title">${tile.title}</div>
+                        <div class="concept-description">${tile.description}</div>
+                        <span class="concept-status ${statusClass}">${tile.statusText}</span>
+                    </${tagName}>
+                `;
+            }
+            
+            async regenerateIndexPage() {
+                if (!confirm('Regenerate the index.html file with current tile data? This will overwrite the existing index page.')) {
+                    return;
+                }
+                
+                try {
+                    // Generate tiles
+                    const tiles = this.generateTilesFromOutline();
+                    
+                    // Generate the new index.html content
+                    const indexHTML = this.generateIndexHTML(tiles);
+                    
+                    // Save to file (this would require a server endpoint in a real app)
+                    console.log('Generated index.html content:', indexHTML);
+                    
+                    this.showSaveIndicator('✅ Index page regenerated! Check console for HTML content');
+                    
+                } catch (error) {
+                    console.error('Error regenerating index page:', error);
+                    this.showSaveIndicator('❌ Failed to regenerate index page', 'error');
+                }
+            }
+            
+            previewIndexPage() {
+                // Open index page for current week
+                const url = this.currentWeek === 1 ? 'index.html' : `index.html?week=${this.currentWeek}`;
+                window.open(url, '_blank');
+                console.log(`🔗 Opening index page for Week ${this.currentWeek}: ${url}`);
+            }
+            
+            async clearDatabaseAndReset() {
+                if (!confirm('⚠️ WARNING: This will permanently delete ALL Firebase data and reset everything.\n\nThis includes:\n• All course outlines\n• All tile data\n• All analytics\n\nAre you absolutely sure?')) {
+                    return;
+                }
+                
+                if (!confirm('Last chance! This action cannot be undone. Click OK to proceed with clearing the database.')) {
+                    return;
+                }
+                
+                try {
+                    this.showSaveIndicator('🗑️ Clearing database...', 'warning');
+                    
+                    // Clear all Firebase data
+                    await this.courseManager.database.ref().remove();
+                    console.log('🗑️ Firebase database cleared');
+                    
+                    // Clear local data
+                    this.weekData.clear();
+                    
+                    // Reload all week data (will create fresh templates)
+                    await this.loadAllWeekData();
+                    
+                    // Skip auto-sync to allow manual content creation
+                    
+                    // Refresh display
+                    this.displayWeek(this.currentWeek);
+                    this.updateCourseStats();
+                    this.generateIndexPreview();
+                    
+                    this.showSaveIndicator('✅ Database cleared and reset successfully!', 'success');
+                    
+                } catch (error) {
+                    console.error('Error clearing database:', error);
+                    this.showSaveIndicator('❌ Error clearing database: ' + error.message, 'error');
+                }
+            }
+            
+            async quickReset() {
+                try {
+                    this.showSaveIndicator('⚡ Quick resetting...', 'warning');
+                    
+                    // Clear database and local data
+                    await this.courseManager.database.ref().remove();
+                    this.weekData.clear();
+                    
+                    // Reload data
+                    await this.loadAllWeekData();
+                    // Skip auto-sync to allow manual content creation
+                    
+                    // Refresh display
+                    this.displayWeek(this.currentWeek);
+                    this.updateCourseStats();
+                    this.generateIndexPreview();
+                    
+                    this.showSaveIndicator('✅ Quick reset complete!', 'success');
+                    
+                } catch (error) {
+                    console.error('Error in quick reset:', error);
+                    this.showSaveIndicator('❌ Quick reset failed: ' + error.message, 'error');
+                }
+            }
+            
+            async completelyClean() {
+                if (!confirm('🧹 This will clear everything and start with COMPLETELY EMPTY weeks.\n\nNo placeholder data will be created.\nYou will have to manually add activities.\n\nContinue?')) {
+                    return;
+                }
+                
+                try {
+                    this.showSaveIndicator('🧹 Starting completely clean...', 'warning');
+                    
+                    // Clear everything
+                    await this.courseManager.database.ref().remove();
+                    this.weekData.clear();
+                    
+                    // Load completely empty data (no sync with index)
+                    await this.loadAllWeekData();
+                    
+                    // Refresh display
+                    this.displayWeek(this.currentWeek);
+                    this.updateCourseStats();
+                    this.generateIndexPreview();
+                    
+                    this.showSaveIndicator('✅ Started completely clean! Week outlines are empty.', 'success');
+                    
+                } catch (error) {
+                    console.error('Error starting clean:', error);
+                    this.showSaveIndicator('❌ Failed to start clean: ' + error.message, 'error');
+                }
+            }
+
+            async deleteActivityRow(row) {
+                const activityTitle = row.querySelector('.activity-title')?.textContent?.trim() || 'this activity';
+                
+                if (confirm(`Are you sure you want to delete "${activityTitle}"?\n\nThis will also remove the tile from the index page.`)) {
+                    try {
+                        // Get the activity ID or order to identify the tile
+                        const activityId = row.dataset.activityId;
+                        const activityOrder = row.dataset.activityOrder;
+                        
+                        // Add fade-out animation
+                        row.style.transition = 'opacity 0.3s ease';
+                        row.style.opacity = '0';
+                        
+                        setTimeout(async () => {
+                            row.remove();
+                            
+                            // Update the week data immediately after removing the row
+                            this.updateWeekDataFromDOM();
+                            
+                            // Delete the corresponding tile from Firebase
+                            // Find the matching activity data to get proper tile ID
+                            const currentWeekData = this.weekData.get(this.currentWeek);
+                            let activityToDelete = null;
+                            
+                            if (currentWeekData && currentWeekData.activities) {
+                                // Find the activity by matching the title since row may not have proper data attributes
+                                activityToDelete = currentWeekData.activities.find(a => 
+                                    a.title === activityTitle
+                                );
+                            }
+                            
+                            if (activityToDelete) {
+                                const tileId = this.getTileIdFromActivity(activityToDelete, this.currentWeek);
+                                
+                                try {
+                                    // Tiles are stored in course/content, not course/tiles
+                                    await this.courseManager.database.ref(`course/content/${tileId}`).remove();
+                                    console.log(`✅ Deleted tile from Firebase: course/content/${tileId}`);
+                                } catch (error) {
+                                    console.error('Error deleting tile from Firebase:', error);
+                                }
+                            } else {
+                                console.warn('Could not find activity data for deletion:', activityTitle);
+                            }
+                            
+                            // Recalculate times and totals
+                            this.calculateTimesAndTotal();
+                            this.updateWeekStats(this.currentWeek);
+                            
+                            // Save changes to database
+                            this.debouncedSave();
+                            
+                            // Update preview
+                            this.debouncedPreviewUpdate();
+                            
+                            // After deleting, sync all remaining tiles to ensure consistency
+                            setTimeout(() => {
+                                this.syncAllTilesToFirebase();
+                            }, 500);
+                            
+                            this.showSaveIndicator(`"${activityTitle}" deleted successfully from outline and index`);
+                        }, 300);
+                    } catch (error) {
+                        console.error('Error deleting activity:', error);
+                        this.showSaveIndicator('Error deleting activity', 'error');
+                    }
                 }
             }
 
@@ -1327,110 +2875,41 @@
         }
 
         // Initialize when DOM is loaded
-        // Immediate protection check
-        function checkTeacherMode() {
-            // Default state is blocked - only unblock if verified through proper teacher mode
-            const isTeacherMode = sessionStorage.getItem('teacherMode') === 'true';
-            
-            if (!isTeacherMode) {
-                // Not in teacher mode, show restricted message
-                console.log('Access denied - not in teacher mode');
-                // Remove the blocking style to show restricted message
-                document.getElementById('blockContent').remove();
-                showRestrictedAccess();
-                return;
-            }
-            
-            // Teacher mode verified, show the content
-            console.log('Teacher mode verified - showing content');
-            // Remove the blocking style
-            document.getElementById('blockContent').remove();
-            document.body.style.display = 'block';
-            
-            // Ensure teacher mode class is added
-            document.body.classList.add('teacher-mode');
-        }
         
-        function showRestrictedAccess() {
-            // Replace entire body content with restricted access message
-            document.body.innerHTML = `
-                <div style="
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    min-height: 100vh;
-                    background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                    padding: 20px;
-                ">
-                    <div style="
-                        max-width: 600px;
-                        background: white;
-                        border-radius: 15px;
-                        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-                        padding: 40px;
-                        text-align: center;
-                    ">
-                        <div style="
-                            font-size: 60px;
-                            margin-bottom: 20px;
-                        ">🔒</div>
-                        <h1 style="
-                            color: #2d5d3b;
-                            font-size: 28px;
-                            margin-bottom: 20px;
-                        ">Restricted Content</h1>
-                        <p style="
-                            color: #666;
-                            font-size: 18px;
-                            line-height: 1.6;
-                            margin-bottom: 30px;
-                        ">
-                            This content is meant to supplement class and is only accessible during instructor-led sessions.
-                        </p>
-                        <p style="
-                            color: #999;
-                            font-size: 16px;
-                            margin-bottom: 30px;
-                        ">
-                            Please return to class to view this material with your instructor.
-                        </p>
-                        <a href="index.html" style="
-                            display: inline-block;
-                            background: #2d5d3b;
-                            color: white;
-                            text-decoration: none;
-                            padding: 12px 30px;
-                            border-radius: 8px;
-                            font-size: 16px;
-                            font-weight: 600;
-                            transition: all 0.3s ease;
-                        " onmouseover="this.style.background='#4a7c59'" onmouseout="this.style.background='#2d5d3b'">
-                            Return to Course Home
-                        </a>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // Check immediately
-        checkTeacherMode();
-        
+        // Initialize when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
-            // Only initialize if in teacher mode
-            const isTeacherMode = sessionStorage.getItem('teacherMode') === 'true';
-            if (!isTeacherMode) return;
+            console.log('DOM loaded, starting course outline manager...');
             
-            // Initialize Teacher Manager first
-            if (!window.teacherManager) {
-                window.teacherManager = new TeacherManager(new CourseManager());
-            }
-            
-            // Initialize the outline manager after teacher manager is ready
+            // Wait for Firebase to be ready, then start the manager
             setTimeout(() => {
-                window.outlineManager = new CourseOutlineManager();
-            }, 1000);
+                try {
+                    window.outlineManager = new CourseOutlineManager();
+                    console.log('Course outline manager started successfully');
+                } catch (error) {
+                    console.error('Error starting course outline manager:', error);
+                    
+                    // Hide loading overlay and show error
+                    const loadingOverlay = document.getElementById('loading-overlay');
+                    if (loadingOverlay) {
+                        loadingOverlay.style.display = 'none';
+                    }
+                    
+                    // Show error message
+                    const weekContent = document.getElementById('week-content');
+                    if (weekContent) {
+                        weekContent.innerHTML = `
+                            <div style="text-align: center; padding: 40px; color: #dc3545;">
+                                <h3>❌ Error Loading Course Manager</h3>
+                                <p>Please refresh the page or check the console for details.</p>
+                                <p style="font-size: 14px; color: #666; margin-top: 20px;">Error: ${error.message}</p>
+                                <button onclick="window.location.reload()" style="background: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 15px;">
+                                    Refresh Page
+                                </button>
+                            </div>
+                        `;
+                    }
+                }
+            }, 1500);
         });
     </script>
 

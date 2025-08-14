@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1 Wrap-up - Managing IT Projects</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .back-to-course {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-to-course:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 36px;
+            font-weight: bold;
+        }
+        
+        .header p {
+            margin: 0;
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ff9800;
+        }
+        
+        .section h2 {
+            color: #e65100;
+            margin: 0 0 20px 0;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-content {
+            font-size: 16px;
+            color: #495057;
+        }
+        
+        .section-content strong {
+            color: #333;
+        }
+        
+        .section-content ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        
+        .section-content li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #fff3cd, #fef8e0);
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .highlight-box h4 {
+            color: #856404;
+            margin: 0 0 15px 0;
+            font-size: 18px;
+        }
+        
+        /* Homework Assignment Styling (like in lessons) */
+        .homework-assignment {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 3px solid #ff9800;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .homework-header {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .homework-content h4 {
+            color: #ff9800;
+            font-size: 18px;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+        }
+        
+        .homework-content .homework-step {
+            background: white;
+            border: 2px solid #ffe0b2;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .homework-content .homework-step h4 {
+            color: #f57c00;
+            margin-top: 0;
+        }
+        
+        /* In-Class Assignment Cards */
+        .activity-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .activity-card:hover {
+            border-color: #bdbdbd;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
+        }
+        
+        .activity-card h4 {
+            color: #666;
+            font-size: 16px;
+            margin: 0 0 12px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .activity-card p {
+            font-size: 14px;
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+        
+        .activity-card strong {
+            color: #333;
+        }
+        
+        .tabs-container {
+            margin: 0;
+            background: #f8f9fa;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            background: #e9ecef;
+            border-radius: 10px 10px 0 0;
+            overflow: hidden;
+            margin: 0;
+        }
+        
+        .tab-button {
+            flex: 1;
+            background: #e9ecef;
+            border: none;
+            padding: 15px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #495057;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-button:hover {
+            background: #dee2e6;
+            color: #343a40;
+        }
+        
+        .tab-button.active {
+            background: white;
+            color: #ff9800;
+            border-bottom-color: #ff9800;
+        }
+        
+        .tab-content {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 10px 10px;
+            min-height: 400px;
+        }
+        
+        .tab-panel {
+            display: none;
+        }
+        
+        .tab-panel.active {
+            display: block;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #ff9800;
+            color: white;
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+        }
+        
+        .back-button:hover {
+            background: #f57c00;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 28px;
+            }
+            
+            .content {
+                padding: 25px 20px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/print.css">
+</head>
+<body>
+    <script src="js/search-system.js"></script>
+    <script src="js/dark-mode.js"></script>
+    <script src="js/progressive-loading.js"></script>
+    <script src="js/performance-optimizer.js"></script>
+    
+    <script>
+        function showTab(tabName) {
+            // Hide all tab panels
+            const panels = document.querySelectorAll('.tab-panel');
+            panels.forEach(panel => panel.classList.remove('active'));
+            
+            // Remove active class from all tab buttons
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => button.classList.remove('active'));
+            
+            // Show the selected tab panel
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to the clicked button
+            event.target.classList.add('active');
+        }
+    </script>
+    
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="back-to-course">
+                <span aria-hidden="true">←</span>
+                Back to Course Home
+            </a>
+            <h1>📝 Week 1 Wrap-up</h1>
+            <p>Everything else you need to know!</p>
+        </div>
+        
+        <div class="content">
+            <div class="tabs-container">
+                <!-- Tab Buttons -->
+                <div class="tab-buttons">
+                    <button class="tab-button active" onclick="showTab('thinking')">💭 Things to Think About</button>
+                    <button class="tab-button" onclick="showTab('homework')">📝 Assignments</button>
+                    <button class="tab-button" onclick="showTab('summary')">📚 Class Summary</button>
+                </div>
+                
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <!-- Things to Think About Tab -->
+                    <div id="thinking" class="tab-panel active">
+                        <h2 style="margin-top: 0;">💭 Things to Think About...</h2>
+                        <p>As we wrap up Week 1, here are some important concepts to start thinking about for next week:</p>
+                        
+                        <div class="highlight-box">
+                            <h4>🎯 Elevator Pitches</h4>
+                            <p><strong>Start thinking about how you'd describe yourself professionally in 30 seconds.</strong></p>
+                            <p>An elevator pitch is a brief, persuasive speech that sparks interest in what you do. As future project managers, you'll need to:</p>
+                            <ul>
+                                <li>Clearly communicate your value proposition</li>
+                                <li>Connect with stakeholders quickly and effectively</li>
+                                <li>Make a memorable first impression</li>
+                            </ul>
+                            <p><em>What makes you unique? What value do you bring to a project team?</em></p>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <h4>💼 LinkedIn First Impressions</h4>
+                            <p><strong>Your photo and profile headline are crucial - they're the first things people notice.</strong></p>
+                            <p>In the professional world, your LinkedIn presence often serves as your first introduction. Consider:</p>
+                            <ul>
+                                <li>Does your profile photo look professional and approachable?</li>
+                                <li>Is your headline clear about what you do and aspire to do?</li>
+                                <li>Would someone immediately understand your professional value?</li>
+                            </ul>
+                            <p><em>Take a moment to review your current LinkedIn profile - what impression does it make?</em></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Assignments Tab -->
+                    <div id="homework" class="tab-panel">
+                        <h2 style="margin-top: 0;">📝 Week 1 Assignments</h2>
+                        
+                        <div class="homework-assignment">
+                            <div class="homework-header">
+                                <span>📝</span>
+                                Week 1 | Homework 1 | Student Membership Upload
+                            </div>
+                            <div class="homework-content">
+                                <p>Access the assignment at: <a href="https://calstatela.instructure.com/courses/116684/assignments/2255259?module_item_id=8435235" target="_blank"><strong>Canvas Assignment Link</strong></a></p>
+                                
+                                <div class="homework-step">
+                                    <h4>📌 Step 1: Sign Up for PMI Student Membership</h4>
+                                    <ul>
+                                        <li>Visit: <strong>PMI Student Membership Information</strong></li>
+                                        <li>Create a PMI account and verify your student status (a .edu email is typically required)</li>
+                                        <li>Cost: approximately <strong>$32/year</strong></li>
+                                        <li>Your membership will support your learning throughout this course and beyond</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="homework-step">
+                                    <h4>📥 Step 2: Download and Upload Your PMI Membership Card</h4>
+                                    <p>Once your membership is active:</p>
+                                    <ol>
+                                        <li>Log in to your PMI account at <strong>www.pmi.org</strong></li>
+                                        <li><strong>Go to your profile:</strong> Click your name or profile icon in the top-right corner, select "Dashboard" or "My PMI"</li>
+                                        <li><strong>Find and download your membership card:</strong> Look for "Membership" section, click "Download Membership Card"</li>
+                                        <li><strong>Upload the card:</strong> Submit as PDF or clear screenshot showing your name and PMI member ID</li>
+                                    </ol>
+                                </div>
+                                
+                                <div class="homework-step">
+                                    <h4>✍️ Step 3: Benefits Exploration</h4>
+                                    <p>While logged in, go to the "Benefits" tab in the Membership area.</p>
+                                    <p><strong>Write a short summary (3–5 sentences) explaining the top benefits of PMI student membership.</strong></p>
+                                    <p><em>Focus on what stands out to you personally - don't just copy from the website! Demonstrate how the benefits connect to your learning, interests, or future goals.</em></p>
+                                </div>
+                                
+                                <h4>📋 Grading Expectations</h4>
+                                <ul>
+                                    <li><strong>PMI Membership Card Uploaded – 5 points:</strong> Valid membership card with your name and PMI Member ID clearly visible</li>
+                                    <li><strong>PMI Benefits Summary – 10 points:</strong> Thoughtful analysis of three meaningful benefits showing engagement with the content and connection to your goals</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <h3 style="margin-top: 40px;">In-Class Assignments</h3>
+                        <p>If you didn't finish or need polishing, revisit the class assignments:</p>
+                        
+                        <div class="activity-card">
+                            <h4>📝 Activity 1: Examples of Projects</h4>
+                            <p><strong>Instructions:</strong> Search online and find one real-world IT project documented in a news article, blog post, press release, case study, or video.</p>
+                            <p><strong>Provide:</strong> Project Title, URL, Brief Summary (2-4 sentences), Why It Qualifies as a Project</p>
+                            <p><strong>Points:</strong> 15 points total • <a href="https://calstatela.instructure.com/courses/116684/assignments/2255178" target="_blank">Submit on Canvas</a></p>
+                        </div>
+                        
+                        <div class="activity-card">
+                            <h4>📝 Activity 2: PM Job Market Research</h4>
+                            <p><strong>Instructions:</strong> Find three different project management job postings from different job sites (LinkedIn, Indeed, Glassdoor, etc.).</p>
+                            <p><strong>Provide:</strong> For each job - Title, Company, URL. Plus write a reflection (1-2 paragraphs) on common requirements and whether you'd apply for PM roles.</p>
+                            <p><strong>Points:</strong> 15 points total • <a href="https://calstatela.instructure.com/courses/116684/assignments/2255257" target="_blank">Submit on Canvas</a></p>
+                        </div>
+                        
+                        <div class="activity-card">
+                            <h4>📝 Activity 3: Visit PMI Website</h4>
+                            <p><strong>Instructions:</strong> Visit <a href="https://www.pmi.org" target="_blank">www.pmi.org</a> and explore areas like certifications (CAPM, PMP), career resources, events, and learning tools.</p>
+                            <p><strong>Provide:</strong> Write 3 personal observations about things you found interesting or helpful on the website.</p>
+                            <p><strong>Points:</strong> 15 points total • <a href="https://calstatela.instructure.com/courses/116684/assignments/2255258" target="_blank">Submit on Canvas</a></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Class Summary Tab -->
+                    <div id="summary" class="tab-panel">
+                        <h2 style="margin-top: 0;">📚 Week 1 Class Summary</h2>
+                        <p><strong>Congratulations on completing the foundation week!</strong> Here's what we covered:</p>
+                        
+                        <h3>🎯 Key Topics Covered</h3>
+                        <ul>
+                            <li><strong>Project Management Definition & Core "Musts":</strong> Understanding what PM really is and what it requires</li>
+                            <li><strong>What Makes Something a Project:</strong> Characteristics that differentiate projects from operations</li>
+                            <li><strong>Project Manager Role & Essential Skills:</strong> Defining the PM role and key competencies needed</li>
+                            <li><strong>PMO Types & Functions:</strong> Different types of Project Management Offices and their purposes</li>
+                            <li><strong>PMI & PMBOK Guide Overview:</strong> Introduction to the Project Management Institute and their guide framework</li>
+                        </ul>
+                        
+                        <div class="highlight-box">
+                            <h4>🏗️ Foundation Established</h4>
+                            <p>This week established <strong>the fundamentals of IT project management success.</strong> You now have:</p>
+                            <ul>
+                                <li>A clear understanding of what project management really means</li>
+                                <li>Knowledge of what qualifies as a "project"</li>
+                                <li>Insight into the project manager's role and responsibilities</li>
+                                <li>Awareness of organizational support structures (PMOs)</li>
+                                <li>Familiarity with professional standards and frameworks</li>
+                            </ul>
+                        </div>
+                        
+                        <h3>🎮 Test Your Knowledge</h3>
+                        <div class="highlight-box">
+                            <h4>Week 1 Quiz Challenge</h4>
+                            <p>Ready to test what you've learned? Take the interactive quiz with immediate feedback and explanations!</p>
+                            <p>Choose between <strong>Concepts</strong> (definitions and theory) or <strong>Scenarios</strong> (real-world applications).</p>
+                            <p style="text-align: center; margin-top: 20px;">
+                                <a href="week-1-quiz.html" style="
+                                    display: inline-block;
+                                    background: linear-gradient(135deg, #667eea, #764ba2);
+                                    color: white;
+                                    text-decoration: none;
+                                    padding: 15px 30px;
+                                    border-radius: 8px;
+                                    font-size: 16px;
+                                    font-weight: 600;
+                                    transition: all 0.3s ease;
+                                    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+                                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'" 
+                                   onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+                                    🎮 Start Quiz Challenge
+                                </a>
+                            </p>
+                        </div>
+                        
+                        <h3>🚀 Looking Ahead</h3>
+                        <p>Next week, we'll build on this foundation by exploring business value, strategic alignment, and how projects connect to organizational goals. You're ready!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <a href="index.html" class="back-button">
+                    <span>←</span>
+                    Back to Week 1 Concepts
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

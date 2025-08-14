@@ -6,10 +6,22 @@
         ".write": true,
         ".indexOn": ["week", "type"]
       },
+      "settings": {
+        ".read": true,
+        ".write": true
+      },
+      "outlines": {
+        ".read": true,
+        ".write": true
+      },
+      "tiles": {
+        ".read": true,
+        ".write": true
+      },
       "progress": {
         "$uid": {
-          ".read": "$uid === auth.uid",
-          ".write": "$uid === auth.uid"
+          ".read": true,
+          ".write": true
         }
       }
     },

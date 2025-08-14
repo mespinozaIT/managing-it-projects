@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWOT Analysis - Managing IT Projects</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .lesson-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--color-surface-primary);
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        
+        .lesson-header {
+            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .lesson-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="80" r="2.5" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="60" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 2;
+        }
+        
+        .back-button:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .lesson-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 36px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .lesson-header p {
+            margin: 0;
+            font-size: 18px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .lesson-content {
+            padding: 40px;
+        }
+        
+        .intro-section {
+            background: var(--color-surface-secondary);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            border-left: 5px solid var(--color-success);
+            border: 2px solid var(--color-border-primary);
+        }
+        
+        .intro-section h2 {
+            color: var(--color-success);
+            margin-top: 0;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .intro-section p {
+            color: var(--color-text-secondary);
+            font-size: 18px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .swot-definition {
+            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .swot-definition h3 {
+            margin-top: 0;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .swot-definition p {
+            font-size: 18px;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .swot-matrix {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto 1fr 1fr;
+            gap: 2px;
+            margin: 40px 0;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .matrix-header {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .swot-quadrant {
+            padding: 35px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        
+        .swot-quadrant:hover {
+            transform: scale(1.02);
+            z-index: 5;
+        }
+        
+        .quadrant-title {
+            font-size: 28px;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding-bottom: 10px;
+        }
+        
+        .quadrant-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: normal;
+            font-style: italic;
+        }
+        
+        .quadrant-examples {
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 1.5;
+        }
+        
+        .quadrant-examples ul {
+            margin: 0;
+            padding-left: 0;
+            list-style: none;
+        }
+        
+        .quadrant-examples li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .quadrant-examples li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .strengths {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        }
+        
+        .weaknesses {
+            background: linear-gradient(135deg, #e74c3c, #ec7063);
+        }
+        
+        .opportunities {
+            background: linear-gradient(135deg, #f39c12, #f4d03f);
+        }
+        
+        .threats {
+            background: linear-gradient(135deg, #9b59b6, #bb8fce);
+        }
+
+        /* Story Time Section Styles */
+        .story-time-section {
+            margin: 40px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff3cd 100%);
+            border-radius: 15px;
+            padding: 30px 40px;
+            border: 3px solid #ffc107;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-time-header {
+            text-align: center;
+            color: #2d5d3b;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .story-icon {
+            font-size: 36px;
+            color: #ffc107;
+        }
+
+        .story-subtitle {
+            font-size: 16px;
+            color: var(--color-text-secondary);
+            font-weight: normal;
+            font-style: italic;
+            text-align: center;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .story-teaser {
+            background: var(--color-surface-primary);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid var(--color-border-primary);
+        }
+
+        .story-intro {
+            color: var(--color-text-primary);
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .story-unlock-message {
+            background: linear-gradient(135deg, #e3f2fd, #f8f9fa);
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .story-unlock-message p {
+            margin: 0;
+            color: #1976d2;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        
+        .assignment-box {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 35px;
+            border-radius: 15px;
+            margin-top: 50px;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .assignment-box h3 {
+            margin-top: 0;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .points-badge {
+            background: rgba(255,255,255,0.25);
+            padding: 12px 25px;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: bold;
+            margin-bottom: 25px;
+            font-size: 18px;
+        }
+        
+        .assignment-objective {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .assignment-objective h4 {
+            margin-top: 0;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .assignment-objective p {
+            margin: 0;
+            font-size: 16px;
+        }
+        
+        .swot-requirements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .requirement-card {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .requirement-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .requirement-text {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .expectation-list {
+            background: rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+        
+        .expectation-list h4 {
+            margin-top: 0;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        
+        .expectation-list ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .expectation-list li {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+        
+        .lesson-footer {
+            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .lesson-footer h3 {
+            margin: 0 0 15px 0;
+            color: #8dd3a0;
+            font-size: 20px;
+        }
+        
+        .lesson-footer p {
+            margin: 0 0 20px 0;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .footer-link {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 25px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .footer-link:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Dark mode enhancements */
+        [data-theme="dark"] .swot-definition {
+            background: linear-gradient(135deg, #3d6b47, #4a7c59);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .lesson-header {
+                padding: 30px 20px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 28px;
+            }
+            
+            .lesson-content {
+                padding: 30px 20px;
+            }
+            
+            .swot-matrix {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto repeat(4, 1fr);
+            }
+            
+            .swot-quadrant {
+                padding: 25px;
+                min-height: 150px;
+            }
+            
+            .swot-requirements {
+                grid-template-columns: 1fr;
+            }
+
+            .back-button {
+                position: static;
+                margin-bottom: 20px;
+                display: inline-flex;
+            }
+
+            .story-time-header {
+                font-size: 24px;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .story-time-section {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="lesson-container">
+        <div class="lesson-header">
+            <a href="index.html" class="back-button">
+                <span aria-hidden="true">←</span>
+                Back to Course
+            </a>
+            <h1>SWOT Analysis</h1>
+            <p>Strategic Self-Assessment for Project Success</p>
+        </div>
+        
+        <div class="lesson-content">
+            <div class="intro-section">
+                <h2>🎯 What is SWOT Analysis?</h2>
+                <p>
+                    SWOT Analysis is one of the most powerful strategic planning tools in project management. Originally developed for business strategy, it has become essential for understanding your current state before planning your future state.
+                </p>
+                
+                <div class="swot-definition">
+                    <h3>SWOT = Strengths • Weaknesses • Opportunities • Threats</h3>
+                    <p>A structured framework for evaluating internal capabilities and external factors that could impact your project's success.</p>
+                </div>
+                
+                <p style="background: var(--color-surface-success); padding: 20px; border-radius: 8px; border-left: 4px solid var(--color-success); margin-top: 20px; color: var(--color-text-secondary);">
+                    <strong>💡 Key Purpose:</strong> SWOT helps you make strategic decisions by providing a realistic, honest view of your current situation. It's about authentic self-assessment, not just listing what sounds impressive.
+                </p>
+            </div>
+            
+            <div class="swot-matrix">
+                <div class="matrix-header">
+                    SWOT Analysis Matrix
+                </div>
+                
+                <div class="swot-quadrant strengths">
+                    <div class="quadrant-title">STRENGTHS</div>
+                    <div class="quadrant-subtitle">Internal factors that give you an advantage</div>
+                    <div class="quadrant-examples">
+                        <strong>Ask yourself:</strong>
+                        <ul>
+                            <li>What do I do well?</li>
+                            <li>What unique resources do I have?</li>
+                            <li>What do others see as my strengths?</li>
+                            <li>What achievements am I proud of?</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="swot-quadrant weaknesses">
+                    <div class="quadrant-title">WEAKNESSES</div>
+                    <div class="quadrant-subtitle">Internal factors that could hold you back</div>
+                    <div class="quadrant-examples">
+                        <strong>Ask yourself:</strong>
+                        <ul>
+                            <li>What could I improve?</li>
+                            <li>Where do I lack resources?</li>
+                            <li>What do others likely see as weaknesses?</li>
+                            <li>What habits limit my success?</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="swot-quadrant opportunities">
+                    <div class="quadrant-title">OPPORTUNITIES</div>
+                    <div class="quadrant-subtitle">External factors you can leverage</div>
+                    <div class="quadrant-examples">
+                        <strong>Ask yourself:</strong>
+                        <ul>
+                            <li>What trends could benefit me?</li>
+                            <li>What new tools/technologies exist?</li>
+                            <li>What connections could help?</li>
+                            <li>What gaps can I fill?</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="swot-quadrant threats">
+                    <div class="quadrant-title">THREATS</div>
+                    <div class="quadrant-subtitle">External factors that could cause problems</div>
+                    <div class="quadrant-examples">
+                        <strong>Ask yourself:</strong>
+                        <ul>
+                            <li>What obstacles do I face?</li>
+                            <li>What is my competition doing?</li>
+                            <li>What trends could hurt me?</li>
+                            <li>What external factors worry me?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Story Time Section -->
+            <div class="story-time-section" id="story-time">
+                <h2 class="story-time-header">
+                    <span class="story-icon">⭐</span>
+                    Story Time: Professor's SWOT Analysis
+                    <span class="story-subtitle">Real-world strategic self-assessment in action</span>
+                </h2>
+                
+                <!-- Student/Teacher View -->
+                <div class="story-teaser" id="story-content">
+                    <p class="story-intro">Want to see how SWOT analysis works with real data? Professor Espinoza combines her CliftonStrengths assessment results with honest IT skill evaluation to demonstrate authentic strategic self-assessment.</p>
+                    
+                    <div class="story-unlock-message" id="student-message">
+                        <p><em>💡 This detailed personal SWOT analysis will be discussed in class.</em></p>
+                    </div>
+
+                    <!-- Teacher Mode Button (Hidden by default) -->
+                    <div style="text-align: center; margin-top: 20px; display: none;" id="teacher-button">
+                        <a href="professors-swot-story.html" style="
+                            display: inline-block;
+                            background: linear-gradient(135deg, #3498db, #5dade2);
+                            color: white;
+                            text-decoration: none;
+                            padding: 15px 30px;
+                            border-radius: 10px;
+                            font-size: 16px;
+                            font-weight: 600;
+                            transition: all 0.3s ease;
+                            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+                        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(52, 152, 219, 0.4)'" 
+                           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(52, 152, 219, 0.3)'">
+                            📖 Read Professor's SWOT Story
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="assignment-box">
+                <h3>📌 Week 2 | Activity 3 | Personal SWOT Analysis</h3>
+                <div class="points-badge">20 Points Total</div>
+                
+                <div class="assignment-objective">
+                    <h4>🎯 Objective</h4>
+                    <p>Complete a personal or professional SWOT analysis to build self-awareness and make more informed, strategic decisions. This sets the stage for defining clear, realistic strategies and compelling project objectives in future assignments.</p>
+                </div>
+                
+                <div class="swot-requirements">
+                    <div class="requirement-card">
+                        <div class="requirement-title">📊 STRENGTHS</div>
+                        <div class="requirement-text">What are you good at? What advantages do you have? Think skills, knowledge, resources, relationships.</div>
+                    </div>
+                    
+                    <div class="requirement-card">
+                        <div class="requirement-title">🔍 WEAKNESSES</div>
+                        <div class="requirement-text">What skills, habits, or gaps could hold you back? Be honest about areas for improvement.</div>
+                    </div>
+                    
+                    <div class="requirement-card">
+                        <div class="requirement-title">🚀 OPPORTUNITIES</div>
+                        <div class="requirement-text">What trends, tools, or resources could help you succeed? Look at external factors you can leverage.</div>
+                    </div>
+                    
+                    <div class="requirement-card">
+                        <div class="requirement-title">⚠️ THREATS</div>
+                        <div class="requirement-text">What challenges, risks, or external factors could affect your progress? Consider competition, barriers, market changes.</div>
+                    </div>
+                </div>
+                
+                <div class="expectation-list">
+                    <h4>📋 Expectations for Full Credit</h4>
+                    <ul>
+                        <li><strong>Complete all four quadrants</strong> (S, W, O, T) with thoughtful analysis</li>
+                        <li><strong>Include at least 3 bullet points per section</strong> with specific examples</li>
+                        <li><strong>Write in your own words</strong> - be honest and specific, not generic</li>
+                        <li><strong>Show self-reflection</strong> that demonstrates genuine introspection</li>
+                        <li><strong>Connect to your goals</strong> - relate to your mission and vision from previous activities</li>
+                        <li><strong>Distinguish internal vs. external factors</strong> clearly (S&W are internal, O&T are external)</li>
+                    </ul>
+                    <p style="margin-bottom: 0; font-style: italic;">
+                        <strong>Scoring:</strong> Each section (S/W/O/T) is worth 5 points. Quality matters more than quantity.
+                    </p>
+                </div>
+                
+                <p style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px; margin-top: 25px; margin-bottom: 0;">
+                    <strong>💡 Pro Tip:</strong> The most valuable SWOT analyses are brutally honest. Don't just write what sounds impressive—write what's true. That's where real strategic insight comes from. Remember, everyone has weaknesses and faces threats. Acknowledging them is the first step to addressing them strategically.
+                </p>
+            </div>
+        </div>
+        
+        <div class="lesson-footer">
+            <h3>Strategic Thinking in Action</h3>
+            <p>SWOT analysis isn't just an academic exercise—it's a practical tool that successful project managers use to make better decisions, allocate resources effectively, and anticipate challenges before they become problems.</p>
+            <a href="project-management-artifacts.html" class="footer-link">← Back to Artifacts</a>
+            <a href="index.html" class="footer-link">← Course Home</a>
+        </div>
+    </div>
+    
+    <!-- Load teacher mode and dark mode scripts -->
+    <script src="firebase-config.js"></script>
+    <script src="js/teacher-manager.js"></script>
+    <script src="js/dark-mode.js"></script>
+
+    <script>
+        // Check for teacher mode and show appropriate content
+        function checkTeacherModeForStory() {
+            const isTeacherMode = sessionStorage.getItem('teacherMode') === 'true';
+            const studentMessage = document.getElementById('student-message');
+            const teacherButton = document.getElementById('teacher-button');
+            
+            if (isTeacherMode) {
+                // Show teacher button, hide student message
+                studentMessage.style.display = 'none';
+                teacherButton.style.display = 'block';
+                console.log('Teacher mode detected - showing professor SWOT story button');
+            } else {
+                // Show student message, hide teacher button
+                studentMessage.style.display = 'block';
+                teacherButton.style.display = 'none';
+                console.log('Student mode - showing story teaser');
+            }
+        }
+
+        // Check immediately when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait a moment for teacher-manager.js to initialize
+            setTimeout(checkTeacherModeForStory, 100);
+        });
+
+        // Also check when teacher mode changes
+        document.addEventListener('teacherModeChanged', function() {
+            checkTeacherModeForStory();
+        });
+    </script>
+</body>
+</html>

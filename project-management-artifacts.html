@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Management Artifacts - Managing IT Projects</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .lesson-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--color-surface-primary);
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        
+        .lesson-header {
+            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .lesson-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="80" r="2.5" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="60" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 2;
+        }
+        
+        .back-button:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .lesson-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 36px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .lesson-header p {
+            margin: 0;
+            font-size: 18px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .lesson-content {
+            padding: 40px;
+        }
+        
+        .intro-section {
+            background: var(--color-surface-secondary);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            border-left: 5px solid var(--color-success);
+            border: 2px solid var(--color-border-primary);
+        }
+        
+        .intro-section h2 {
+            color: var(--color-success);
+            margin-top: 0;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .intro-section p {
+            color: var(--color-text-secondary);
+            font-size: 18px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .definition-box {
+            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 1.7;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .artifact-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .category-card {
+            background: var(--color-surface-primary);
+            border: 2px solid var(--color-border-primary);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            transition: transform 0.3s ease;
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-success);
+        }
+        
+        .category-card.planning::before {
+            background: linear-gradient(135deg, #3498db, #5dade2);
+        }
+        
+        .category-card.analysis::before {
+            background: linear-gradient(135deg, #e74c3c, #ec7063);
+        }
+        
+        .category-card.tracking::before {
+            background: linear-gradient(135deg, #f39c12, #f4d03f);
+        }
+        
+        .category-card.closure::before {
+            background: linear-gradient(135deg, #27ae60, #58d68d);
+        }
+        
+        .category-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .category-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+            text-align: center;
+        }
+        
+        .category-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--color-text-primary);
+            text-align: center;
+        }
+        
+        .category-description {
+            font-size: 16px;
+            color: var(--color-text-secondary);
+            margin-bottom: 20px;
+            text-align: center;
+            line-height: 1.6;
+        }
+        
+        .artifact-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .artifact-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--color-border-secondary);
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .artifact-list li:before {
+            content: "📄";
+            position: absolute;
+            left: 0;
+            font-size: 12px;
+        }
+        
+        .artifact-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .artifact-list li a {
+            color: var(--color-success);
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .artifact-list li a:hover {
+            text-decoration: underline;
+        }
+        
+        .key-points {
+            background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .key-points h3 {
+            margin-top: 0;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .point-item {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .point-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .point-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .point-text {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .tailoring-section {
+            background: linear-gradient(135deg, var(--color-surface-success), rgba(76, 175, 80, 0.1));
+            border: 2px solid var(--color-success);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+        
+        .tailoring-section h3 {
+            color: var(--color-success);
+            margin-top: 0;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .tailoring-section > p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--color-text-secondary);
+        }
+        
+        .project-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .project-size {
+            background: var(--color-surface-primary);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease;
+        }
+        
+        .project-size:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .size-header {
+            padding: 25px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .project-size.large .size-header {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+        
+        .project-size.medium .size-header {
+            background: linear-gradient(135deg, #f39c12, #d68910);
+        }
+        
+        .project-size.small .size-header {
+            background: linear-gradient(135deg, #27ae60, #229954);
+        }
+        
+        .size-icon {
+            font-size: 36px;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .size-title {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .size-example {
+            font-size: 16px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+        
+        .size-details {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .artifacts-needed {
+            padding: 25px;
+        }
+        
+        .artifact-category {
+            margin-bottom: 20px;
+        }
+        
+        .artifact-category strong {
+            color: var(--color-success);
+            font-size: 16px;
+            display: block;
+            margin-bottom: 10px;
+            border-bottom: 2px solid var(--color-border-primary);
+            padding-bottom: 5px;
+        }
+        
+        .artifact-category ul {
+            margin: 0;
+            padding-left: 20px;
+            list-style-type: none;
+        }
+        
+        .artifact-category li {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            margin-bottom: 5px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .artifact-category li:before {
+            content: "▸";
+            color: var(--color-success);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .tailoring-principles {
+            background: rgba(255,255,255,0.7);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 30px;
+            border: 2px solid var(--color-border-primary);
+        }
+        
+        .tailoring-principles h4 {
+            color: var(--color-success);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .principle-item {
+            text-align: center;
+            padding: 20px;
+            background: var(--color-surface-primary);
+            border-radius: 10px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-border-primary);
+        }
+        
+        .principle-icon {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .principle-title {
+            font-weight: bold;
+            color: var(--color-text-primary);
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .principle-text {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            line-height: 1.4;
+        }
+        
+        .lesson-footer {
+            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .lesson-footer h3 {
+            margin: 0 0 15px 0;
+            color: #8dd3a0;
+            font-size: 20px;
+        }
+        
+        .lesson-footer p {
+            margin: 0 0 20px 0;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .footer-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .footer-link:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        /* Dark mode enhancements */
+        [data-theme="dark"] .definition-box {
+            background: linear-gradient(135deg, #3d6b47, #4a7c59);
+        }
+        
+        [data-theme="dark"] .key-points {
+            background: linear-gradient(135deg, #5a1c7d, #7b1fa2);
+        }
+        
+        [data-theme="dark"] .tailoring-principles {
+            background: var(--color-surface-secondary);
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .lesson-header {
+                padding: 30px 20px;
+            }
+            
+            .lesson-header h1 {
+                font-size: 28px;
+            }
+            
+            .lesson-content {
+                padding: 30px 20px;
+            }
+            
+            .artifact-categories {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .category-card {
+                padding: 25px;
+            }
+            
+            .points-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-comparison {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .principles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .back-button {
+                position: static;
+                margin-bottom: 20px;
+                display: inline-flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="lesson-container">
+        <div class="lesson-header">
+            <a href="index.html" class="back-button">
+                <span aria-hidden="true">←</span>
+                Back to Course
+            </a>
+            <h1>Project Management Artifacts</h1>
+            <p>The Documents That Drive Project Success</p>
+        </div>
+        
+        <div class="lesson-content">
+            <div class="intro-section">
+                <h2>🛠️ What Are Project Management Artifacts?</h2>
+                <p>
+                    Think of walking through a construction site. You'll see blueprints, permits, inspection reports, progress photos, and safety checklists. Each document serves a specific purpose in building something successfully. Project management artifacts work the same way in IT projects.
+                </p>
+                
+                <div class="definition-box">
+                    <strong>Project Management Artifacts</strong> are the documents, tools, and deliverables that capture important information throughout a project's lifecycle. They're your project's "paper trail" that documents decisions, tracks progress, and keeps teams aligned.
+                </div>
+                
+                <p style="font-style: italic; text-align: center; color: var(--color-text-secondary);">
+                    They're not bureaucratic busy work - they're strategic tools that help teams make better decisions, communicate effectively, and learn from both successes and failures.
+                </p>
+            </div>
+            
+            <div class="artifact-categories">
+                <div class="category-card planning">
+                    <span class="category-icon">📋</span>
+                    <div class="category-title">Planning Artifacts</div>
+                    <div class="category-description">Documents created during the planning phase to define scope, approach, and expectations</div>
+                    <ul class="artifact-list">
+                        <li>Project Charter</li>
+                        <li>Scope Statement</li>
+                        <li>Work Breakdown Structure (WBS)</li>
+                        <li>Project Schedule</li>
+                        <li>Budget & Resource Plans</li>
+                        <li>Communication Plan</li>
+                        <li>Quality Management Plan</li>
+                    </ul>
+                </div>
+                
+                <div class="category-card analysis">
+                    <span class="category-icon">📊</span>
+                    <div class="category-title">Analysis Artifacts</div>
+                    <div class="category-description">Tools for understanding the current state, requirements, and potential challenges</div>
+                    <ul class="artifact-list">
+                        <li>SWOT Analysis<a href="swot-analysis.html">→ Learn More</a></li>
+                        <li>Risk Register</li>
+                        <li>Stakeholder Analysis</li>
+                        <li>Requirements Documentation</li>
+                        <li>Business Case</li>
+                        <li>Feasibility Studies</li>
+                        <li>Gap Analysis</li>
+                    </ul>
+                </div>
+                
+                <div class="category-card tracking">
+                    <span class="category-icon">📈</span>
+                    <div class="category-title">Tracking Artifacts</div>
+                    <div class="category-description">Documents that monitor progress, performance, and changes throughout execution</div>
+                    <ul class="artifact-list">
+                        <li>Status Reports</li>
+                        <li>Project Dashboards</li>
+                        <li>Meeting Minutes</li>
+                        <li>Change Request Logs</li>
+                        <li>Issue Tracking</li>
+                        <li>Performance Metrics</li>
+                        <li>Budget vs. Actual Reports</li>
+                    </ul>
+                </div>
+                
+                <div class="category-card closure">
+                    <span class="category-icon">✅</span>
+                    <div class="category-title">Closure Artifacts</div>
+                    <div class="category-description">Documents that capture learnings and formally close out the project</div>
+                    <ul class="artifact-list">
+                        <li>Lessons Learned Report</li>
+                        <li>Final Project Report</li>
+                        <li>Project Retrospective</li>
+                        <li>Handover Documentation</li>
+                        <li>User Acceptance Forms</li>
+                        <li>Archive & Knowledge Base</li>
+                        <li>Post-Implementation Review</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="key-points">
+                <h3>🎯 Why Artifacts Matter in IT Projects</h3>
+                <div class="points-grid">
+                    <div class="point-item">
+                        <span class="point-icon">🧠</span>
+                        <div class="point-title">Memory & Knowledge</div>
+                        <div class="point-text">Teams forget decisions and rationale. Artifacts preserve institutional knowledge.</div>
+                    </div>
+                    
+                    <div class="point-item">
+                        <span class="point-icon">🤝</span>
+                        <div class="point-title">Communication</div>
+                        <div class="point-text">Clear documentation prevents misunderstandings and keeps everyone aligned.</div>
+                    </div>
+                    
+                    <div class="point-item">
+                        <span class="point-icon">📏</span>
+                        <div class="point-title">Accountability</div>
+                        <div class="point-text">Written commitments and decisions create accountability and reduce scope creep.</div>
+                    </div>
+                    
+                    <div class="point-item">
+                        <span class="point-icon">🔄</span>
+                        <div class="point-title">Continuous Improvement</div>
+                        <div class="point-text">Lessons learned artifacts help teams avoid repeating mistakes on future projects.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tailoring-section">
+                <h3>🎛️ Tailoring Artifacts to Project Size</h3>
+                <p>
+                    Not every project needs every artifact. Smart project managers tailor their documentation based on project complexity, risk, and stakeholder needs.
+                </p>
+                
+                <div class="tailoring-principles">
+                    <h4>🎯 Tailoring Principles</h4>
+                    <div class="principles-grid">
+                        <div class="principle-item">
+                            <span class="principle-icon">⚖️</span>
+                            <div class="principle-title">Right-Size Documentation</div>
+                            <div class="principle-text">Create just enough documentation to manage risk and ensure success</div>
+                        </div>
+                        
+                        <div class="principle-item">
+                            <span class="principle-icon">👥</span>
+                            <div class="principle-title">Know Your Stakeholders</div>
+                            <div class="principle-text">Executive projects need executive-level reporting and governance</div>
+                        </div>
+                        
+                        <div class="principle-item">
+                            <span class="principle-icon">🎯</span>
+                            <div class="principle-title">Focus on Value</div>
+                            <div class="principle-text">Every artifact should serve a clear purpose - not just check a box</div>
+                        </div>
+                        
+                        <div class="principle-item">
+                            <span class="principle-icon">🔄</span>
+                            <div class="principle-title">Iterate and Improve</div>
+                            <div class="principle-text">Learn what works for your team and organization</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-comparison">
+                    <div class="project-size large">
+                        <div class="size-header">
+                            <span class="size-icon">🏢</span>
+                            <div class="size-title">Large Project</div>
+                            <div class="size-example">Enterprise ERP Implementation</div>
+                            <div class="size-details">$2M+ budget • 18+ months • 50+ team members</div>
+                        </div>
+                        <div class="artifacts-needed">
+                            <div class="artifact-category">
+                                <strong>Planning (15+ artifacts)</strong>
+                                <ul>
+                                    <li>Detailed project charter</li>
+                                    <li>Comprehensive WBS</li>
+                                    <li>Resource allocation matrix</li>
+                                    <li>Risk management plan</li>
+                                    <li>Communication plan</li>
+                                    <li>Quality assurance plan</li>
+                                    <li>Change management strategy</li>
+                                    <li>Training curriculum</li>
+                                </ul>
+                            </div>
+                            <div class="artifact-category">
+                                <strong>Tracking (10+ artifacts)</strong>
+                                <ul>
+                                    <li>Weekly status reports</li>
+                                    <li>Executive dashboards</li>
+                                    <li>Detailed budget tracking</li>
+                                    <li>Risk register updates</li>
+                                    <li>Change request logs</li>
+                                    <li>Quality metrics</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-size medium">
+                        <div class="size-header">
+                            <span class="size-icon">🏪</span>
+                            <div class="size-title">Medium Project</div>
+                            <div class="size-example">Customer Portal Development</div>
+                            <div class="size-details">$200K-500K budget • 6-12 months • 10-20 team members</div>
+                        </div>
+                        <div class="artifacts-needed">
+                            <div class="artifact-category">
+                                <strong>Planning (8-10 artifacts)</strong>
+                                <ul>
+                                    <li>Project charter (2-3 pages)</li>
+                                    <li>High-level WBS</li>
+                                    <li>Project schedule</li>
+                                    <li>Key risk assessment</li>
+                                    <li>Requirements document</li>
+                                    <li>Testing plan</li>
+                                </ul>
+                            </div>
+                            <div class="artifact-category">
+                                <strong>Tracking (5-7 artifacts)</strong>
+                                <ul>
+                                    <li>Bi-weekly status updates</li>
+                                    <li>Budget vs. actual report</li>
+                                    <li>Issue tracker</li>
+                                    <li>Sprint reports (if Agile)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-size small">
+                        <div class="size-header">
+                            <span class="size-icon">🏠</span>
+                            <div class="size-title">Small Project</div>
+                            <div class="size-example">Website Security Update</div>
+                            <div class="size-details">Under $50K budget • 2-4 months • 3-8 team members</div>
+                        </div>
+                        <div class="artifacts-needed">
+                            <div class="artifact-category">
+                                <strong>Planning (3-5 artifacts)</strong>
+                                <ul>
+                                    <li>Simple project charter (1 page)</li>
+                                    <li>Task list with timeline</li>
+                                    <li>Basic requirements</li>
+                                    <li>Testing checklist</li>
+                                </ul>
+                            </div>
+                            <div class="artifact-category">
+                                <strong>Tracking (2-3 artifacts)</strong>
+                                <ul>
+                                    <li>Weekly team check-ins</li>
+                                    <li>Simple progress tracker</li>
+                                    <li>Final completion report</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="lesson-footer">
+            <h3>Remember: Quality Over Quantity</h3>
+            <p>The best artifacts are clear, concise, and actually used by the team. Don't create documents just to check a box - create them because they add real value to your project's success.</p>
+            <a href="index.html" class="footer-link">← Back to Course Concepts</a>
+        </div>
+    </div>
+    
+    <!-- Load teacher mode and dark mode scripts -->
+    <script src="firebase-config.js"></script>
+    <script src="js/teacher-manager.js"></script>
+    <script src="js/dark-mode.js"></script>
+</body>
+</html>
