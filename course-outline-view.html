@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Outline View - Managing IT Projects</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="css/design-system.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
+            min-height: 100vh;
+        }
+        
+        .outline-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--color-surface-primary);
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        
+        .outline-header {
+            background: linear-gradient(135deg, #2d5d3b, #4a7c59);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .outline-back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .outline-back-button:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .outline-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 36px;
+            font-weight: bold;
+        }
+        
+        .outline-header p {
+            margin: 0;
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        /* Week Tabs */
+        .week-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            overflow-x: auto;
+            padding: 10px 20px;
+            scrollbar-width: thin;
+            scrollbar-color: #dee2e6 transparent;
+            min-height: 60px;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .week-tabs::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .week-tabs::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .week-tabs::-webkit-scrollbar-thumb {
+            background: var(--color-border-primary);
+            border-radius: 3px;
+        }
+        
+        .week-tab {
+            padding: 12px 18px;
+            cursor: pointer;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            background: white;
+            font-size: 14px;
+            font-weight: 500;
+            color: #495057;
+            min-width: 75px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .week-tab:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+        }
+        
+        .week-tab.active {
+            color: white;
+            background: #27ae60;
+            border-color: #27ae60;
+            font-weight: 600;
+            box-shadow: 0 3px 6px rgba(39, 174, 96, 0.3);
+        }
+        
+        .week-tab.has-content::after {
+            content: '•';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            color: var(--color-success);
+            font-size: 12px;
+        }
+        
+        /* Main Content Area */
+        .outline-content {
+            padding: 40px;
+            min-height: 400px;
+        }
+        
+        /* Course Statistics */
+        .course-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: var(--color-surface-secondary);
+            border-radius: 10px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            background: var(--color-surface-primary);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .stat-item.lessons {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .stat-item.activities {
+            background: #e8f5e8;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .stat-item.stories {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+        }
+        
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--color-success);
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Activity List */
+        .activities-list {
+            background: var(--color-surface-secondary);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+        
+        .week-title {
+            color: var(--color-success);
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--color-border-primary);
+        }
+        
+        .activity-item {
+            background: var(--color-surface-primary);
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .activity-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .activity-item.lesson-row {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .activity-type {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .type-lesson {
+            background: var(--color-surface-info);
+            color: var(--color-info);
+        }
+        
+        .type-activity {
+            background: #e8f5e8;
+            color: #4caf50;
+        }
+        
+        .type-story {
+            background: var(--color-surface-warning);
+            color: var(--color-warning);
+        }
+        
+        .type-intro {
+            background: #f3e5f5;
+            color: #9c27b0;
+        }
+        
+        .type-wrap {
+            background: #f3e5f5;
+            color: #9c27b0;
+        }
+        
+        .type-break {
+            background: #f5f5f5;
+            color: #757575;
+        }
+        
+        .activity-title {
+            flex: 1;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--color-text-primary);
+        }
+        
+        .activity-number {
+            width: 30px;
+            height: 30px;
+            background: var(--color-success);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        /* Loading State */
+        .loading-content {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--color-text-secondary);
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--color-border-primary);
+            border-top: 4px solid var(--color-success);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--color-text-secondary);
+        }
+        
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .outline-content {
+                padding: 20px;
+            }
+            
+            .week-tabs {
+                padding: 0 10px;
+            }
+            
+            .week-tab {
+                padding: 12px 15px;
+                font-size: 13px;
+            }
+            
+            .course-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .activity-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .activity-type {
+                display: block;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/print.css">
+</head>
+<body>
+    <script src="js/dark-mode.js"></script>
+    <script src="js/progressive-loading.js"></script>
+    <script src="js/performance-optimizer.js"></script>
+    
+    <div class="outline-container">
+        <div class="outline-header">
+            <a href="index.html" class="outline-back-button">
+                <span aria-hidden="true">←</span>
+                Back to Course
+            </a>
+            <h1>Course Outline</h1>
+            <p>Managing IT Projects - Activity Overview</p>
+        </div>
+        
+        <!-- Week tabs -->
+        <div class="week-tabs" id="week-tabs">
+            <button class="week-tab active" data-week="1" onclick="outlineViewer.switchWeek(1)">Week 1</button>
+            <button class="week-tab" data-week="2" onclick="outlineViewer.switchWeek(2)">Week 2</button>
+            <button class="week-tab" data-week="3" onclick="outlineViewer.switchWeek(3)">Week 3</button>
+            <button class="week-tab" data-week="4" onclick="outlineViewer.switchWeek(4)">Week 4</button>
+            <button class="week-tab" data-week="5" onclick="outlineViewer.switchWeek(5)">Week 5</button>
+            <button class="week-tab" data-week="6" onclick="outlineViewer.switchWeek(6)">Week 6</button>
+            <button class="week-tab" data-week="7" onclick="outlineViewer.switchWeek(7)">Week 7</button>
+            <button class="week-tab" data-week="8" onclick="outlineViewer.switchWeek(8)">Week 8</button>
+            <button class="week-tab" data-week="9" onclick="outlineViewer.switchWeek(9)">Week 9</button>
+            <button class="week-tab" data-week="10" onclick="outlineViewer.switchWeek(10)">Week 10</button>
+            <button class="week-tab" data-week="11" onclick="outlineViewer.switchWeek(11)">Week 11</button>
+            <button class="week-tab" data-week="12" onclick="outlineViewer.switchWeek(12)">Week 12</button>
+            <button class="week-tab" data-week="13" onclick="outlineViewer.switchWeek(13)">Week 13</button>
+            <button class="week-tab" data-week="14" onclick="outlineViewer.switchWeek(14)">Week 14</button>
+            <button class="week-tab" data-week="15" onclick="outlineViewer.switchWeek(15)">Week 15</button>
+            <button class="week-tab" data-week="16" onclick="outlineViewer.switchWeek(16)">Week 16</button>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="outline-content">
+            <!-- Course Statistics -->
+            <div class="course-stats" id="course-stats">
+                <div class="stat-item lessons">
+                    <span class="stat-number" id="lesson-stats">0 Lessons</span>
+                    <div class="stat-label">Lessons</div>
+                </div>
+                <div class="stat-item activities">
+                    <span class="stat-number" id="activity-stats">0 Activities</span>
+                    <div class="stat-label">Activities</div>
+                </div>
+                <div class="stat-item stories">
+                    <span class="stat-number" id="story-stats">0 Stories</span>
+                    <div class="stat-label">Stories</div>
+                </div>
+            </div>
+            
+            <!-- Week Content Will Be Loaded Here -->
+            <div id="week-content" class="week-content">
+                <div class="loading-content">
+                    <div class="loading-spinner"></div>
+                    <p>Loading course outline...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    
+    <!-- Firebase Configuration -->
+    <script src="firebase-config.js"></script>
+    <script src="js/course-manager.js"></script>
+    
+    <script>
+        // Simplified Course Outline Viewer
+        class CourseOutlineViewer {
+            constructor() {
+                this.currentWeek = 1;
+                this.weekData = new Map();
+                this.courseManager = null;
+                this.totalWeeks = 16;
+                
+                this.initialize();
+            }
+            
+            async initialize() {
+                try {
+                    console.log('Initializing Course Outline Viewer...');
+                    
+                    // Initialize course manager for Firebase access
+                    this.courseManager = new CourseManager();
+                    
+                    // Wait for Firebase to be ready
+                    if (typeof firebase === 'undefined') {
+                        console.error('Firebase not loaded');
+                        this.showError('Firebase configuration error');
+                        return;
+                    }
+                    
+                    await this.courseManager.init();
+                    console.log('Course Manager initialized');
+                    
+                    // Week tabs are now static in HTML, no need to generate
+                    
+                    // Load all week data
+                    await this.loadAllWeekData();
+                    
+                    // Update tab indicators
+                    this.updateWeekTabIndicators();
+                    
+                    // Display first week
+                    this.displayWeek(1);
+                    
+                    // Update overall stats
+                    this.updateCourseStats();
+                    
+                } catch (error) {
+                    console.error('Error initializing outline viewer:', error);
+                    // Just load empty data if initialization fails
+                    this.loadDefaultData();
+                    this.updateWeekTabIndicators();
+                    this.displayWeek(1);
+                    this.updateCourseStats();
+                }
+            }
+            
+            generateWeekTabs() {
+                const tabsContainer = document.getElementById('week-tabs');
+                if (!tabsContainer) {
+                    console.error('Week tabs container not found!');
+                    return;
+                }
+                
+                console.log('Generating week tabs...');
+                tabsContainer.innerHTML = '';
+                
+                for (let i = 1; i <= this.totalWeeks; i++) {
+                    const tab = document.createElement('button');
+                    tab.className = 'week-tab';
+                    tab.textContent = `Week ${i}`;
+                    tab.dataset.week = i;
+                    
+                    if (i === 1) {
+                        tab.classList.add('active');
+                    }
+                    
+                    tab.addEventListener('click', () => {
+                        this.switchWeek(i);
+                    });
+                    
+                    tabsContainer.appendChild(tab);
+                }
+                
+                console.log(`Generated ${this.totalWeeks} week tabs`);
+            }
+            
+            updateWeekTabIndicators() {
+                // Update tab indicators to show which weeks have content
+                document.querySelectorAll('.week-tab').forEach(tab => {
+                    const weekNum = parseInt(tab.dataset.week);
+                    const weekData = this.weekData.get(weekNum);
+                    
+                    if (weekData && weekData.activities && weekData.activities.length > 0) {
+                        tab.classList.add('has-content');
+                    } else {
+                        tab.classList.remove('has-content');
+                    }
+                });
+            }
+            
+            switchWeek(weekNumber) {
+                // Ensure week number is valid
+                if (!weekNumber || weekNumber < 1 || weekNumber > 16) return;
+                
+                console.log(`Switching to Week ${weekNumber}`);
+                
+                // Update active tab
+                document.querySelectorAll('.week-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                    if (parseInt(tab.dataset.week) === weekNumber) {
+                        tab.classList.add('active');
+                    }
+                });
+                
+                this.currentWeek = weekNumber;
+                
+                // Always try to display the week (even if empty)
+                this.displayWeek(weekNumber);
+                
+                // Update stats for this specific week
+                this.updateWeekStats(weekNumber);
+            }
+            
+            async loadAllWeekData() {
+                try {
+                    console.log('Loading week data from Firebase...');
+                    
+                    // Check if database is available
+                    if (!this.courseManager || !this.courseManager.database) {
+                        console.error('Database not initialized');
+                        this.loadSampleData();
+                        return;
+                    }
+                    
+                    // Load outline data from Firebase
+                    const snapshot = await this.courseManager.database.ref('outlines').once('value');
+                    const outlines = snapshot.val() || {};
+                    
+                    console.log('Loaded outlines:', Object.keys(outlines).length, 'weeks');
+                    
+                    // Process each week's data
+                    let hasData = false;
+                    for (let weekNum = 1; weekNum <= this.totalWeeks; weekNum++) {
+                        const weekId = `week-${weekNum}-outline`;  // Match the main manager format
+                        
+                        if (outlines[weekId] && outlines[weekId].activities) {
+                            this.weekData.set(weekNum, outlines[weekId]);
+                            hasData = true;
+                            console.log(`Week ${weekNum}: ${outlines[weekId].activities.length} activities`);
+                        } else {
+                            // Create default structure if no data exists
+                            this.weekData.set(weekNum, {
+                                id: weekId,
+                                title: `Week ${weekNum}`,
+                                activities: []
+                            });
+                        }
+                    }
+                    
+                    // If no data was found, that's fine - just show empty weeks
+                    if (!hasData) {
+                        console.log('No data found in Firebase - will show empty weeks');
+                    }
+                } catch (error) {
+                    console.error('Error loading week data:', error);
+                    // Just use empty data if Firebase fails
+                    this.loadDefaultData();
+                }
+            }
+            
+            loadDefaultData() {
+                // Create empty week structure
+                for (let i = 1; i <= this.totalWeeks; i++) {
+                    this.weekData.set(i, {
+                        id: `week-${i}-outline`,
+                        title: `Week ${i}`,
+                        activities: []
+                    });
+                }
+            }
+            
+            
+            displayWeek(weekNumber) {
+                const contentArea = document.getElementById('week-content');
+                
+                // Get week data or create default
+                let weekData = this.weekData.get(weekNumber);
+                if (!weekData) {
+                    // Create default week data if none exists
+                    weekData = {
+                        id: `week-${weekNumber}-outline`,
+                        title: `Week ${weekNumber}`,
+                        activities: []
+                    };
+                    this.weekData.set(weekNumber, weekData);
+                }
+                
+                // Sort activities by order
+                const sortedActivities = [...(weekData.activities || [])]
+                    .sort((a, b) => (a.order || 0) - (b.order || 0));
+                
+                console.log(`Displaying Week ${weekNumber}: ${sortedActivities.length} activities`);
+                
+                if (sortedActivities.length === 0) {
+                    contentArea.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📚</div>
+                            <h3>No Activities Yet</h3>
+                            <p>Activities for Week ${weekNumber} will appear here</p>
+                        </div>
+                    `;
+                    // Clear stats for empty week
+                    document.getElementById('lesson-stats').textContent = '0 Lessons';
+                    document.getElementById('activity-stats').textContent = '0 Activities';
+                    document.getElementById('story-stats').textContent = '0 Stories';
+                    return;
+                }
+                
+                // Generate activity list HTML
+                contentArea.innerHTML = `
+                    <div class="activities-list">
+                        <h2 class="week-title">${weekData.title || `Week ${weekNumber}`} - Activities</h2>
+                        ${sortedActivities.map((activity, index) => this.generateActivityItem(activity, index + 1)).join('')}
+                    </div>
+                `;
+            }
+            
+            generateActivityItem(activity, number) {
+                const isLesson = activity.type && activity.type.toLowerCase() === 'lesson';
+                const rowClass = isLesson ? 'lesson-row' : '';
+                const typeClass = this.getActivityTypeClass(activity.type);
+                
+                return `
+                    <div class="activity-item ${rowClass}">
+                        <div class="activity-number">${number}</div>
+                        <span class="activity-type ${typeClass}">${activity.type || 'Activity'}</span>
+                        <span class="activity-title">${activity.title || 'Untitled Activity'}</span>
+                    </div>
+                `;
+            }
+            
+            getActivityTypeClass(type) {
+                if (!type) return '';
+                
+                switch(type.toLowerCase()) {
+                    case 'lesson': return 'type-lesson';
+                    case 'activity': return 'type-activity';
+                    case 'story': return 'type-story';
+                    case 'intro': return 'type-intro';
+                    case 'wrap-up': return 'type-wrap';
+                    case 'break': return 'type-break';
+                    default: return '';
+                }
+            }
+            
+            updateWeekStats(weekNumber) {
+                const weekData = this.weekData.get(weekNumber);
+                if (!weekData || !weekData.activities) return;
+                
+                let lessonCount = 0;
+                let activityCount = 0;
+                let storyCount = 0;
+                let totalMinutes = 0;
+                
+                weekData.activities.forEach(activity => {
+                    const type = (activity.type || '').toLowerCase();
+                    const duration = parseInt(activity.duration) || 0;
+                    
+                    totalMinutes += duration;
+                    
+                    switch(type) {
+                        case 'lesson':
+                            lessonCount++;
+                            break;
+                        case 'activity':
+                            activityCount++;
+                            break;
+                        case 'story':
+                            storyCount++;
+                            break;
+                    }
+                });
+                
+                // Update display
+                document.getElementById('lesson-stats').textContent = `${lessonCount} ${lessonCount === 1 ? 'Lesson' : 'Lessons'}`;
+                document.getElementById('activity-stats').textContent = `${activityCount} ${activityCount === 1 ? 'Activity' : 'Activities'}`;
+                document.getElementById('story-stats').textContent = `${storyCount} ${storyCount === 1 ? 'Story' : 'Stories'}`;
+            }
+            
+            updateCourseStats() {
+                let totalLessons = 0;
+                let totalActivities = 0;
+                let totalStories = 0;
+                let totalMinutes = 0;
+                
+                // Aggregate stats from all weeks
+                for (let [weekNum, weekData] of this.weekData) {
+                    if (weekData && weekData.activities) {
+                        weekData.activities.forEach(activity => {
+                            const type = (activity.type || '').toLowerCase();
+                            const duration = parseInt(activity.duration) || 0;
+                            
+                            totalMinutes += duration;
+                            
+                            switch(type) {
+                                case 'lesson':
+                                    totalLessons++;
+                                    break;
+                                case 'activity':
+                                    totalActivities++;
+                                    break;
+                                case 'story':
+                                    totalStories++;
+                                    break;
+                            }
+                        });
+                    }
+                }
+                
+                // Show current week stats initially
+                this.updateWeekStats(this.currentWeek);
+            }
+            
+            showError(message) {
+                const contentArea = document.getElementById('week-content');
+                contentArea.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <h3>Error</h3>
+                        <p>${message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Initialize the viewer when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            window.outlineViewer = new CourseOutlineViewer();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor's PMO Story - Managing IT Projects</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <style>
+        /* Teacher mode protection - content initially hidden */
+        .blocked-content {
+            display: none;
+        }
+        
+        .restricted-access {
+            display: none;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .restricted-message {
+            background: var(--color-surface-primary);
+            padding: 60px 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            max-width: 500px;
+        }
+        
+        .restricted-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+        
+        .restricted-title {
+            font-size: 24px;
+            color: var(--color-text-primary);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .restricted-text {
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        .back-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--color-success);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .back-button:hover {
+            background: var(--color-success-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--color-surface-primary);
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2F5233, #4A7C59);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .back-to-course {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-to-course:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="80" r="2.5" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="60" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+        }
+        
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 36px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header p {
+            margin: 0;
+            font-size: 18px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .definition-section {
+            background: linear-gradient(135deg, #f6f9fc, #e9f3ff);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border-left: 5px solid var(--color-success);
+        }
+        
+        .definition-title {
+            font-size: 24px;
+            color: var(--color-text-primary);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .definition-text {
+            font-size: 18px;
+            color: var(--color-text-secondary);
+            line-height: 1.7;
+        }
+        
+        .evolution-section {
+            background: var(--color-surface-secondary);
+            color: var(--color-text-primary);
+            padding: 40px;
+            margin: 0 -40px 40px -40px;
+            position: relative;
+        }
+        
+        .evolution-title {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--color-success);
+            font-weight: bold;
+        }
+        
+        .evolution-timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .evolution-stage {
+            background: var(--color-surface-primary);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--color-success);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .evolution-stage:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateX(10px);
+        }
+        
+        .stage-number {
+            display: inline-block;
+            background: var(--color-success);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 16px;
+        }
+        
+        .stage-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--color-success);
+        }
+        
+        .stage-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--color-text-secondary);
+            margin-bottom: 15px;
+        }
+        
+        .stage-reality {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--color-border-primary);
+            font-style: italic;
+            color: var(--color-info);
+            background: var(--color-surface-info);
+            padding: 15px;
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .stage-reality::before {
+            content: '💡';
+            margin-right: 8px;
+            font-style: normal;
+        }
+        
+        .challenges-section {
+            background: #fef3c7;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 2px solid var(--color-warning);
+        }
+        
+        .challenges-title {
+            font-size: 24px;
+            color: #92400e;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .challenge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .challenge-item {
+            background: var(--color-surface-primary);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid var(--color-warning);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+        
+        .challenge-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .challenge-icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .challenge-name {
+            font-weight: bold;
+            color: var(--color-text-primary);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .challenge-text {
+            font-size: 15px;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+        
+        .success-factors {
+            background: var(--color-surface-success);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 2px solid var(--color-success);
+        }
+        
+        .success-title {
+            font-size: 24px;
+            color: var(--color-success);
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .success-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 15px;
+        }
+        
+        .success-item {
+            background: var(--color-surface-primary);
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+        
+        .success-item:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        
+        .success-check {
+            color: var(--color-success);
+            font-size: 24px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .success-text {
+            font-size: 15px;
+            color: var(--color-text-primary);
+            line-height: 1.6;
+        }
+        
+        .success-text strong {
+            color: var(--color-success);
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .footer-section {
+            background: var(--color-surface-secondary);
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid var(--color-border-primary);
+        }
+        
+        .footer-section h3 {
+            color: var(--color-text-primary);
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .footer-section p {
+            color: var(--color-text-secondary);
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.7;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .footer-link {
+            display: inline-block;
+            padding: 15px 35px;
+            background: var(--color-success);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .footer-link:hover {
+            background: var(--color-success-hover);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 28px;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .evolution-section {
+                padding: 30px 20px;
+                margin: 0 -20px 30px -20px;
+            }
+            
+            .challenge-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .success-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .stage-title {
+                font-size: 18px;
+            }
+            
+            .stage-number {
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+                font-size: 14px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/print.css">
+</head>
+<body>
+    <!-- Blocking style to prevent FOUC (Flash of Unstyled Content) -->
+    <style id="blockContent">
+        body { display: none !important; }
+    </style>
+    
+    <!-- Teacher mode protection scripts -->
+    <script src="js/dark-mode.js"></script>
+    <script src="js/progressive-loading.js"></script>
+    <script src="js/performance-optimizer.js"></script>
+    <script src="js/teacher-manager.js"></script>
+    
+    <!-- Restricted access message -->
+    <div class="restricted-access">
+        <div class="restricted-message">
+            <div class="restricted-icon">🔒</div>
+            <h2 class="restricted-title">Restricted Content</h2>
+            <p class="restricted-text">
+                This content is meant to supplement class and is only accessible during instructor-led sessions.
+            </p>
+            <p class="restricted-text" style="margin-top: 15px;">
+                Please return to class to view this material with your instructor.
+            </p>
+            <a href="index.html" class="back-button">Return to Course Home</a>
+        </div>
+    </div>
+    
+    <!-- Main content (shown only in teacher mode) -->
+    <div class="blocked-content">
+        <div class="container">
+            <div class="header">
+                <a href="index.html" class="back-to-course">
+                    <span aria-hidden="true">←</span>
+                    Back to Course
+                </a>
+                <h1>🏢 Project Management Office (PMO)</h1>
+                <p>The Reality Behind Organizational Project Management</p>
+            </div>
+            
+            <div class="content">
+                <div class="definition-section">
+                    <div class="definition-title">What is a PMO?</div>
+                    <div class="definition-text">
+                        A <strong>Project Management Office (PMO)</strong> is a centralized organizational unit that oversees, supports, and standardizes project management practices across an organization. It serves as the guardian of project management methodology, processes, and governance—though its real-world implementation varies dramatically from its textbook definition.
+                    </div>
+                </div>
+                
+                <div class="evolution-section">
+                    <div class="evolution-title">📈 The PMO Evolution Journey: A Real Story</div>
+                    <div class="evolution-timeline">
+                        <div class="evolution-stage">
+                            <div class="stage-title"><span class="stage-number">1</span>No Formal PM Structure</div>
+                            <div class="stage-description">
+                                The organization operates without dedicated project managers. Technical leads and department heads manage their own projects while juggling operational responsibilities.
+                            </div>
+                            <div class="stage-reality">
+                                <strong>Reality Check:</strong> "I was responsible for outcomes and had to coordinate development, plan deployment, manage rollout, AND provide support—all without a PM title."
+                            </div>
+                        </div>
+                        
+                        <div class="evolution-stage">
+                            <div class="stage-title"><span class="stage-number">2</span>Portfolio Management PM</div>
+                            <div class="stage-description">
+                                Departments add their first project manager to oversee and coordinate multiple smaller projects as a portfolio, providing much-needed coordination across initiatives.
+                            </div>
+                            <div class="stage-reality">
+                                <strong>Reality Check:</strong> "I added a project manager to manage my portfolio of 15+ projects and initiatives. This actually didn't work well—they got too deep in the weeds and couldn't handle the breadth."
+                            </div>
+                        </div>
+                        
+                        <div class="evolution-stage">
+                            <div class="stage-title"><span class="stage-number">3</span>Dedicated Project PMs</div>
+                            <div class="stage-description">
+                                As projects grow in complexity and scale, organizations assign dedicated PMs to major initiatives, allowing deeper focus and better stakeholder management.
+                            </div>
+                            <div class="stage-reality">
+                                <strong>Reality Check:</strong> "Started assigning PMs to bigger projects. This actually worked well—they understood our business and could focus 100% on project success."
+                            </div>
+                        </div>
+                        
+                        <div class="evolution-stage">
+                            <div class="stage-title"><span class="stage-number">4</span>PMO Establishment</div>
+                            <div class="stage-description">
+                                The organization creates a formal PMO to standardize practices and provide enterprise-wide oversight of all projects.
+                            </div>
+                            <div class="stage-reality">
+                                <strong>Reality Check:</strong> "They wanted me to report statuses to them separately from how I already reported. It wasn't embraced—it felt like overhead without value."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="challenges-section">
+                    <div class="challenges-title">⚠️ Why PMOs and PMs Struggle: The Unspoken Truth</div>
+                    <div class="challenge-grid">
+                        <div class="challenge-item">
+                            <span class="challenge-icon">🎭</span>
+                            <div class="challenge-name">Cultural Misalignment</div>
+                            <div class="challenge-text">
+                                PMOs often don't understand the existing culture, informal processes, or "how things really get done" in the organization.
+                            </div>
+                        </div>
+                        
+                        <div class="challenge-item">
+                            <span class="challenge-icon">👥</span>
+                            <div class="challenge-name">Unclear Expectations</div>
+                            <div class="challenge-text">
+                                Unwritten rules and implicit expectations aren't captured in formal processes, leaving PMs confused about their real role.
+                            </div>
+                        </div>
+                        
+                        <div class="challenge-item">
+                            <span class="challenge-icon">🎪</span>
+                            <div class="challenge-name">Multi-Hat Organizations</div>
+                            <div class="challenge-text">
+                                In organizations where everyone wears multiple hats, PMs struggle to find their unique value and establish boundaries.
+                            </div>
+                        </div>
+                        
+                        <div class="challenge-item">
+                            <span class="challenge-icon">💰</span>
+                            <div class="challenge-name">Value Question</div>
+                            <div class="challenge-text">
+                                When PMOs add process without clear value—like duplicate reporting—they become viewed as overhead rather than enablers.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="success-factors">
+                    <div class="success-title">✅ What Actually Works</div>
+                    <div class="success-list">
+                        <div class="success-item">
+                            <span class="success-check">✓</span>
+                            <div class="success-text">
+                                <strong>Embedded PMs:</strong> Project managers who understand the business and work directly with teams
+                            </div>
+                        </div>
+                        <div class="success-item">
+                            <span class="success-check">✓</span>
+                            <div class="success-text">
+                                <strong>Gradual Evolution:</strong> Starting with supportive PMO and evolving based on organizational maturity
+                            </div>
+                        </div>
+                        <div class="success-item">
+                            <span class="success-check">✓</span>
+                            <div class="success-text">
+                                <strong>Value-First Approach:</strong> Focus on solving real problems rather than implementing textbook processes
+                            </div>
+                        </div>
+                        <div class="success-item">
+                            <span class="success-check">✓</span>
+                            <div class="success-text">
+                                <strong>Cultural Integration:</strong> Understanding and working with existing informal processes, not against them
+                            </div>
+                        </div>
+                        <div class="success-item">
+                            <span class="success-check">✓</span>
+                            <div class="success-text">
+                                <strong>Clear Communication:</strong> Being transparent about the PMO's role and how it adds value to existing work
+                            </div>
+                        </div>
+                        <div class="success-item">
+                            <span class="success-check">✓</span>
+                            <div class="success-text">
+                                <strong>Flexible Standards:</strong> Adapting methodologies to fit the organization, not forcing the organization to fit the methodology
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>The Bottom Line</h3>
+                <p>
+                    A PMO can be a powerful enabler of project success—or a bureaucratic burden. The difference lies not in the structure itself, but in how well it understands and serves the organization's real needs. The best PMOs evolve with their organizations, add clear value, and never forget that project management is ultimately about people, not just processes.
+                </p>
+                <a href="index.html" class="footer-link">← Back to Course Concepts</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize when DOM is loaded
+        // Immediate protection check
+        function checkTeacherMode() {
+            // Default state is blocked - only unblock if verified through proper teacher mode
+            const isTeacherMode = sessionStorage.getItem('teacherMode') === 'true';
+            
+            if (!isTeacherMode) {
+                // Not in teacher mode, show restricted message
+                console.log('Access denied - not in teacher mode');
+                // Remove the blocking style to show restricted message
+                document.getElementById('blockContent').remove();
+                showRestrictedAccess();
+                return;
+            }
+            
+            // Teacher mode verified, show the content
+            console.log('Teacher mode verified - showing content');
+            // Remove the blocking style
+            document.getElementById('blockContent').remove();
+            document.body.style.display = 'block';
+            
+            // Show the blocked content and hide restricted access
+            document.querySelector('.blocked-content').style.display = 'block';
+            document.querySelector('.restricted-access').style.display = 'none';
+            
+            // Ensure teacher mode class is added
+            document.body.classList.add('teacher-mode');
+        }
+        
+        function showRestrictedAccess() {
+            // Content is already set up in HTML, just ensure it's visible
+            document.querySelector('.restricted-access').style.display = 'flex';
+            document.querySelector('.blocked-content').style.display = 'none';
+        }
+        
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, checking teacher mode...');
+            
+            // Wait for teacher manager to be ready
+            setTimeout(() => {
+                checkTeacherMode();
+            }, 100);
+        });
+    </script>
+</body>
+</html>

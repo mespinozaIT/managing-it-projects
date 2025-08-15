@@ -129,6 +129,21 @@
             box-shadow: var(--shadow-sm);
         }
         
+        .stat-item.lessons {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .stat-item.activities {
+            background: #e8f5e8;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .stat-item.stories {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+        }
+        
         .stat-number {
             font-size: 24px;
             font-weight: bold;
@@ -181,6 +196,14 @@
             background: var(--color-surface-hover);
         }
         
+        .schedule-table tr.lesson-row {
+            background: #e3f2fd !important;
+        }
+        
+        .schedule-table tr.lesson-row:hover {
+            background: #bbdefb !important;
+        }
+        
         .activity-type {
             display: inline-block;
             padding: 6px 12px;
@@ -202,8 +225,8 @@
         }
         
         .type-activity {
-            background: var(--color-surface-success);
-            color: var(--color-success);
+            background: #e8f5e8;
+            color: #4caf50;
         }
         
         .type-story {
@@ -224,6 +247,16 @@
         .type-admin {
             background: var(--color-surface-error);
             color: var(--color-error);
+        }
+        
+        .type-intro {
+            background: #f3e5f5;
+            color: #9c27b0;
+        }
+        
+        .type-wrap {
+            background: #f3e5f5;
+            color: #9c27b0;
         }
         
         .activity-title {
@@ -583,11 +616,11 @@
         <div class="admin-nav-links">
             <a href="weekly-schedule.html" class="admin-nav-link">
                 <span class="admin-nav-icon">📅</span>
-                <span class="admin-nav-text">Weekly Schedule</span>
+                <span class="admin-nav-text">High-Level Outline</span>
             </a>
             <a href="course-outline-manager.html" class="admin-nav-link current">
                 <span class="admin-nav-icon">📝</span>
-                <span class="admin-nav-text">Content Editor</span>
+                <span class="admin-nav-text">Class Content</span>
             </a>
             <a href="index.html" class="admin-nav-link">
                 <span class="admin-nav-icon">🏠</span>
@@ -600,7 +633,7 @@
         <div class="outline-header">
             <a href="weekly-schedule.html" class="outline-back-button">
                 <span aria-hidden="true">←</span>
-                Weekly Schedule
+                High-Level Outline
             </a>
             <h1>Course Outline Manager</h1>
             <p>Managing IT Projects - Complete Course Planning</p>
@@ -615,16 +648,16 @@
         <div class="outline-content">
             <!-- Course Statistics -->
             <div class="course-stats" id="course-stats">
-                <div class="stat-item">
-                    <span class="stat-number" id="lesson-stats">0 min (0)</span>
+                <div class="stat-item lessons">
+                    <span class="stat-number" id="lesson-stats">0 Lessons | 0 min</span>
                     <div class="stat-label">Lessons</div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number" id="activity-stats">0 min (0)</span>
+                <div class="stat-item activities">
+                    <span class="stat-number" id="activity-stats">0 Activities | 0 min</span>
                     <div class="stat-label">Activities</div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number" id="story-stats">0 min (0)</span>
+                <div class="stat-item stories">
+                    <span class="stat-number" id="story-stats">0 Stories | 0 min</span>
                     <div class="stat-label">Stories</div>
                 </div>
                 <div class="stat-item">
@@ -639,18 +672,18 @@
                 <button class="action-btn btn-secondary" onclick="outlineManager.toggleEditMode()">
                     📝 Edit Mode
                 </button>
-                <button class="action-btn btn-primary edit-mode-only" onclick="outlineManager.addNewActivity()" style="display: none;">
-                    ➕ Add Activity
-                </button>
-                <button class="action-btn btn-secondary edit-mode-only" onclick="outlineManager.copyFromWeek()" style="display: none;">
-                    📋 Copy from Week...
-                </button>
-                <button class="action-btn btn-danger edit-mode-only" onclick="outlineManager.resetCurrentWeek()" style="display: none;">
-                    🔄 Reset Week
-                </button>
             </div>
             
-            <!-- Sync & Management Tools -->
+
+            <!-- Week Content Area -->
+            <div id="week-content">
+                <div class="loading-content">
+                    <div class="loading-spinner"></div>
+                    <p>Loading course outlines...</p>
+                </div>
+            </div>
+            
+            <!-- Sync & Management Tools - moved to bottom -->
             <details class="utility-section" style="margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 10px; border: 1px solid #e0e0e0;">
                 <summary style="cursor: pointer; color: #2F5233; font-size: 16px; font-weight: bold; display: flex; align-items: center; gap: 8px; margin-bottom: 15px;">
                     🔧 Sync & Management Tools
@@ -672,46 +705,11 @@
                     <button class="action-btn btn-danger" onclick="outlineManager.cleanOrphanedTiles()" title="Remove tiles not in outline">
                         🧹 Clean Orphaned Tiles
                     </button>
-                    <button class="action-btn btn-info" onclick="outlineManager.syncFirebaseStatusToOutline()" title="Sync tile visibility from index back to outline">
-                        ⬅️ Sync from Index
-                    </button>
-                    <button class="action-btn btn-warning" onclick="outlineManager.quickReset()" title="Reset current week to default template">
-                        🔄 Reset Week
-                    </button>
                 </div>
                 <div style="font-size: 12px; color: #666; padding: 10px; background: #e9ecef; border-radius: 6px;">
                     <strong>ℹ️ Quick Guide:</strong> Use "Sync to Index" after editing activities. Use "Compare Data" to check for issues.
                 </div>
             </details>
-            
-            <!-- Student View Preview -->
-            <div class="index-preview-section" style="margin-bottom: 40px; padding: 20px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 10px; border: 1px solid #dee2e6;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-                    <h2 style="margin: 0; color: #2F5233; font-size: 18px; display: flex; align-items: center; gap: 8px;">
-                        👁️ Student View Preview
-                        <span style="font-size: 12px; font-weight: normal; color: #666; background: #fff; padding: 2px 6px; border-radius: 3px;">Live</span>
-                    </h2>
-                    <button class="action-btn btn-info" onclick="outlineManager.previewIndexPage()" style="font-size: 12px; padding: 6px 12px;">
-                        🔗 Open Week Index
-                    </button>
-                </div>
-                <div id="index-preview-grid" class="concepts-grid" style="margin-bottom: 15px; max-height: 400px; overflow-y: auto; border: 2px solid #dee2e6; border-radius: 8px; background: white; padding: 15px;">
-                    <div style="padding: 40px; text-align: center; color: #999;">
-                        📚 Loading tile preview...
-                    </div>
-                </div>
-                <div style="text-align: center; font-size: 12px; color: #666; font-style: italic;">
-                    ✨ Preview updates automatically when you make changes
-                </div>
-            </div>
-
-            <!-- Week Content Area -->
-            <div id="week-content">
-                <div class="loading-content">
-                    <div class="loading-spinner"></div>
-                    <p>Loading course outlines...</p>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -1027,6 +1025,11 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="edit-mode-only" style="display: none; margin-top: 20px; text-align: center;">
+                            <button class="action-btn btn-primary" onclick="outlineManager.addNewActivity()">
+                                ➕ New Item
+                            </button>
+                        </div>
                     </div>
                 `;
 
@@ -1058,6 +1061,7 @@
                                     </button>
                                     <select data-original-element="activity-type" 
                                             style="flex: 1; padding: 4px; border: 1px solid #ddd; border-radius: 3px; font-size: 12px;">
+                                        <option value="" ${!activity.type ? 'selected' : ''}></option>
                                         <option value="Intro" ${activity.type === 'Intro' ? 'selected' : ''}>Intro</option>
                                         <option value="Lesson" ${activity.type === 'Lesson' ? 'selected' : ''}>Lesson</option>
                                         <option value="Activity" ${activity.type === 'Activity' ? 'selected' : ''}>Activity</option>
@@ -1065,6 +1069,13 @@
                                         <option value="Break" ${activity.type === 'Break' ? 'selected' : ''}>Break</option>
                                         <option value="Wrap-up" ${activity.type === 'Wrap-up' ? 'selected' : ''}>Wrap-up</option>
                                     </select>
+                                    <label style="display: flex; align-items: center; gap: 4px; margin-left: 8px;">
+                                        <input type="checkbox" data-original-element="create-tile" 
+                                               ${activity.type === 'Lesson' ? 'checked' : ''}
+                                               onchange="outlineManager.updateCreateTile(this)"
+                                               style="cursor: pointer;">
+                                        <span style="font-size: 11px; color: #666;">Tile?</span>
+                                    </label>
                                 </div>
                             </div>
                         ` : `
@@ -1087,7 +1098,8 @@
                         ` : this.formatPageLink(activity.pageLink || '');
                         
                         return `
-                        <tr draggable="true" data-activity-order="${activity.order}" data-activity-id="${activity.id || activity.order}">
+                        <tr draggable="true" data-activity-order="${activity.order}" data-activity-id="${activity.id || activity.order}" 
+                            class="${isLesson ? 'lesson-row' : ''}">
                             <td>
                                 ${activityCell}
                             </td>
@@ -1151,25 +1163,32 @@
             generatePageLinkOptions(selectedPage = '') {
                 const pages = [
                     '',
-                    'class-expectations.html',
-                    'course-syllabus.html',
-                    'instructor-profile.html',
-                    'professional-experience.html',
-                    'professors-projects-stories.html',
-                    'project-definition.html',
                     'case-study.html',
+                    'class-expectations.html',
+                    'course-outline-view.html',
+                    'course-syllabus.html',
+                    'index.html',
+                    'professors-profile.html',
                     'journey.html',
-                    'project-manager-role.html',
-                    'project-management-office-definition.html',
+                    'mission-vision-strategy.html',
                     'PMI.html',
+                    'professional-experience.html',
+                    'professors-pmo-story.html',
+                    'professors-projects-stories.html',
+                    'professors-swot-analysis.html',
+                    'professors-swot-story.html',
+                    'project-definition.html',
+                    'project-management-artifacts.html',
+                    'project-management-definition.html',
+                    'project-management-office-definition.html',
+                    'project-manager-role.html',
+                    'swot-analysis.html',
+                    'week-1-outline.html',
                     'week-1-quiz.html',
                     'week-1-summary.html',
-                    'project-management-definition.html',
-                    'mission-vision-strategy.html',
-                    'project-management-artifacts.html',
-                    'swot-analysis.html',
-                    'professors-swot-analysis.html',
-                    'professors-swot-story.html'
+                    'week-1-wrap-up.html',
+                    'week-in-it-introduction.html',
+                    'weekly-schedule.html'
                 ];
                 
                 return pages.map(page => {
@@ -1187,8 +1206,8 @@
                     case 'professional': return 'type-professional';
                     case 'course-info': return 'type-course-info';
                     case 'admin': return 'type-admin';
-                    case 'intro': return 'type-admin';
-                    case 'wrap-up': return 'type-admin';
+                    case 'intro': return 'type-intro';
+                    case 'wrap-up': return 'type-wrap';
                     default: return 'type-lesson';
                 }
             }
@@ -1270,9 +1289,9 @@
                 // Update current week stats in the display
                 const totalMinutes = weekData.activities.reduce((sum, activity) => sum + activity.duration, 0);
                 document.getElementById('total-class-time').textContent = totalMinutes;
-                document.getElementById('lesson-stats').textContent = `${lessonMinutes} min (${lessonCount})`;
-                document.getElementById('activity-stats').textContent = `${activityMinutes} min (${activityCount})`;
-                document.getElementById('story-stats').textContent = `${storyMinutes} min (${storyCount})`;
+                document.getElementById('lesson-stats').textContent = `${lessonCount} Lessons | ${lessonMinutes} min`;
+                document.getElementById('activity-stats').textContent = `${activityCount} Activities | ${activityMinutes} min`;
+                document.getElementById('story-stats').textContent = `${storyCount} Stories | ${storyMinutes} min`;
             }
 
             updateCourseStats() {
@@ -1315,9 +1334,9 @@
                     });
                 }
 
-                document.getElementById('lesson-stats').textContent = `${totalLessonMinutes} min (${totalLessonCount})`;
-                document.getElementById('activity-stats').textContent = `${totalActivityMinutes} min (${totalActivityCount})`;
-                document.getElementById('story-stats').textContent = `${totalStoryMinutes} min (${totalStoryCount})`;
+                document.getElementById('lesson-stats').textContent = `${totalLessonCount} Lessons | ${totalLessonMinutes} min`;
+                document.getElementById('activity-stats').textContent = `${totalActivityCount} Activities | ${totalActivityMinutes} min`;
+                document.getElementById('story-stats').textContent = `${totalStoryCount} Stories | ${totalStoryMinutes} min`;
                 document.getElementById('total-class-time').textContent = totalClassTime;
             }
 
@@ -1332,15 +1351,15 @@
                     }
 
                     const newActivity = {
-                        type: 'Activity',
-                        title: 'New Activity',
-                        duration: 15,
+                        type: '',
+                        title: '',
+                        duration: '',
                         timeRange: 'TBD',
                         pageLink: '',
                         order: weekData.activities.length,
                         tileVisibility: 'available',
                         tileIcon: '📚',
-                        tileDescription: 'New activity description'
+                        tileDescription: ''
                     };
 
                     weekData.activities.push(newActivity);
@@ -1359,7 +1378,7 @@
                     // Use debounced save
                     this.debouncedSave();
                     this.debouncedPreviewUpdate();
-                    this.showSaveIndicator('✅ New activity added - click to edit title');
+                    this.showSaveIndicator('✅ New item added - click to edit details');
                 } catch (error) {
                     console.error('Error adding new activity:', error);
                     this.showSaveIndicator('Error adding activity', 'error');
@@ -2272,6 +2291,46 @@
                 } catch (error) {
                     console.error('Error updating tile description:', error);
                     this.showSaveIndicator('Error updating description', 'error');
+                }
+            }
+
+            updateCreateTile(checkboxElement) {
+                const row = checkboxElement.closest('tr');
+                const activityId = row.dataset.activityId;
+                const activityOrder = row.dataset.activityOrder;
+                const createTile = checkboxElement.checked;
+                
+                try {
+                    // Update local data
+                    const currentWeekData = this.weekData.get(this.currentWeek);
+                    const activity = currentWeekData.activities.find(a => 
+                        (a.id && a.id == activityId) || a.order == activityOrder
+                    );
+                    
+                    if (activity) {
+                        // If creating tile, set type to lesson and ensure tile properties
+                        if (createTile) {
+                            activity.type = 'Lesson';
+                            activity.tileVisibility = activity.tileVisibility || 'available';
+                            activity.tileIcon = activity.tileIcon || '📚';
+                            activity.tileDescription = activity.tileDescription || '';
+                            
+                            // Update the type dropdown to show lesson
+                            const typeSelect = row.querySelector('[data-original-element="activity-type"]');
+                            if (typeSelect) {
+                                typeSelect.value = 'Lesson';
+                            }
+                        }
+                        
+                        // Save to local database (debounced)
+                        this.debouncedSave();
+                        
+                        // Show success indicator
+                        this.showSaveIndicator(createTile ? '✅ Tile creation enabled' : '✅ Tile creation disabled');
+                    }
+                } catch (error) {
+                    console.error('Error updating create tile:', error);
+                    this.showSaveIndicator('Error updating tile setting', 'error');
                 }
             }
 

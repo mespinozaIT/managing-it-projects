@@ -609,6 +609,17 @@
     <script src="js/performance-optimizer.js"></script>
     <script src="js/teacher-manager.js"></script>
     <script>
+        // Function to maintain teacher mode when navigating to story pages
+        function maintainTeacherMode() {
+            // Ensure teacher mode is preserved in session storage
+            const isTeacherMode = sessionStorage.getItem('teacherMode') === 'true';
+            if (isTeacherMode) {
+                console.log('Maintaining teacher mode for navigation');
+                // The sessionStorage will persist across page navigation
+            }
+            return true; // Allow the link to proceed
+        }
+        
         // Initialize teacher mode functionality immediately
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Initializing Teacher Manager...');
@@ -781,27 +792,66 @@
             <div class="story-time-section">
                 <h2 class="story-time-header">
                     <span class="story-icon">⭐</span>
-                    Story Time: Professor's PM Skills in Action
-                    <span class="story-subtitle">How an IT Manager applies PM skills while managing PMs</span>
+                    Story Time: Professor's PMO Evolution Journey
+                    <span class="story-subtitle">The reality behind organizational project management transformation</span>
                 </h2>
                 
                 <div class="story-student-view">
                     <div class="story-teaser">
-                        <p class="story-intro">Want to understand how an IT Manager uses project management skills to lead a team that includes Project Managers? Professor Espinoza manages both BSAs and PMs, demonstrating advanced PM concepts in practice.</p>
+                        <p class="story-intro">Ever wondered what happens when organizations try to implement PMOs in the real world? Professor Espinoza shares her firsthand experience watching PMO evolution—from the early days of "everyone wears multiple hats" to formal PMO establishment.</p>
+                        
+                        <div class="story-preview">
+                            <h4>🎯 What You'll Learn About:</h4>
+                            <ul>
+                                <li><strong>The 4-Stage PMO Evolution:</strong> How organizations really grow their PM practices</li>
+                                <li><strong>Why PMOs Often Struggle:</strong> The unspoken cultural challenges nobody talks about</li>
+                                <li><strong>Real Success Stories:</strong> What actually works when implementing project management</li>
+                                <li><strong>The "Overhead vs. Value" Problem:</strong> How PMOs can add genuine value instead of bureaucracy</li>
+                            </ul>
+                        </div>
                         
                         <div class="story-unlock-message">
-                            <p><em>💡 This detailed team structure and leadership approach will be discussed in class.</em></p>
+                            <p><em>💡 This detailed story of PMO transformation successes and failures will be shared in class, including specific examples of what worked and what didn't.</em></p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="story-teacher-view" style="display: none;">
                     <div class="story-introduction">
-                        Although I'm not a traditional Project Manager, I use PM skills daily as an IT Manager overseeing both Business Systems Analysts and Project Managers.
-                    </div>
-                    
-                    <div class="story-quick-preview">
-                        <p><em>[Teacher content placeholder - Details about managing PMs and BSAs to be added]</em></p>
+                        <p class="story-intro">Ready to dive deep into the real story of PMO evolution? This teacher story covers the unvarnished truth about organizational project management transformation.</p>
+                        
+                        <div class="story-preview">
+                            <h4>🏢 PMO Evolution Story Includes:</h4>
+                            <ul>
+                                <li><strong>Stage 1:</strong> No Formal PM Structure - "I managed everything without a PM title"</li>
+                                <li><strong>Stage 2:</strong> Portfolio Management PM - "This didn't work well—too broad"</li>
+                                <li><strong>Stage 3:</strong> Dedicated Project PMs - "This actually worked well"</li>
+                                <li><strong>Stage 4:</strong> PMO Establishment - "Felt like overhead without value"</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="story-cta" style="text-align: center; margin: 30px 0;">
+                            <a href="professors-pmo-story.html" class="story-link" onclick="maintainTeacherMode()" style="
+                                display: inline-block;
+                                background: linear-gradient(135deg, #27ae60, #2ecc71);
+                                color: white;
+                                text-decoration: none;
+                                padding: 20px 30px;
+                                border-radius: 12px;
+                                font-size: 18px;
+                                font-weight: 600;
+                                box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+                                transition: all 0.3s ease;
+                                text-align: center;
+                            " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 20px rgba(39, 174, 96, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(39, 174, 96, 0.3)'">
+                                📖 Read Full PMO Evolution Story
+                                <span class="story-link-subtitle" style="display: block; font-size: 14px; opacity: 0.9; margin-top: 5px; font-weight: 400;">Complete with reality checks and success factors</span>
+                            </a>
+                        </div>
+                        
+                        <div class="story-note" style="background: var(--color-surface-info); border-radius: 8px; padding: 15px; border-left: 4px solid var(--color-info);">
+                            <p><em>💡 This story provides real-world context for the PMO concepts covered in this lesson and helps explain why PMO implementation often faces cultural challenges.</em></p>
+                        </div>
                     </div>
                 </div>
             </div>

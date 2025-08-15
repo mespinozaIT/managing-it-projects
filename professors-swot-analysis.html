@@ -438,6 +438,10 @@
             document.getElementById('blockContent').remove();
             document.body.style.display = 'block';
             
+            // Show the blocked content and hide restricted access
+            document.querySelector('.blocked-content').style.display = 'block';
+            document.querySelector('.restricted-access').style.display = 'none';
+            
             // Ensure teacher mode class is added
             document.body.classList.add('teacher-mode');
         }
